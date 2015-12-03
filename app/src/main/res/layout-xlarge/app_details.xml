@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include android:id="@+id/toolbar"
+        layout="@layout/app_bar"/>
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/backup"
+            android:id="@+id/buttonBackup"
+            android:padding="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/last_modify"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/selectable_background"
+            android:drawableLeft="@mipmap/micro_sd"
+            android:textColor="@color/secondary_text"
+            android:typeface="sans"
+            android:textSize="18sp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/uninstall_app"
+            android:id="@+id/buttonUnInstall"
+            android:padding="10dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/buttonBackup"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/selectable_background"
+            android:textColor="@color/secondary_text"
+            android:typeface="sans"
+            android:textSize="18sp"
+            android:drawableLeft="@mipmap/delete"
+            android:layout_weight="1"/>
+
+    </LinearLayout>-->
+
+    <!--<TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_details"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorAccent"
+        android:textSize="26sp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:id="@+id/txtHeader"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="outsideInset"
+            android:layout_marginBottom="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+
+                <TextView
+                    android:id="@+id/apk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/apkname"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_below="@+id/txtHeader"
+                    android:textColor="@color/secondary_text"/>
+
+                <TextView
+                    android:id="@+id/applabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/apk"
+                    android:paddingLeft="24dp"
+                    android:textColor="@color/colorAccent"
+                    android:text="hakha"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/pack_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/applabel"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/package_name"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/secondary_text"/>
+
+                <TextView
+                    android:id="@+id/package_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/pack_name"
+                    android:paddingLeft="24dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorAccent"/>
+
+                <TextView
+                    android:id="@+id/version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/package_name"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="18dp"
+                    android:text="@string/version"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/secondary_text"/>
+
+                <TextView
+                    android:id="@+id/version_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/version"
+                    android:paddingLeft="24dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorAccent"/>
+
+                <TextView
+                    android:id="@+id/features"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/version_name"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="18dp"
+                    android:text="@string/features"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/secondary_text"/>
+
+                <TextView
+                    android:id="@+id/req_feature"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/features"
+                    android:paddingLeft="24dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorAccent"/>
+
+                <TextView
+                    android:id="@+id/permissions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/req_feature"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="18dp"
+                    android:text="@string/permissions"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/secondary_text"/>
+
+                <TextView
+                    android:id="@+id/req_permission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/permissions"
+                    android:paddingLeft="24dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorAccent"/>
+
+                <TextView
+                    android:id="@+id/path_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/req_permission"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="18dp"
+                    android:text="@string/path_info"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/secondary_text"/>
+
+                <TextView
+                    android:id="@+id/path"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/path_info"
+                    android:paddingLeft="24dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorAccent"/>
+
+                <TextView
+                    android:id="@+id/and_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/path"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="18dp"
+                    android:text="@string/req_version"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/secondary_text"/>
+
+                <TextView
+                    android:id="@+id/andversion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/and_version"
+                    android:paddingLeft="24dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorAccent"/>
+
+                <TextView
+                    android:id="@+id/installed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/andversion"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="18dp"
+                    android:text="@string/installed"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/secondary_text"/>
+
+                <TextView
+                    android:id="@+id/insdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/installed"
+                    android:paddingLeft="24dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorAccent"/>
+
+                <TextView
+                    android:id="@+id/modified"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/insdate"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="18dp"
+                    android:textSize="18sp"
+                    android:text="@string/modified"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/last_modify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/modified"
+                    android:paddingLeft="24dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorAccent"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>

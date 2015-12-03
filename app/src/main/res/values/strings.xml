@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">AppManager</string>
+    <string name="title_activity_apk_list">List of installed applications</string>
+    <string name="appicon">Application Icon</string>
+    <string name="apkname">Application Name:</string>
+    <string name="package_name">Package Name:</string>
+    <string name="version">Version:</string>
+    <string name="features">Required Features:</string>
+    <string name="permissions">Required Permissions:</string>
+    <string name="req_version">Target SDK Version:</string>
+    <string name="path_info">Path Info:</string>
+    <string name="appsize">Physical Size</string>
+    <string name="installed">Installed:</string>
+    <string name="modified">Last Modified:</string>
+    <string name="uninstall_app">Uninstall</string>
+    <string name="backup">Backup</string>
+    <string name="app_details">Application Detail</string>
+    <string name="available_space">Available Space :</string>
+    <string name="total_space">Total Space :</string>
+    <string name="total_ram">Total RAM :</string>
+    <string name="available_ram">Available RAM :</string>
+    <string name="clean_ram">Clear Memory</string>
+
+
+    <string name="about_title">Rudraksh Pahade</string>
+    <string name="about_desc">I am an Android Developer just build this application to demonstrate how we can extract all installed applications of device, both user and system applications. This demo also provides the feature of (un)installing the application.</string>
+    <string name="action_ram">About RAM</string>
+    <string name="action_device_info">Device Info</string>
+    <string name="ram_clear_message">
+        Clear inactive and background processes.\n\nCompleted and ongoing application\nfunctions will be removed from RAM.\n\nClearing RAM will end some applications.Save data before you clear RAM.\n\nTo enable quick reopening, Android OS
+        applications remain in the memory, even
+        when they are closed. When there is not
+        enough memory, the low memory killer (LMK)
+        frees the memory automatically by clearing
+        the least recently used (LRU) list.
+        If you clear the memory manually,
+        applications may take longer to launch.
+    </string>
+</resources>

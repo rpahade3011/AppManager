@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/menu_backup"
+        android:orderInCategory="100"
+        android:icon="@mipmap/micro_sd"
+        android:showAsAction="always"
+        android:title="@string/backup"
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/menu_uninstall"
+        android:orderInCategory="100"
+        android:icon="@mipmap/delete_50"
+        android:showAsAction="always"
+        android:title="@string/uninstall_app"
+        tools:ignore="AppCompatResource" />
+
+</menu>
