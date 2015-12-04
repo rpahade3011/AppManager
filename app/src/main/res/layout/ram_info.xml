@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <include android:id="@+id/toolbar"
-        layout="@layout/app_bar"/>
+        layout="@layout/toolbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -99,7 +99,7 @@
                 android:textColor="@color/accent"
                 android:layout_marginTop="5dp"/>
 
-            <com.andexert.library.RippleView
+            <!--<com.andexert.library.RippleView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/rippleView"
@@ -120,7 +120,15 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"/>
 
-            </com.andexert.library.RippleView>
+            </com.andexert.library.RippleView>-->
+            <com.gc.materialdesign.views.ButtonFlat
+                android:id="@+id/buttonCleanRam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:text="@string/clean_ram"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp" />
 
         </LinearLayout>
 
