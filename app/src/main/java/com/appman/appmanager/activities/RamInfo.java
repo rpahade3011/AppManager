@@ -1,4 +1,4 @@
-package com.appman.appmanager;
+package com.appman.appmanager.activities;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -7,11 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.appman.appmanager.R;
 import com.appman.appmanager.utils.MemoryUtils;
+import com.gc.materialdesign.views.ButtonFlat;
 
 /**
  * Created by rudhraksh.pahade on 02-12-2015.
@@ -23,7 +25,8 @@ public class RamInfo extends AppCompatActivity {
     Toolbar toolbar;
 
     TextView txtTotalRam, txtUsedRam, txtRamMsg;
-    Button btnCleanRam;
+    //Button btnCleanRam;
+    ButtonFlat btnCleanRam;
 
 
     private Typeface font;
@@ -39,14 +42,20 @@ public class RamInfo extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.action_ram));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         mContext = getApplicationContext();
         txtTotalRam = (TextView) findViewById(R.id.textViewTotalRam);
         txtUsedRam = (TextView) findViewById(R.id.textViewUsedRam);
         txtRamMsg = (TextView) findViewById(R.id.txtViewRamMsg);
-        btnCleanRam = (Button) findViewById(R.id.buttonCleanRam);
+        btnCleanRam = (ButtonFlat) findViewById(R.id.buttonCleanRam);
 
-        font = Typeface.createFromAsset(getAssets(), "fonts/Avenir-Book.ttf");
+        //font = Typeface.createFromAsset(getAssets(), "fonts/Avenir-Book.ttf");
         getAvailableRam();
 
     }
@@ -72,15 +81,22 @@ public class RamInfo extends AppCompatActivity {
                 txtRamMsg.setTypeface(font);
             }
         });
-        btnCleanRam.setTypeface(font);
+        //btnCleanRam.setTypeface(font);
         btnCleanRam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //AvailableSpaceHandler.cleanMemory();
+                clearMemory();
+            }
+        });
+    }
+
+    private void clearMemory(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
                 ramCleaned = MemoryUtils.cleanMemory(mContext);
                 showUpdatedAvailableRam();
                 Toast.makeText(mContext, "A total clean-up: " + ramCleaned + "M", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
@@ -89,6 +105,12 @@ public class RamInfo extends AppCompatActivity {
         usedRam = MemoryUtils.getAvailMemory(getApplicationContext());
         txtUsedRam.setText(getString(R.string.available_ram) + " " + usedRam + " " + "M");
         txtUsedRam.setTypeface(font);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fade_forward, R.anim.slide_out_right);
     }
 
 }

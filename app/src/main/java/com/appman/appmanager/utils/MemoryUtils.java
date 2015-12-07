@@ -7,8 +7,10 @@ import android.app.ActivityManager.RunningTaskInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Process;
+import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -203,11 +205,56 @@ public class MemoryUtils {
 
     //Access to the available memory size
     public static long getAvailMemory(Context context) {
+        long availMemory = -1L;
         ActivityManager activityManager=(ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
         MemoryInfo memoryInfo = new MemoryInfo();
         activityManager.getMemoryInfo(memoryInfo);
-        return memoryInfo.availMem / (1024 * 1024);
+        availMemory = memoryInfo.availMem / (1024 * 1024);
+        return availMemory;
     }
+
+    public static String getMemorySizeStrings() {
+
+        DecimalFormat dformat = new DecimalFormat("#.##");
+        String mem = null;
+        long freeSize = 0L;
+        long totalSize = 0L;
+        long usedSize = 0L;
+        double totCal = 0;
+        String lastValue = "";
+        String load = null;
+        try {
+            Runtime info = Runtime.getRuntime();
+            freeSize = info.freeMemory();
+            totalSize = info.totalMemory();
+            usedSize = totalSize - freeSize;
+
+            // totRam = totRam / 1024;
+
+            double mb = usedSize / 1024.0;
+            double gb = usedSize / 1048576.0;
+            double tb = usedSize / 1073741824.0;
+
+            if (tb > 1) {
+                lastValue = dformat.format(tb).concat(" TB");
+            } else if (gb > 1) {
+                lastValue = dformat.format(gb).concat(" GB");
+            } else if (mb > 1) {
+                lastValue = dformat.format(mb).concat(" MB");
+            } else {
+                lastValue = dformat.format(totCal).concat(" KB");
+            }
+
+            mem = "free=" + dformat.format(freeSize) + " byte / " + "total="
+                    + dformat.format(totalSize) + " byte / " + "used="
+                    + dformat.format(usedSize) + " byte";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lastValue;
+    }
+
 
     /**
      * METHOD THAT WILL EXTRACT THE TOTAL RAM SIZE OF THE DEVICE
@@ -268,10 +315,55 @@ public class MemoryUtils {
         long free = 0;
 
         total = getTotalMemory();
-        used = getAvailMemory(context);
+//        used = getAvailMemory(context);
+        used = getFreeMemorySize();
 
         free = total - used;
         return free;
+    }
+
+    public static long getFreeMemorySize() {
+
+        long size = -1L;
+        try {
+            Runtime info = Runtime.getRuntime();
+            size = info.freeMemory();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return size;
+    }
+
+    public void clearApplicationData(Context context) {
+        File cache = context.getCacheDir();
+        File appDir = new File(cache.getParent());
+        if (appDir.exists()) {
+            String[] children = appDir.list();
+            for (String s : children) {
+                if (!s.equals("lib")) {
+                    deleteDir(new File(appDir, s));
+                    Log.i("TAG", "**************** File /data/data/APP_PACKAGE/" + s + " DELETED *******************");
+                }
+            }
+        }
+    }
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+
+
+        return dir.delete();
+    }
+
+    public static void clearCache(Context context){
+        ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).clearApplicationUserData();
     }
 
 

@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <include android:id="@+id/toolbar"
-        layout="@layout/app_bar"/>
+        layout="@layout/toolbar"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,429 +21,750 @@
             android:orientation="vertical">
 
             <!-- OS VERSION -->
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="OS Version"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtOSVersion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="OS Version"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtOSVersion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="hdlfhlfh"
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:fontFamily="sans-serif-thin"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- VERSION RELEASE -->
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Version Release"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtOSVersionRelease"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:fontFamily="sans-serif-thin"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Version Release"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtOSVersionRelease"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- API LEVEL -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="API Level"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtAPILevel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="API Level"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtAPILevel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:fontFamily="sans-serif-thin"/>
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- DEVICE -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Device"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtDevice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Device"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtDevice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:fontFamily="sans-serif-thin"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- MODEL -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Model"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtDeviceModel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Model"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtDeviceModel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:fontFamily="sans-serif-thin"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- PRODUCT -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Product"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtDeviceProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Product"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtDeviceProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- BRAND -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Brand"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtDeviceBrand"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Brand"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtDeviceBrand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                </LinearLayout>
+
+
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- DISPLAY -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Display"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtDisplay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Display"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtDisplay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- CPU INFO 1 -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CPU ABI 1"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtCpuAbi1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="CPU ABI 1"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtCpuAbi1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="5dp"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-thin"/>-->
 
             <!-- CPU INFO 2 -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CPU ABI 2"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtCpuAbi2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="CPU ABI 2"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtCpuAbi2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- UNKNOWN -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Unknown"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtUnknown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Unknown"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtUnknown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+
+                </LinearLayout>
+
+
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- HARDWARE -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hardware"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtHardware"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hardware"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtHardware"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- ID -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ID"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ID"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- MANUFACTURER -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Manufacturer"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtManufacturer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Manufacturer"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtManufacturer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+
+                </LinearLayout>
+
+
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- SERIAL -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Serial"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtSerial"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Serial"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtSerial"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- USER -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="User"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtUser"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="User"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
             <!-- HOST -->
 
-            <TextView
+            <android.support.v7.widget.CardView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Host"
-                android:textSize="18sp"
-                android:padding="10dp"
-                android:textColor="@color/secondary_text"
-                android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/txtHost"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="16sp"
-                android:padding="10dp"
-                android:textColor="@color/colorAccent"
-                android:layout_marginTop="5dp"/>
-            <View
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Host"
+                        android:textSize="18sp"
+                        android:padding="10dp"
+                        android:textColor="@color/secondary_text"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+                    <TextView
+                        android:id="@+id/txtHost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="16sp"
+                        android:padding="10dp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="sans-serif-thin"/>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimary"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"/>-->
 
         </LinearLayout>
 

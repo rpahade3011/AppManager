@@ -1,10 +1,14 @@
-package com.appman.appmanager;
+package com.appman.appmanager.activities;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
+
+import com.appman.appmanager.R;
+
 
 /**
  * Created by rudhraksh.pahade on 02-12-2015.
@@ -26,10 +30,16 @@ public class DeviceInfo extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle(getString(R.string.action_device_info));
-        getSupportActionBar().setIcon(R.mipmap.ic_action_communication_stay_current_portrait);
+//        getSupportActionBar().setTitle(getString(R.string.action_device_info));
+//        getSupportActionBar().setIcon(R.mipmap.ic_action_communication_stay_current_portrait);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
-        font = Typeface.createFromAsset(getAssets(), "fonts/Avenir-Book.ttf");
+        //font = Typeface.createFromAsset(getAssets(), "fonts/Avenir-Book.ttf");
         findViewsById();
 
         displayDeviceInfo();
@@ -94,23 +104,11 @@ public class DeviceInfo extends AppCompatActivity {
         txtUser.setText(_USER);
         txtHost.setText(_HOST);
 
-        txtOSVersion.setTypeface(font);
-        txtVersionRelease.setTypeface(font);
-        txtApiLevel.setTypeface(font);
-        txtDevice.setTypeface(font);
-        txtModel.setTypeface(font);
-        txtProduct.setTypeface(font);
-        txtBrand.setTypeface(font);
-        txtDisplay.setTypeface(font);
-        txtCpuAbi1.setTypeface(font);
-        txtCpuAbi2.setTypeface(font);
-        txtUnknown.setTypeface(font);
-        txtHardware.setTypeface(font);
-        txtId.setTypeface(font);
-        txtManufacturer.setTypeface(font);
-        txtSerial.setTypeface(font);
-        txtUser.setTypeface(font);
-        txtHost.setTypeface(font);
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fade_forward, R.anim.slide_out_right);
     }
 }

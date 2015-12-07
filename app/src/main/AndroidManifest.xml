@@ -1,31 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.appman.appmanager">
 
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
-        android:name="com.appman.appmanager.utils.AppData"
         android:allowBackup="true"
         android:icon="@mipmap/hdd"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        android:theme="@style/AppManager"
+        tools:replace="android:theme"
+        android:name=".AppManagerApplication">
+    <activity
+        android:name=".activities.MainActivity"
+        android:label="@string/app_name" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".ApkInfo"
-            android:label="@string/title_activity_apk_list"/>
-        <activity android:name=".RamInfo"/>
-        <activity android:name=".DeviceInfo"
-            android:icon="@mipmap/ic_action_communication_stay_current_portrait"/>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.SEARCH" />
+        </intent-filter>
+
+        <meta-data
+            android:name="android.app.searchable"
+            android:resource="@xml/searchable" />
+    </activity>
+    <activity
+        android:name=".activities.AppActivity" />
+    <activity
+        android:name=".activities.SettingsActivity" />
+    <activity
+        android:name=".activities.AboutActivity" />
+    <activity
+        android:name=".activities.RamInfo" />
+    <activity android:name=".activities.DeviceInfo"/>
+    <activity android:name=".activities.LicenseActivity"/>
+    <activity android:name=".activities.ProcessActivity"/>
+    <activity android:name=".activities.MemoryInfoActivity"/>
+
+    <receiver android:name=".utils.BootUpReceiver"
+        android:enabled="true"
+        android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+        </intent-filter>
+    </receiver>
     </application>
 
 </manifest>
