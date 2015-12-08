@@ -6,6 +6,7 @@ import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.ComponentName;
 import android.content.Context;
+import android.os.Handler;
 import android.os.Process;
 import android.util.Log;
 
@@ -44,25 +45,34 @@ import java.util.regex.Pattern;
 public class MemoryUtils {
 
     //----------> The following several ways to kill the process.
+    public static long totalCleanMem;
+    public static long cleanMemory(final Context context) {
 
-    public static long cleanMemory(Context context) {
-        long beforeCleanMemory=getAvailMemory(context);
-        System.out.println("---> Clean up before the available memory size:"+beforeCleanMemory+"M");
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        RunningAppProcessInfo runningAppProcessInfo = null;
-        List<RunningAppProcessInfo> runningAppProcessInfoList = activityManager.getRunningAppProcesses();
-        for (int i = 0; i <runningAppProcessInfoList.size(); ++i) {
-            runningAppProcessInfo = runningAppProcessInfoList.get(i);
-            String processName = runningAppProcessInfo.processName;
-            //Method invocation kill process
-            System.out.println("---> Start cleaning:"+processName);
-            killProcessByRestartPackage(context, processName);
-        }
-        long afterCleanMemory=getAvailMemory(context);
-        System.out.println("---> The available memory size after cleaning:"+afterCleanMemory+"M");
-        System.out.println("---> Save the memory size:"+(afterCleanMemory-beforeCleanMemory)+"M");
-        long totalCleanMem = afterCleanMemory-beforeCleanMemory;
-        //editText.setText("A total clean-up:"+(afterCleanMemory-beforeCleanMemory)+"M");
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                //editText.setText("A total clean-up:"+(afterCleanMemory-beforeCleanMemory)+"M");
+                long beforeCleanMemory=getAvailMemory(context);
+                System.out.println("---> Clean up before the available memory size:"+beforeCleanMemory+"M");
+                ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                RunningAppProcessInfo runningAppProcessInfo = null;
+                List<RunningAppProcessInfo> runningAppProcessInfoList = activityManager.getRunningAppProcesses();
+                for (int i = 0; i <runningAppProcessInfoList.size(); ++i) {
+                    runningAppProcessInfo = runningAppProcessInfoList.get(i);
+                    String processName = runningAppProcessInfo.processName;
+                    //Method invocation kill process
+                    System.out.println("---> Start cleaning:"+processName);
+                    killProcessByRestartPackage(context, processName);
+                }
+                long afterCleanMemory=getAvailMemory(context);
+                System.out.println("---> The available memory size after cleaning:" + afterCleanMemory + "M");
+                System.out.println("---> Save the memory size:" + (afterCleanMemory - beforeCleanMemory) + "M");
+                totalCleanMem = afterCleanMemory-beforeCleanMemory;
+
+            }
+        };
+        thread.start();
         return totalCleanMem;
     }
 

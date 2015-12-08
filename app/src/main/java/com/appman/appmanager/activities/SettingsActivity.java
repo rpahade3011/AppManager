@@ -98,7 +98,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             public boolean onPreferenceClick(Preference preference) {
                 prefDeleteAll.setSummary(R.string.deleting);
                 prefDeleteAll.setEnabled(false);
-                Boolean deleteAll = UtilsApp.deleteAppFiles();
+                Boolean deleteAll = UtilsApp.deleteAppFiles(context);
                 if (deleteAll) {
                     prefDeleteAll.setSummary(R.string.deleting_done);
                 } else {
@@ -124,7 +124,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 final DirectoryChooserConfig chooserConfig = DirectoryChooserConfig.builder()
-                        .newDirectoryName("ML Manager APKs")
+                        .newDirectoryName("AppManager APKs")
                         .allowReadOnlyDirectory(false)
                         .allowNewDirectoryNameModification(true)
                         .initialDirectory(appPreferences.getCustomPath())

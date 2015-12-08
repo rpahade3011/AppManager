@@ -47,4 +47,9 @@ public class DeleteDataInBackground extends AsyncTask<Void, String, Boolean> {
             UtilsDialog.showTitleContent(context, context.getResources().getString(R.string.dialog_root_required), context.getResources().getString(R.string.dialog_root_required_description));
         }
     }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
 }

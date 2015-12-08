@@ -41,7 +41,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtOSVersion"
                         android:layout_width="match_parent"
@@ -81,7 +82,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtOSVersionRelease"
                         android:layout_width="match_parent"
@@ -121,7 +123,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtAPILevel"
                         android:layout_width="match_parent"
@@ -163,7 +166,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtDevice"
                         android:layout_width="match_parent"
@@ -204,7 +208,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtDeviceModel"
                         android:layout_width="match_parent"
@@ -247,7 +252,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtDeviceProduct"
                         android:layout_width="match_parent"
@@ -290,7 +296,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtDeviceBrand"
                         android:layout_width="match_parent"
@@ -336,7 +343,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtDisplay"
                         android:layout_width="match_parent"
@@ -380,7 +388,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtCpuAbi1"
                         android:layout_width="match_parent"
@@ -424,7 +433,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtCpuAbi2"
                         android:layout_width="match_parent"
@@ -468,7 +478,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtUnknown"
                         android:layout_width="match_parent"
@@ -515,7 +526,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtHardware"
                         android:layout_width="match_parent"
@@ -561,7 +573,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtID"
                         android:layout_width="match_parent"
@@ -606,7 +619,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtManufacturer"
                         android:layout_width="match_parent"
@@ -653,7 +667,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtSerial"
                         android:layout_width="match_parent"
@@ -698,7 +713,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtUser"
                         android:layout_width="match_parent"
@@ -743,7 +759,8 @@
                         android:padding="10dp"
                         android:textColor="@color/secondary_text"
                         android:layout_marginTop="5dp"
-                        android:fontFamily="sans-serif-thin"/>
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
                     <TextView
                         android:id="@+id/txtHost"
                         android:layout_width="match_parent"

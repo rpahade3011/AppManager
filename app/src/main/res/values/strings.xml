@@ -27,7 +27,7 @@
     <string name="search_noresults">No results were found for your search</string>
     <string name="copied_clipboard">Copied to clipboard</string>
     <string name="total_ram">Total RAM :</string>
-    <string name="available_ram">Available RAM :</string>
+    <string name="available_ram">Free RAM :</string>
 
     <!-- Messages -->
 
@@ -107,7 +107,7 @@
     <string name="settings_googleplus">Join me on Google+</string>
     <string name="settings_googleplus_description">Want to talk about APKs and keep abreast of developments in the application? Join to our community!</string>
     <string name="settings_license">Open Source licenses</string>
-    <string name="settings_about">Make in India</string>
+    <string name="settings_about">Made in India</string>
 
     <!-- Buttons -->
     <string name="button_extract">Extract</string>

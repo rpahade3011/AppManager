@@ -28,8 +28,10 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.appman.appmanager.AppInfo;
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
+import com.appman.appmanager.async.DeleteDataInBackground;
 import com.appman.appmanager.async.ExtractFileInBackground;
 import com.appman.appmanager.utils.AppPreferences;
+import com.appman.appmanager.utils.MemoryUtils;
 import com.appman.appmanager.utils.UtilsApp;
 import com.appman.appmanager.utils.UtilsDialog;
 import com.appman.appmanager.utils.UtilsUI;
@@ -163,8 +165,14 @@ public class AppActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     try {
-                        Intent intent = getPackageManager().getLaunchIntentForPackage(appInfo.getAPK());
-                        startActivity(intent);
+                        if (appInfo.getName().equalsIgnoreCase("AppManager")){
+                            UtilsDialog.showTitleContent(activity, "ERROR","This app can't be opened, because this app is already in its working state.");
+                        }
+                        else{
+                            Intent intent = getPackageManager().getLaunchIntentForPackage(appInfo.getAPK());
+                            startActivity(intent);
+                        }
+
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                         UtilsDialog.showSnackbar(activity, String.format(getResources().getString(R.string.dialog_cannot_open), appInfo.getName()), null, null, 2).show();
@@ -199,6 +207,7 @@ public class AppActivity extends AppCompatActivity {
                         , getResources().getString(R.string.dialog_cache_deleting_description));
                 new DeleteDataInBackground(context, dialog, appInfo.getData() + "/cache/**"
                         , getResources().getString(R.string.dialog_cache_success_description, appInfo.getName())).execute();
+//                MemoryUtils.clearCache(context);
             }
         });
         clearData.setVisibility(View.VISIBLE);
