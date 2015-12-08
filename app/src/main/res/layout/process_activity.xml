@@ -93,7 +93,8 @@
         android:id="@+id/progressBar"
         android:layout_below="@+id/app_card"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:visibility="gone">
     </com.gc.materialdesign.views.ProgressBarDeterminate>
     <LinearLayout
         android:id="@+id/lnrlytRunningPro"
@@ -117,21 +118,22 @@
             android:layout_marginRight="70dp"
             android:layout_marginEnd="70dp"/>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="10dp"
+            android:layout_height="28dp"
             android:id="@+id/txtViewRunningProcessCount"
             android:text="25"
             android:gravity="center"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/icons"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginRight="70dp"
             android:layout_marginEnd="30dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:textStyle="bold"
             android:fontFamily="sans-serif-thin"
-            android:background="@drawable/rounded_patch"/>
+            android:background="@drawable/thread_count_box_light" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
