@@ -24,14 +24,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-
 import com.appman.appmanager.AppInfo;
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
-import com.appman.appmanager.async.DeleteDataInBackground;
 import com.appman.appmanager.async.ExtractFileInBackground;
 import com.appman.appmanager.utils.AppPreferences;
-import com.appman.appmanager.utils.MemoryUtils;
 import com.appman.appmanager.utils.UtilsApp;
 import com.appman.appmanager.utils.UtilsDialog;
 import com.appman.appmanager.utils.UtilsUI;
@@ -79,7 +76,6 @@ public class AppActivity extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.setBackgroundColor(getResources().getColor(R.color.card_blue));
-            //getSupportActionBar().setBackgroundDrawable(new ColorDrawable("#00BED4"));
         }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,13 +86,11 @@ public class AppActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            getWindow().setStatusBarColor(UtilsUI.darker(appPreferences.getPrimaryColorPref(), 0.8));
             getWindow().setStatusBarColor(UtilsUI.darker(getResources().getColor(R.color.card_blue), 0.8));
 
-            //toolbar.setBackgroundColor(appPreferences.getPrimaryColorPref());
+
             toolbar.setBackgroundColor(getResources().getColor(R.color.card_blue));
             if (!appPreferences.getNavigationBlackPref()) {
-                //getWindow().setNavigationBarColor(appPreferences.getPrimaryColorPref());
                 getWindow().setNavigationBarColor(getResources().getColor(R.color.card_blue));
             }
         }
@@ -115,10 +109,7 @@ public class AppActivity extends AppCompatActivity {
         CardView uninstall = (CardView) findViewById(R.id.uninstall_card);
 //        CardView cache = (CardView) findViewById(R.id.cache_card);
 //        CardView clearData = (CardView) findViewById(R.id.clear_data_card);
-        //fab = (FloatingActionsMenu) findViewById(R.id.fab);
-//        FloatingActionButton fab_share = (FloatingActionButton) findViewById(R.id.fab_a);
-//        final FloatingActionButton fab_hide = (FloatingActionButton) findViewById(R.id.fab_b);
-//        FloatingActionButton fab_buy = (FloatingActionButton) findViewById(R.id.fab_buy);
+
 
         icon.setImageDrawable(appInfo.getIcon());
         name.setText(appInfo.getName());
@@ -126,14 +117,8 @@ public class AppActivity extends AppCompatActivity {
         version.setText(appInfo.getVersion());
 
         // Configure Colors
-        //header.setBackgroundColor(appPreferences.getPrimaryColorPref());
+
         header.setBackgroundColor(Color.parseColor("#00BED4"));
-//        fab_share.setColorNormal(appPreferences.getFABColorPref());
-//        fab_share.setColorPressed(UtilsUI.darker(appPreferences.getFABColorPref(), 0.8));
-//        fab_hide.setColorNormal(appPreferences.getFABColorPref());
-//        fab_hide.setColorPressed(UtilsUI.darker(appPreferences.getFABColorPref(), 0.8));
-//        fab_buy.setColorNormal(appPreferences.getFABColorPref());
-//        fab_buy.setColorPressed(UtilsUI.darker(appPreferences.getFABColorPref(), 0.8));
 
         // CardView
         if (appInfo.isSystem()) {
@@ -222,103 +207,6 @@ public class AppActivity extends AppCompatActivity {
             }
         });*/
 
-        /*if(UtilsRoot.isRooted() && AppManagerApplication.isPro()) {
-            if (appInfo.isSystem()) {
-                uninstall.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        MaterialDialog.Builder materialBuilder = UtilsDialog.showUninstall(context)
-                                .callback(new MaterialDialog.ButtonCallback() {
-                                    @Override
-                                    public void onPositive(MaterialDialog dialog) {
-                                        MaterialDialog dialogUninstalling = UtilsDialog.showTitleContentWithProgress(context
-                                                , String.format(getResources().getString(R.string.dialog_uninstalling), appInfo.getName())
-                                                , getResources().getString(R.string.dialog_uninstalling_description));
-                                        new UninstallInBackground(context, dialogUninstalling, appInfo).execute();
-                                        dialog.dismiss();
-                                    }
-                                });
-                        materialBuilder.show();
-                    }
-                });
-            }
-            cache.setVisibility(View.VISIBLE);
-            cache.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    MaterialDialog dialog = UtilsDialog.showTitleContentWithProgress(context
-                            , getResources().getString(R.string.dialog_cache_deleting)
-                            , getResources().getString(R.string.dialog_cache_deleting_description));
-                    new DeleteDataInBackground(context, dialog, appInfo.getData() + "/cache/**"
-                            , getResources().getString(R.string.dialog_cache_success_description, appInfo.getName())).execute();
-                }
-            });
-            clearData.setVisibility(View.VISIBLE);
-            clearData.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    MaterialDialog dialog = UtilsDialog.showTitleContentWithProgress(context
-                            , getResources().getString(R.string.dialog_clear_data_deleting)
-                            , getResources().getString(R.string.dialog_clear_data_deleting_description));
-                    new DeleteDataInBackground(context, dialog, appInfo.getData() + "/**"
-                            , getResources().getString(R.string.dialog_clear_data_success_description, appInfo.getName())).execute();
-                }
-            });
-        } else if (appInfo.isSystem()) {
-            uninstall.setVisibility(View.GONE);
-            uninstall.setForeground(null);
-        }*/
-
-        // FAB (Share)
-//        fab_share.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                UtilsApp.copyFile(appInfo);
-//                Intent shareIntent = UtilsApp.getShareIntent(UtilsApp.getOutputFilename(appInfo));
-//                startActivity(Intent.createChooser(shareIntent, String.format(getResources().getString(R.string.send_to), appInfo.getName())));
-//            }
-//        });
-
-        // FAB (Hide)
-        /*if (AppManagerApplication.isPro()) {
-            fab_buy.setVisibility(View.GONE);
-            if (UtilsRoot.isRooted()) {
-                UtilsApp.setAppHidden(context, fab_hide, UtilsApp.isAppHidden(appInfo, appsHidden));
-                fab_hide.setVisibility(View.VISIBLE);
-                fab_hide.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (UtilsApp.isAppHidden(appInfo, appsHidden)) {
-                            Boolean hidden = UtilsRoot.hideWithRootPermission(appInfo.getAPK(), true);
-                            if (hidden) {
-                                UtilsApp.removeIconFromCache(context, appInfo);
-                                appsHidden.remove(appInfo.toString());
-                                appPreferences.setHiddenApps(appsHidden);
-                                UtilsDialog.showSnackbar(activity, getResources().getString(R.string.dialog_reboot), getResources().getString(R.string.button_reboot), null, 3).show();
-                            }
-                        } else {
-                            UtilsApp.saveIconToCache(context, appInfo);
-                            Boolean hidden = UtilsRoot.hideWithRootPermission(appInfo.getAPK(), false);
-                            if (hidden) {
-                                appsHidden.add(appInfo.toString());
-                                appPreferences.setHiddenApps(appsHidden);
-                            }
-                        }
-                        UtilsApp.setAppHidden(context, fab_hide, UtilsApp.isAppHidden(appInfo, appsHidden));
-                    }
-                });
-            }
-        } else {
-            fab_buy.setVisibility(View.VISIBLE);
-            fab_buy.setTitle(context.getResources().getString(R.string.action_buy));
-            fab_buy.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    UtilsDialog.showProFeatures(context);
-                }
-            });
-        }*/
-
     }
 
     @Override
@@ -355,12 +243,6 @@ public class AppActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        if (fab.isExpanded()) {
-//            fab.collapse();
-//        } else {
-//            super.onBackPressed();
-//            overridePendingTransition(R.anim.fade_forward, R.anim.slide_out_right);
-//        }
         super.onBackPressed();
         overridePendingTransition(R.anim.fade_forward, R.anim.slide_out_right);
     }

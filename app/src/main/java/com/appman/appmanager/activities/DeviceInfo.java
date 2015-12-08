@@ -1,10 +1,12 @@
 package com.appman.appmanager.activities;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.appman.appmanager.R;
@@ -17,9 +19,8 @@ public class DeviceInfo extends AppCompatActivity {
 
     Toolbar toolbar;
     TextView txtOSVersion, txtVersionRelease, txtApiLevel, txtDevice, txtModel,
-    txtProduct, txtBrand, txtDisplay, txtCpuAbi1, txtCpuAbi2, txtUnknown, txtHardware, txtId, txtManufacturer, txtSerial, txtUser, txtHost;
-
-    Typeface font;
+    txtProduct, txtBrand, txtDisplay, txtCpuAbi1, txtCpuAbi2, txtHardware, txtId, txtManufacturer, txtSerial, txtUser, txtHost;
+    ScrollView scrollView;
 
 
     @Override
@@ -29,9 +30,7 @@ public class DeviceInfo extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        getSupportActionBar().setTitle(getString(R.string.action_device_info));
-//        getSupportActionBar().setIcon(R.mipmap.ic_action_communication_stay_current_portrait);
+        getSupportActionBar().setTitle(getResources().getString(R.string.action_device));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,13 +38,13 @@ public class DeviceInfo extends AppCompatActivity {
             }
         });
 
-        //font = Typeface.createFromAsset(getAssets(), "fonts/Avenir-Book.ttf");
         findViewsById();
 
         displayDeviceInfo();
     }
 
     private void findViewsById(){
+        scrollView = (ScrollView) findViewById (R.id.scrollDeviceInfo);
         txtOSVersion = (TextView) findViewById(R.id.txtOSVersion);
         txtVersionRelease = (TextView)findViewById(R.id.txtOSVersionRelease);
         txtApiLevel = (TextView)findViewById(R.id.txtAPILevel);
@@ -56,7 +55,6 @@ public class DeviceInfo extends AppCompatActivity {
         txtDisplay = (TextView)findViewById(R.id.txtDisplay);
         txtCpuAbi1 = (TextView)findViewById(R.id.txtCpuAbi1);
         txtCpuAbi2 = (TextView)findViewById(R.id.txtCpuAbi2);
-        txtUnknown = (TextView)findViewById(R.id.txtUnknown);
         txtHardware = (TextView)findViewById(R.id.txtHardware);
         txtId = (TextView)findViewById(R.id.txtID);
         txtManufacturer = (TextView)findViewById(R.id.txtManufacturer);
@@ -78,13 +76,15 @@ public class DeviceInfo extends AppCompatActivity {
         String _DISPLAY = android.os.Build.DISPLAY;
         String _CPU_ABI = android.os.Build.CPU_ABI;
         String _CPU_ABI2 = android.os.Build.CPU_ABI2;
-        String _UNKNOWN = android.os.Build.UNKNOWN;
         String _HARDWARE = android.os.Build.HARDWARE;
         String _ID = android.os.Build.ID;
         String _MANUFACTURER = android.os.Build.MANUFACTURER;
         String _SERIAL = android.os.Build.SERIAL;
         String _USER = android.os.Build.USER;
         String _HOST = android.os.Build.HOST;
+
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.card_animation);
+        scrollView.setAnimation(animation);
 
         txtOSVersion.setText(_OSVERSION);
         txtVersionRelease.setText(_RELEASE);
@@ -96,7 +96,6 @@ public class DeviceInfo extends AppCompatActivity {
         txtDisplay.setText(_DISPLAY);
         txtCpuAbi1.setText(_CPU_ABI);
         txtCpuAbi2.setText(_CPU_ABI2);
-        txtUnknown.setText(_UNKNOWN);
         txtHardware.setText(_HARDWARE);
         txtId.setText(_ID);
         txtManufacturer.setText(_MANUFACTURER);

@@ -12,23 +12,25 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
+        android:name=".AppManagerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/hdd"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppManager"
-        tools:replace="android:theme"
-        android:name=".AppManagerApplication">
+        tools:replace="android:theme">
     <activity
         android:name=".activities.MainActivity"
-        android:label="@string/app_name" >
+        android:configChanges="keyboardHidden|orientation"
+        android:label="@string/app_name">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         <intent-filter>
-            <action android:name="android.intent.action.SEARCH" />
+            <action android:name="android.intent.action.SEARCH"
+                android:configChanges="keyboardHidden|orientation"/>
         </intent-filter>
 
         <meta-data
@@ -44,18 +46,13 @@
     <activity
         android:name=".activities.RamInfo" />
     <activity android:name=".activities.DeviceInfo"/>
-    <activity android:name=".activities.LicenseActivity"/>
-    <activity android:name=".activities.ProcessActivity"/>
+        <activity android:name=".activities.ProcessActivity"/>
     <activity android:name=".activities.MemoryInfoActivity"/>
 
-    <!--<receiver android:name=".utils.BootUpReceiver"
-        android:enabled="true"
-        android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-        <intent-filter>
-            <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            <category android:name="android.intent.category.DEFAULT"/>
-        </intent-filter>
-    </receiver>-->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="fee6a286ef3615374dc431c85b45de6c947957e9" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

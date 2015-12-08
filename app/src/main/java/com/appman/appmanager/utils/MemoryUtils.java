@@ -6,7 +6,6 @@ import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.ComponentName;
 import android.content.Context;
-import android.os.Handler;
 import android.os.Process;
 import android.util.Log;
 
@@ -52,7 +51,6 @@ public class MemoryUtils {
             @Override
             public void run() {
                 super.run();
-                //editText.setText("A total clean-up:"+(afterCleanMemory-beforeCleanMemory)+"M");
                 long beforeCleanMemory=getAvailMemory(context);
                 System.out.println("---> Clean up before the available memory size:"+beforeCleanMemory+"M");
                 ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -61,9 +59,14 @@ public class MemoryUtils {
                 for (int i = 0; i <runningAppProcessInfoList.size(); ++i) {
                     runningAppProcessInfo = runningAppProcessInfoList.get(i);
                     String processName = runningAppProcessInfo.processName;
-                    //Method invocation kill process
-                    System.out.println("---> Start cleaning:"+processName);
-                    killProcessByRestartPackage(context, processName);
+                    if (processName.equals("com.appman.appmanager")){
+                        System.out.println("---> OWN PACKAGE:"+processName);
+
+                    }else {
+                        //Method invocation kill process
+                        System.out.println("---> Start cleaning:"+processName);
+                        killProcessByRestartPackage(context, processName);
+                    }
                 }
                 long afterCleanMemory=getAvailMemory(context);
                 System.out.println("---> The available memory size after cleaning:" + afterCleanMemory + "M");
@@ -344,19 +347,6 @@ public class MemoryUtils {
         return size;
     }
 
-    public void clearApplicationData(Context context) {
-        File cache = context.getCacheDir();
-        File appDir = new File(cache.getParent());
-        if (appDir.exists()) {
-            String[] children = appDir.list();
-            for (String s : children) {
-                if (!s.equals("lib")) {
-                    deleteDir(new File(appDir, s));
-                    Log.i("TAG", "**************** File /data/data/APP_PACKAGE/" + s + " DELETED *******************");
-                }
-            }
-        }
-    }
     public static boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
@@ -374,6 +364,20 @@ public class MemoryUtils {
 
     public static void clearCache(Context context){
         ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).clearApplicationUserData();
+    }
+
+    public void clearApplicationData(Context context) {
+        File cache = context.getCacheDir();
+        File appDir = new File(cache.getParent());
+        if (appDir.exists()) {
+            String[] children = appDir.list();
+            for (String s : children) {
+                if (!s.equals("lib")) {
+                    deleteDir(new File(appDir, s));
+                    Log.i("TAG", "**************** File /data/data/APP_PACKAGE/" + s + " DELETED *******************");
+                }
+            }
+        }
     }
 
 

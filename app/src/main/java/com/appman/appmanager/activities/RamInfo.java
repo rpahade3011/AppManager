@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.appman.appmanager.R;
 import com.appman.appmanager.utils.MemoryUtils;
 import com.gc.materialdesign.views.ButtonFlat;
@@ -25,7 +24,6 @@ public class RamInfo extends AppCompatActivity {
     Toolbar toolbar;
 
     TextView txtTotalRam, txtUsedRam, txtRamMsg;
-    //Button btnCleanRam;
     ButtonFlat btnCleanRam;
 
 
@@ -54,8 +52,6 @@ public class RamInfo extends AppCompatActivity {
         txtUsedRam = (TextView) findViewById(R.id.textViewUsedRam);
         txtRamMsg = (TextView) findViewById(R.id.txtViewRamMsg);
         btnCleanRam = (ButtonFlat) findViewById(R.id.buttonCleanRam);
-
-        //font = Typeface.createFromAsset(getAssets(), "fonts/Avenir-Book.ttf");
         getAvailableRam();
 
     }
@@ -81,7 +77,6 @@ public class RamInfo extends AppCompatActivity {
                 txtRamMsg.setTypeface(font);
             }
         });
-        //btnCleanRam.setTypeface(font);
         btnCleanRam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

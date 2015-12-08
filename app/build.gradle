@@ -1,4 +1,14 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 23
@@ -33,6 +43,7 @@ android {
 repositories {
     mavenCentral()
     maven { url 'http://guardian.github.com/maven/repo-releases' }
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 dependencies {
@@ -56,4 +67,7 @@ dependencies {
     compile('net.rdrei.android.dirchooser:library:3.0@aar') { transitive = true; }
     compile('com.mikepenz:aboutlibraries:5.2.1@aar') { transitive = true; }
     compile 'com.github.paolorotolo:appintro:3.3.0'
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
 }

@@ -24,12 +24,12 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-
 import com.appman.appmanager.AppInfo;
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
 import com.appman.appmanager.adapter.AppAdapter;
 import com.appman.appmanager.utils.AppPreferences;
+import com.appman.appmanager.utils.AppRater;
 import com.appman.appmanager.utils.UtilsApp;
 import com.appman.appmanager.utils.UtilsDialog;
 import com.appman.appmanager.utils.UtilsUI;
@@ -49,20 +49,18 @@ import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScrol
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private static final int MY_PERMISSIONS_REQUEST_WRITE_READ = 1;
-
+    private static VerticalRecyclerViewFastScroller fastScroller;
+    private static LinearLayout noResults;
     // Load Settings
     private AppPreferences appPreferences;
-
     // General variables
     private List<AppInfo> appList;
     private List<AppInfo> appSystemList;
     private List<AppInfo> appHiddenList;
-
     private AppAdapter appAdapter;
     private AppAdapter appSystemAdapter;
     private AppAdapter appFavoriteAdapter;
     private AppAdapter appHiddenAdapter;
-
     // Configuration variables
     private Boolean doubleBackToExitPressedOnce = false;
     private Toolbar toolbar;
@@ -74,13 +72,22 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private Drawer drawer;
     private MenuItem searchItem;
     private SearchView searchView;
-    private static VerticalRecyclerViewFastScroller fastScroller;
-    private static LinearLayout noResults;
+
+    public static void setResultsMessage(Boolean result) {
+        if (result) {
+            noResults.setVisibility(View.VISIBLE);
+            fastScroller.setVisibility(View.GONE);
+        } else {
+            noResults.setVisibility(View.GONE);
+            fastScroller.setVisibility(View.VISIBLE);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppRater.app_launched(this);
         this.appPreferences = AppManagerApplication.getAppPreferences();
         this.activity = this;
         this.context = this;
@@ -108,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         progressWheel.setVisibility(View.VISIBLE);
         new getInstalledApps().execute();
 
+
     }
 
     private void setInitialConfiguration() {
@@ -125,6 +133,119 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             if (!appPreferences.getNavigationBlackPref()) {
                 getWindow().setNavigationBarColor(appPreferences.getPrimaryColorPref());
             }
+        }
+    }
+
+    private void setPullToRefreshView(final PullToRefreshView pullToRefreshView) {
+        pullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                appAdapter.clear();
+                appSystemAdapter.clear();
+                appFavoriteAdapter.clear();
+                recyclerView.setAdapter(null);
+                new getInstalledApps().execute();
+
+                pullToRefreshView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        pullToRefreshView.setRefreshing(false);
+                    }
+                }, 2000);
+            }
+        });
+    }
+
+    private void checkAndAddPermissions(Activity activity) {
+        UtilsApp.checkPermissions(activity);
+    }
+
+    private void setAppDir() {
+        File appDir = UtilsApp.getAppFolder();
+        if(!appDir.exists()) {
+            appDir.mkdir();
+        }
+    }
+
+    private List<AppInfo> getFavoriteList(List<AppInfo> appList, List<AppInfo> appSystemList) {
+        List<AppInfo> res = new ArrayList<>();
+
+        for (AppInfo app : appList) {
+            if (UtilsApp.isAppFavorite(app.getAPK(), appPreferences.getFavoriteApps())) {
+                res.add(app);
+            }
+        }
+        for (AppInfo app : appSystemList) {
+            if (UtilsApp.isAppFavorite(app.getAPK(), appPreferences.getFavoriteApps())) {
+                res.add(app);
+            }
+        }
+
+        return res;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String search) {
+        if (search.isEmpty()) {
+            ((AppAdapter) recyclerView.getAdapter()).getFilter().filter("");
+            noResults.setVisibility(View.GONE);
+        } else {
+            ((AppAdapter) recyclerView.getAdapter()).getFilter().filter(search.toLowerCase());
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+
+        searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_WRITE_READ: {
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    UtilsDialog.showTitleContent(context, getResources().getString(R.string.dialog_permissions), getResources().getString(R.string.dialog_permissions_description));
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen()) {
+            drawer.closeDrawer();
+        } else if (searchItem.isVisible() && !searchView.isIconified()) {
+            searchView.onActionViewCollapsed();
+        } else {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, R.string.tap_exit, Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
         }
     }
 
@@ -265,128 +386,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             drawer = UtilsUI.setNavigationDrawer((Activity) context, context, toolbar, appAdapter, appSystemAdapter, appFavoriteAdapter, appHiddenAdapter, recyclerView);
         }
 
-    }
-
-    private void setPullToRefreshView(final PullToRefreshView pullToRefreshView) {
-        pullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                appAdapter.clear();
-                appSystemAdapter.clear();
-                appFavoriteAdapter.clear();
-                recyclerView.setAdapter(null);
-                new getInstalledApps().execute();
-
-                pullToRefreshView.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        pullToRefreshView.setRefreshing(false);
-                    }
-                }, 2000);
-            }
-        });
-    }
-
-    private void checkAndAddPermissions(Activity activity) {
-        UtilsApp.checkPermissions(activity);
-    }
-
-    private void setAppDir() {
-        File appDir = UtilsApp.getAppFolder();
-        if(!appDir.exists()) {
-            appDir.mkdir();
-        }
-    }
-
-    private List<AppInfo> getFavoriteList(List<AppInfo> appList, List<AppInfo> appSystemList) {
-        List<AppInfo> res = new ArrayList<>();
-
-        for (AppInfo app : appList) {
-            if (UtilsApp.isAppFavorite(app.getAPK(), appPreferences.getFavoriteApps())) {
-                res.add(app);
-            }
-        }
-        for (AppInfo app : appSystemList) {
-            if (UtilsApp.isAppFavorite(app.getAPK(), appPreferences.getFavoriteApps())) {
-                res.add(app);
-            }
-        }
-
-        return res;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String search) {
-        if (search.isEmpty()) {
-            ((AppAdapter) recyclerView.getAdapter()).getFilter().filter("");
-        } else {
-            ((AppAdapter) recyclerView.getAdapter()).getFilter().filter(search.toLowerCase());
-        }
-
-        return false;
-    }
-
-    public static void setResultsMessage(Boolean result) {
-        if (result) {
-            noResults.setVisibility(View.VISIBLE);
-            fastScroller.setVisibility(View.GONE);
-        } else {
-            noResults.setVisibility(View.GONE);
-            fastScroller.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-
-        searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setOnQueryTextListener(this);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        return true;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_WRITE_READ: {
-                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    UtilsDialog.showTitleContent(context, getResources().getString(R.string.dialog_permissions), getResources().getString(R.string.dialog_permissions_description));
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen()) {
-            drawer.closeDrawer();
-        } else if (searchItem.isVisible() && !searchView.isIconified()) {
-            searchView.onActionViewCollapsed();
-        } else {
-            if (doubleBackToExitPressedOnce) {
-                super.onBackPressed();
-                return;
-            }
-            this.doubleBackToExitPressedOnce = true;
-            Toast.makeText(this, R.string.tap_exit, Toast.LENGTH_SHORT).show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    doubleBackToExitPressedOnce = false;
-                }
-            }, 2000);
-        }
     }
 
 }

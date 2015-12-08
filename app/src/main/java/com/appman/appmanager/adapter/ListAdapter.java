@@ -6,9 +6,10 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 
 import com.appman.appmanager.R;
 
@@ -42,14 +43,13 @@ public class ListAdapter extends ArrayAdapter<ActivityManager.RunningAppProcessI
         View rowView = inflater.inflate(R.layout.process_info_list_item, parent, false);
 
         TextView appName = (TextView) rowView.findViewById(R.id.appNameText);
-//        appName.setText(values.get(position).processName);
-//        appName.setTextColor(Color.parseColor("#9E9E9E"));
         appName.setText(packagName);
         appName.setTextColor(Color.parseColor("#9E9E9E"));
         if (packagName.equals("com.appman.appmanager")){
             appName.setTextColor(Color.parseColor("#F44336"));
         }
-
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.card_animation);
+        rowView.setAnimation(animation);
         return rowView;
     }
 }

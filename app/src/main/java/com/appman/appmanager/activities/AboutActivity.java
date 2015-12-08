@@ -50,12 +50,9 @@ public class AboutActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            //getWindow().setStatusBarColor(UtilsUI.darker(appPreferences.getPrimaryColorPref(), 0.8));
             getWindow().setStatusBarColor(UtilsUI.darker(getResources().getColor(R.color.bkg_card), 0.8));
-            //toolbar.setBackgroundColor(appPreferences.getPrimaryColorPref());
             toolbar.setBackgroundColor(getResources().getColor(R.color.bkg_card));
             if (!appPreferences.getNavigationBlackPref()) {
-                //getWindow().setNavigationBarColor(appPreferences.getPrimaryColorPref());
                 getWindow().setNavigationBarColor(getResources().getColor(R.color.bkg_card));
             }
         }
@@ -72,7 +69,7 @@ public class AboutActivity extends AppCompatActivity {
 
         //header.setBackgroundColor(appPreferences.getPrimaryColorPref());
         header.setBackgroundColor(getResources().getColor(R.color.bkg_card));
-        appNameVersion.setText(getResources().getString(R.string.app_name) + " " + UtilsApp.getAppVersionName(getApplicationContext()));
+        appNameVersion.setText(getResources().getString(R.string.app_name) + " " + UtilsApp.getAppVersionName(getApplicationContext()) + "(" + UtilsApp.getAppVersionCode(getApplicationContext()) + ")");
 //        about_1.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

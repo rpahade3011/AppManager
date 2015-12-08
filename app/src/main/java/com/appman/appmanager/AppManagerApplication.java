@@ -3,6 +3,9 @@ package com.appman.appmanager;
 import android.app.Application;
 
 import com.appman.appmanager.utils.AppPreferences;
+import com.crashlytics.android.Crashlytics;
+
+import io.fabric.sdk.android.Fabric;
 
 
 /**
@@ -11,25 +14,15 @@ import com.appman.appmanager.utils.AppPreferences;
 public class AppManagerApplication extends Application{
     private static AppPreferences sAppPreferences;
 
-    @Override
-    public void onCreate() {
-        sAppPreferences = new AppPreferences(this);
-        super.onCreate();
-    }
-
     public static AppPreferences getAppPreferences() {
         return sAppPreferences;
     }
 
-    /**
-     * Retrieve ML Manager Pro
-     * @return true for ML Manager Pro, false otherwise
-
-    public static Boolean isPro() {
-        return false;
+    @Override
+    public void onCreate() {
+        sAppPreferences = new AppPreferences(this);
+        super.onCreate();
+        Fabric.with(this, new Crashlytics());
     }
 
-    public static String getProPackage() {
-        return "com.appman.appmanager";
-    }*/
 }

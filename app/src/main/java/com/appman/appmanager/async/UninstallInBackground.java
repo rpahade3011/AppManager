@@ -61,8 +61,6 @@ public class UninstallInBackground extends AsyncTask<Void, String, Boolean> {
                         }
                     });
             materialDialog.show();
-        } /*else {
-            UtilsDialog.showTitleContent(context, context.getResources().getString(R.string.dialog_root_required), context.getResources().getString(R.string.dialog_root_required_description));
-        }*/
+        }
     }
 }

@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
 import com.appman.appmanager.utils.AppPreferences;
@@ -33,8 +32,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     private Toolbar toolbar;
     private Context context;
 
-    private Preference prefVersion, prefLicense, prefDeleteAll, prefDefaultValues, prefNavigationBlack, prefCustomPath;
-    //private AmbilWarnaPreference prefPrimaryColor, prefFABColor;
+    private Preference prefVersion, prefDeleteAll, prefCustomPath;
+
     private ListPreference prefCustomFilename, prefSortMode;
     private DirectoryChooserFragment chooserDialog;
 
@@ -49,12 +48,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         prefs.registerOnSharedPreferenceChangeListener(this);
 
         prefVersion = findPreference("prefVersion");
-        prefLicense = findPreference("prefLicense");
-//        prefPrimaryColor = (AmbilWarnaPreference) findPreference("prefPrimaryColor");
-//        prefFABColor = (AmbilWarnaPreference) findPreference("prefFABColor");
         prefDeleteAll = findPreference("prefDeleteAll");
-        prefDefaultValues = findPreference("prefDefaultValues");
-        prefNavigationBlack = findPreference("prefNavigationBlack");
         prefCustomFilename = (ListPreference) findPreference("prefCustomFilename");
         prefSortMode = (ListPreference) findPreference("prefSortMode");
         prefCustomPath = findPreference("prefCustomPath");
@@ -73,15 +67,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                 return false;
             }
         });
-
-        /*prefLicense.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                startActivity(new Intent(context, LicenseActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.fade_back);
-                return false;
-            }
-        });*/
 
         // prefCustomFilename
         setCustomFilenameSummary();
@@ -109,15 +94,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             }
         });
 
-        // prefDefaultValues
-//        prefDefaultValues.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-//            @Override
-//            public boolean onPreferenceClick(Preference preference) {
-//                appPreferences.setPrimaryColorPref(getResources().getColor(R.color.primary));
-//                appPreferences.setFABColorPref(getResources().getColor(R.color.fab));
-//                return true;
-//            }
-//        });
 
         // prefCustomPath
         prefCustomPath.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -171,12 +147,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             }
         }
 
-        // Pre-Lollipop devices
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-//            prefPrimaryColor.setEnabled(false);
-//            prefNavigationBlack.setEnabled(false);
-//            prefNavigationBlack.setDefaultValue(true);
-//        }
     }
 
     private void setCustomFilenameSummary() {

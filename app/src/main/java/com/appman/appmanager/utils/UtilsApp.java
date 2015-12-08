@@ -16,8 +16,6 @@ import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 
-
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.appman.appmanager.AppInfo;
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;

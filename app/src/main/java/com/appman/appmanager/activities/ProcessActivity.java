@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
 import com.appman.appmanager.adapter.ListAdapter;
@@ -22,10 +21,9 @@ import java.util.List;
  */
 public class ProcessActivity extends ListActivity{
 
+    Context mContext;
     // Load Settings
     private AppPreferences appPreferences;
-
-    Context mContext;
     private ProgressWheel progressWheel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,8 +37,6 @@ public class ProcessActivity extends ListActivity{
         progressWheel.setVisibility(View.VISIBLE);
 
         new MemoryInfoInBackground().execute();
-
-
 
     }
 
@@ -59,7 +55,7 @@ public class ProcessActivity extends ListActivity{
                 setListAdapter(new ListAdapter(mContext, runningProcesses));
             } else {
                 // In case there are no processes running (not a chance :))
-                Toast.makeText(getApplicationContext(), "No application is running", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "There are no applications running", Toast.LENGTH_LONG).show();
             }
             return null;
         }

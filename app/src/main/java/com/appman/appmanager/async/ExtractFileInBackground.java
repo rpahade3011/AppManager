@@ -29,14 +29,6 @@ public class ExtractFileInBackground extends AsyncTask<Void, String, Boolean> {
         Boolean status = false;
         status = UtilsApp.copyFile(appInfo);
 
-        /*if (UtilsApp.checkPermissions(activity)) {
-            if (!appInfo.getAPK().equals(AppManagerApplication.getProPackage())) {
-                status = UtilsApp.copyFile(appInfo);
-            } else {
-                status = UtilsApp.extractMLManagerPro(context, appInfo);
-            }
-        }*/
-
         return status;
     }
 

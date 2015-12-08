@@ -12,13 +12,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-
 import com.appman.appmanager.AppInfo;
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
@@ -74,9 +75,6 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> i
         ButtonFlat appShare = appViewHolder.vShare;
         final ImageView appIcon = appViewHolder.vIcon;
         final CardView cardView = appViewHolder.vCard;
-
-//        appExtract.setBackgroundColor(appPreferences.getPrimaryColorPref());
-//        appShare.setBackgroundColor(appPreferences.getPrimaryColorPref());
 
         appExtract.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,7 +162,10 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> i
     @Override
     public AppViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View appAdapterView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.app_layout, viewGroup, false);
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.card_animation);
+        appAdapterView.setAnimation(animation);
         return new AppViewHolder(appAdapterView);
+
     }
 
     public static class AppViewHolder extends RecyclerView.ViewHolder {
