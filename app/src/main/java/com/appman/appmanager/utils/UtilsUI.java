@@ -40,7 +40,7 @@ public class UtilsUI {
         return Color.argb(a, Math.max((int) (r * factor), 0), Math.max((int) (g * factor), 0), Math.max((int) (b * factor), 0));
     }
 
-    public static Drawer setNavigationDrawer (Activity activity, final Context context, Toolbar toolbar, final AppAdapter appAdapter, final AppAdapter appSystemAdapter, final AppAdapter appFavoriteAdapter, final AppAdapter appHiddenAdapter, final RecyclerView recyclerView) {
+    public static Drawer setNavigationDrawer (final Activity activity, final Context context, final Toolbar toolbar, final AppAdapter appAdapter, final AppAdapter appSystemAdapter, final AppAdapter appFavoriteAdapter, final AppAdapter appHiddenAdapter, final RecyclerView recyclerView) {
         final String loadingLabel = "...";
         int header;
         AppPreferences appPreferences = AppManagerApplication.getAppPreferences();
@@ -129,12 +129,20 @@ public class UtilsUI {
                 switch (iDrawerItem.getIdentifier()) {
                     case 1:
                         recyclerView.setAdapter(appAdapter);
+                        toolbar.setTitle("Installed Apps");
                         break;
                     case 2:
                         recyclerView.setAdapter(appSystemAdapter);
+                        toolbar.setTitle("System Apps");
                         break;
                     case 3:
-                        recyclerView.setAdapter(appFavoriteAdapter);
+                        if (appFavoriteAdapter.getItemCount() == 0){
+                            UtilsDialog.showTitleContent(activity, "NO APPS", "You have not added any apps to your favorite list. Try adding some apps by selecting the star icon on app details and refresh your list by pulling down the screen. ");
+                        }
+                        else {
+                            recyclerView.setAdapter(appFavoriteAdapter);
+                            toolbar.setTitle("Favorite Apps");
+                        }
                         break;
                     case 4:
                         recyclerView.setAdapter(appHiddenAdapter);

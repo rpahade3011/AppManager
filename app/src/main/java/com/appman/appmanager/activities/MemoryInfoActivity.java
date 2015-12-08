@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.appman.appmanager.adapter.ListAdapter;
 import com.appman.appmanager.utils.AppPreferences;
 import com.appman.appmanager.utils.MemoryUtils;
 import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.views.ProgressBarDeterminate;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.List;
@@ -46,6 +48,7 @@ public class MemoryInfoActivity extends AppCompatActivity {
     private long usedRam;
     private long ramCleaned;
     private long calculationOfRam;
+    private ProgressBarDeterminate progressBarDeterminate;
 
     private String mem;
 
@@ -56,7 +59,7 @@ public class MemoryInfoActivity extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getString(R.string.action_ram));
-        getSupportActionBar().setIcon(R.mipmap.ic_action_hardware_memory);
+        //getSupportActionBar().setIcon(R.mipmap.ic_action_hardware_memory);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,12 +75,15 @@ public class MemoryInfoActivity extends AppCompatActivity {
         listProcess = (ListView) findViewById (R.id.listProcess);
         txtTotalRam = (TextView) findViewById(R.id.textViewTotalRam);
         txtUsedRam = (TextView) findViewById(R.id.textViewUsedRam);
+        progressBarDeterminate = (ProgressBarDeterminate) findViewById(R.id.progressBar);
 
         progressWheel.setBarColor(appPreferences.getPrimaryColorPref());
         progressWheel.setVisibility(View.VISIBLE);
         btnCleanRam = (ButtonFlat) findViewById(R.id.buttonCleanRam);
+        btnCleanRam.setHapticFeedbackEnabled(true);
 
         getAvailableRam();
+        showProgressbar();
 
         new MemoryInfoInBackground().execute();
 
@@ -112,6 +118,7 @@ public class MemoryInfoActivity extends AppCompatActivity {
         btnCleanRam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK);
                 clearMemory();
             }
         });
@@ -126,6 +133,21 @@ public class MemoryInfoActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "A total clean-up: " + ramCleaned + "M", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showProgressbar(){
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                progressBarDeterminate.setMax(100);
+//                totalRam = MemoryUtils.getTotalRAM();
+//                usedRam = MemoryUtils.getAvailMemory(mContext);
+
+                progressBarDeterminate.setProgress(1);
+            }
+        };
+        thread.start();
     }
 
     private void showUpdatedAvailableRam(){
@@ -168,7 +190,7 @@ public class MemoryInfoActivity extends AppCompatActivity {
                 progressWheel.setVisibility(View.GONE);
             } else {
                 // In case there are no processes running (not a chance :))
-                Toast.makeText(getApplicationContext(), "No application is running", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "No application are running", Toast.LENGTH_LONG).show();
             }
         }
     }

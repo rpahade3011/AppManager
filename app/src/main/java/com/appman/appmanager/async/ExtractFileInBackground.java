@@ -41,6 +41,11 @@ public class ExtractFileInBackground extends AsyncTask<Void, String, Boolean> {
     }
 
     @Override
+    protected void onCancelled() {
+        super.onCancelled();
+    }
+
+    @Override
     protected void onPostExecute(Boolean status) {
         super.onPostExecute(status);
         dialog.dismiss();

@@ -87,7 +87,14 @@
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
-
+    <com.gc.materialdesign.views.ProgressBarDeterminate
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_below="@+id/app_card"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </com.gc.materialdesign.views.ProgressBarDeterminate>
     <LinearLayout
         android:id="@+id/lnrlytRunningPro"
         android:layout_below="@+id/app_card"
@@ -158,7 +165,8 @@
             android:id="@+id/listProcess"
             android:padding="10dp"
             android:transcriptMode="alwaysScroll"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:layout_marginBottom="5dp">
 
         </ListView>
 
@@ -174,6 +182,7 @@
         android:layout_alignEnd="@+id/view"
         android:layout_alignLeft="@+id/view"
         android:layout_alignStart="@+id/view"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:hapticFeedbackEnabled="true"/>
 
 </RelativeLayout>

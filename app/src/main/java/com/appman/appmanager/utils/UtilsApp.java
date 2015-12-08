@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.appman.appmanager.AppInfo;
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
@@ -32,6 +33,7 @@ import java.util.Set;
 
 public class UtilsApp {
     private static final int MY_PERMISSIONS_REQUEST_WRITE_READ = 1;
+
 
     /**
      * Default folder where APKs will be saved
@@ -106,7 +108,8 @@ public class UtilsApp {
      * Delete all the extracted APKs
      * @return true if all files have been deleted, false otherwise
      */
-    public static Boolean deleteAppFiles() {
+    public static Boolean deleteAppFiles(Context context) {
+        //UtilsDialog.showTitleContent(context, "Confirm Delete", "Are you sure you want to delete all the files stored in the extracted folder ?");
         Boolean res = false;
         File f = getAppFolder();
         if (f.exists() && f.isDirectory()) {
@@ -119,6 +122,7 @@ public class UtilsApp {
             }
         }
         return res;
+
     }
 
     /**

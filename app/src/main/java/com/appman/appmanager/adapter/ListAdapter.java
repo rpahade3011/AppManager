@@ -35,14 +35,20 @@ public class ListAdapter extends ArrayAdapter<ActivityManager.RunningAppProcessI
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
+        final String packagName;
+        packagName = values.get(position).processName;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View rowView = inflater.inflate(R.layout.process_info_list_item, parent, false);
 
         TextView appName = (TextView) rowView.findViewById(R.id.appNameText);
-        appName.setText(values.get(position).processName);
+//        appName.setText(values.get(position).processName);
+//        appName.setTextColor(Color.parseColor("#9E9E9E"));
+        appName.setText(packagName);
         appName.setTextColor(Color.parseColor("#9E9E9E"));
+        if (packagName.equals("com.appman.appmanager")){
+            appName.setTextColor(Color.parseColor("#F44336"));
+        }
 
         return rowView;
     }
