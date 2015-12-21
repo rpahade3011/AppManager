@@ -60,9 +60,8 @@ public class RamInfo extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                totalRam = MemoryUtils.getTotalRAM();
+                totalRam = MemoryUtils.getAvailableRam(mContext);
                 usedRam = MemoryUtils.getAvailMemory(mContext);
-                calculationOfRam = MemoryUtils.calculateRam(mContext);
 
                 Log.i(TAG, "TOTAL RAM :- " + totalRam);
                 Log.i(TAG, "Available :- " + usedRam);

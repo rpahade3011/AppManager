@@ -43,8 +43,9 @@
         android:name=".activities.SettingsActivity" />
     <activity
         android:name=".activities.AboutActivity" />
-    <activity
-        android:name=".activities.RamInfo" />
+    <activity android:name=".activities.RamInfo" />
+        <activity android:name=".activities.StorageActivity"
+            android:label="Storage Details"/>
     <activity android:name=".activities.DeviceInfo"/>
         <activity android:name=".activities.ProcessActivity"/>
     <activity android:name=".activities.MemoryInfoActivity"/>
