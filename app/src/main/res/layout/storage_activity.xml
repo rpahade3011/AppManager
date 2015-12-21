@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
+
+        <!--<com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+            android:id="@+id/progressCirculer"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible"
+            wheel:matProg_barColor="@color/primary"
+            wheel:matProg_progressIndeterminate="true"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/card_blue"/>-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-thin"
+            android:text="60%"
+            android:textColor="@color/fab"
+            android:textSize="32sp" />
+
+
+
+    </RelativeLayout>
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/progress"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:visibility="gone"
+        wheel:matProg_barColor="@color/primary"
+        wheel:matProg_progressIndeterminate="true" />
+
+
+    <TextView
+        android:id="@+id/textViewTotalStorage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/relativeLayout"
+        android:layout_alignRight="@+id/relativeLayout"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:fontFamily="sans-serif-thin"
+        android:text="Total"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <TextView
+        android:id="@+id/textViewUsedStorage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/relativeLayout"
+        android:layout_marginEnd="37dp"
+        android:layout_marginRight="37dp"
+        android:layout_marginTop="37dp"
+        android:fontFamily="sans-serif-thin"
+        android:text="Used : "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/card_blue"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textViewFreeStorage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewUsedStorage"
+        android:layout_alignStart="@+id/textViewUsedStorage"
+        android:layout_below="@+id/textViewUsedStorage"
+        android:layout_marginTop="25dp"
+        android:fontFamily="sans-serif-thin"
+        android:text="Free :"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/card_red"
+        android:textStyle="bold"/>
+
+
+
+</RelativeLayout>

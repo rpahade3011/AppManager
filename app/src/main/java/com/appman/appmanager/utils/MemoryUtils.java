@@ -7,18 +7,14 @@ import android.app.ActivityManager.RunningTaskInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Process;
+import android.text.format.Formatter;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.RandomAccessFile;
-import java.text.DecimalFormat;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by rudhraksh.pahade on 02-12-2015.
@@ -51,7 +47,7 @@ public class MemoryUtils {
             @Override
             public void run() {
                 super.run();
-                long beforeCleanMemory=getAvailMemory(context);
+                long beforeCleanMemory = getAvailMemory(context);
                 System.out.println("---> Clean up before the available memory size:"+beforeCleanMemory+"M");
                 ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
                 RunningAppProcessInfo runningAppProcessInfo = null;
@@ -192,7 +188,7 @@ public class MemoryUtils {
 
 
 
-    //Gets the total size of memory
+    /*//Gets the total size of memory
     public static long getTotalMemory() {
         // Memory file system
         String filePath = "/proc/meminfo";
@@ -212,7 +208,7 @@ public class MemoryUtils {
         } catch (IOException e) {
         }
         return totalMemory / 1024;
-    }
+    }*/
 
 
 
@@ -226,53 +222,11 @@ public class MemoryUtils {
         return availMemory;
     }
 
-    public static String getMemorySizeStrings() {
-
-        DecimalFormat dformat = new DecimalFormat("#.##");
-        String mem = null;
-        long freeSize = 0L;
-        long totalSize = 0L;
-        long usedSize = 0L;
-        double totCal = 0;
-        String lastValue = "";
-        String load = null;
-        try {
-            Runtime info = Runtime.getRuntime();
-            freeSize = info.freeMemory();
-            totalSize = info.totalMemory();
-            usedSize = totalSize - freeSize;
-
-            // totRam = totRam / 1024;
-
-            double mb = usedSize / 1024.0;
-            double gb = usedSize / 1048576.0;
-            double tb = usedSize / 1073741824.0;
-
-            if (tb > 1) {
-                lastValue = dformat.format(tb).concat(" TB");
-            } else if (gb > 1) {
-                lastValue = dformat.format(gb).concat(" GB");
-            } else if (mb > 1) {
-                lastValue = dformat.format(mb).concat(" MB");
-            } else {
-                lastValue = dformat.format(totCal).concat(" KB");
-            }
-
-            mem = "free=" + dformat.format(freeSize) + " byte / " + "total="
-                    + dformat.format(totalSize) + " byte / " + "used="
-                    + dformat.format(usedSize) + " byte";
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lastValue;
-    }
-
 
     /**
      * METHOD THAT WILL EXTRACT THE TOTAL RAM SIZE OF THE DEVICE
      * @return
-     */
+
     public static String getTotalRAM() {
 
         RandomAccessFile reader = null;
@@ -320,31 +274,34 @@ public class MemoryUtils {
         }
 
         return lastValue;
+    }*/
+
+    // Total Ram
+    public static String getTotalMemory(Context ctx){
+        ActivityManager actManager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+        actManager.getMemoryInfo(memInfo);
+        long totalMemory = memInfo.totalMem;
+        return Formatter.formatFileSize(ctx, totalMemory);
     }
 
-    public static long calculateRam(Context context){
-        long total = 0;
-        long used = 0;
-        long free = 0;
-
-        total = getTotalMemory();
-//        used = getAvailMemory(context);
-        used = getFreeMemorySize();
-
-        free = total - used;
-        return free;
+    // Available Ram
+    public static String getAvailableRam(Context ctx){
+        ActivityManager actManager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+        actManager.getMemoryInfo(memInfo);
+        long availableMem = memInfo.availMem;
+        return Formatter.formatFileSize(ctx, availableMem);
     }
-
-    public static long getFreeMemorySize() {
-
-        long size = -1L;
-        try {
-            Runtime info = Runtime.getRuntime();
-            size = info.freeMemory();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return size;
+    // Used Memory
+    public static String getUsedRam(Context ctx){
+        ActivityManager actManager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+        actManager.getMemoryInfo(memInfo);
+        long totalMemory = memInfo.totalMem;
+        long availableMem = memInfo.availMem;
+        long usedMemory = totalMemory - availableMem;
+        return Formatter.formatFileSize(ctx, usedMemory);
     }
 
     public static boolean deleteDir(File dir) {

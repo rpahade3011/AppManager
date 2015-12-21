@@ -7,12 +7,12 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
 import com.appman.appmanager.adapter.ListAdapter;
@@ -32,7 +32,7 @@ public class MemoryInfoActivity extends AppCompatActivity {
     private static final String TAG = MemoryInfoActivity.class.getSimpleName();
     Toolbar toolbar;
     Context mContext;
-    TextView txtTotalRam, txtUsedRam;
+    TextView txtTotalRam;
     List<ActivityManager.RunningAppProcessInfo> runningProcesses;
     ButtonFlat btnCleanRam;
     // Load Settings
@@ -42,12 +42,8 @@ public class MemoryInfoActivity extends AppCompatActivity {
     private ListView listProcess;
     private Integer totalRunningApps;
     private String totalRam;
-    private long usedRam;
     private long ramCleaned;
-    private long calculationOfRam;
     private ProgressBarDeterminate progressBarDeterminate;
-
-    private String mem;
     private Vibrator mVibrator;
 
     @Override
@@ -71,7 +67,6 @@ public class MemoryInfoActivity extends AppCompatActivity {
         progressWheel = (ProgressWheel) findViewById(R.id.progress);
         listProcess = (ListView) findViewById (R.id.listProcess);
         txtTotalRam = (TextView) findViewById(R.id.textViewTotalRam);
-        txtUsedRam = (TextView) findViewById(R.id.textViewUsedRam);
         progressBarDeterminate = (ProgressBarDeterminate) findViewById(R.id.progressBar);
 
         progressWheel.setBarColor(appPreferences.getPrimaryColorPref());
@@ -81,70 +76,131 @@ public class MemoryInfoActivity extends AppCompatActivity {
 
 
         getAvailableRam();
-        showProgressbar();
 
-        new MemoryInfoInBackground().execute();
+        new LoadProcessesInBackground().execute();
 
     }
 
+    /**
+     * THIS WILL LOAD THE TOTAL AND USED RAM FROM {@link MemoryUtils}
+     * AND UPDATE THE TEXT ACCORDINGLY
+     */
+
     private void getAvailableRam(){
-        runOnUiThread(new Runnable() {
+
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                totalRam = MemoryUtils.getTotalRAM();
-                usedRam = MemoryUtils.getAvailMemory(mContext);
-                calculationOfRam = MemoryUtils.calculateRam(mContext);
-                mem = MemoryUtils.getMemorySizeStrings();
-
-                Log.i(TAG, "TOTAL RAM :- " + totalRam);
-                Log.i(TAG, "Available :- " + usedRam);
-                Log.i(TAG, "FREE RAM :- " + calculationOfRam);
-                Log.i(TAG, "MEM STRING :- "+mem);
-
-                txtTotalRam.setText(getString(R.string.total_ram) + " " + totalRam);
-
-
-                txtUsedRam.setText(getString(R.string.available_ram) + " " + usedRam + " " + "M");
+                try{
+                    totalRam = MemoryUtils.getTotalMemory(mContext);
+                    String usedRam = MemoryUtils.getUsedRam(mContext);
+                    txtTotalRam.setText(usedRam + " / " + totalRam);
+                    showRamProgressBar(mContext);
+                }
+                catch (RuntimeException re){
+                    re.getMessage().toString();
+                }catch (Exception e){
+                    e.getMessage().toString();
+                }
 
             }
         });
+        t.start();
 
+        /**
+         * WHEN USER CLICKS ON THE CLEAR MEMORY BUTTON
+         */
         btnCleanRam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showConfimationDialog();
+
+            }
+        });
+    }
+
+    private void showConfimationDialog(){
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(MemoryInfoActivity.this);
+        builder.title("WARNING");
+        builder.content(getString(R.string.ram_clear_message));
+        builder.negativeText("Cancel");
+        builder.positiveText("OK");
+        builder.negativeColor(getResources().getColor(R.color.colorPrimary));
+        builder.positiveColor(getResources().getColor(R.color.card_blue));
+        builder.callback(new MaterialDialog.ButtonCallback() {
+            @Override
+            public void onPositive(MaterialDialog dialog) {
+                super.onPositive(dialog);
                 mVibrator.vibrate(100);
                 clearMemory();
             }
         });
+        builder.show();
     }
+
+    /**
+     * THIS METHOD WILL CLEAR THE BACKGROUND RUNNING PROCESSES
+     * BY CALLING {@link MemoryUtils}
+     */
 
     private void clearMemory(){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ramCleaned = MemoryUtils.cleanMemory(mContext);
-                showUpdatedAvailableRam();
-                Toast.makeText(mContext, "A total clean-up: " + ramCleaned + "M", Toast.LENGTH_SHORT).show();
+                try {
+                    ramCleaned = MemoryUtils.cleanMemory(mContext);
+                    showUpdatedAvailableRam();
+                    Toast.makeText(mContext, "A total clean-up: " + ramCleaned + "M", Toast.LENGTH_SHORT).show();
+                } catch (RuntimeException re) {
+                    re.getMessage().toString();
+                } catch (Exception e) {
+                    e.getMessage().toString();
+                }
+
             }
         });
     }
 
-    private void showProgressbar(){
-        Thread thread = new Thread(){
+    /**
+     * THIS METHOD WILL UPDATE THE PROGRESS BAR ACCCORDING THE USAGE OF RAM.
+     * @param ctx
+     */
+
+    private void showRamProgressBar(final Context ctx){
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                super.run();
-                progressBarDeterminate.setMax(100);
-                progressBarDeterminate.setProgress(1);
+                try{
+                    ActivityManager actManager = (ActivityManager) ctx.getSystemService(ACTIVITY_SERVICE);
+                    ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+                    actManager.getMemoryInfo(memInfo);
+                    long totalMemory = memInfo.totalMem;
+                    long availableMem = memInfo.availMem;
+                    int result = (int)totalMemory - (int) availableMem;
+
+                    if (null != progressBarDeterminate){
+                        progressBarDeterminate.setMax((int) totalMemory);
+                        progressBarDeterminate.setProgress(result);
+                    }
+
+                }catch (RuntimeException re){
+                    re.getMessage().toString();
+                }catch (Exception e){
+                    e.getMessage().toString();
+                }
+
             }
-        };
+        });
         thread.start();
     }
 
+    /**
+     * AFTER DELETING THE BACKGROUND APPS, THIS METHOD IS CALLED TO
+     * AGAIN UPDATE THE CONTENTS AND DISPLAY THE PROGRESS BAR
+     */
+
     private void showUpdatedAvailableRam(){
-        usedRam = MemoryUtils.getAvailMemory(getApplicationContext());
-        txtUsedRam.setText(getString(R.string.available_ram) + " " + usedRam + " " + "M");
-        new MemoryInfoInBackground().execute();
+        new LoadProcessesInBackground().execute();
     }
 
     @Override
@@ -153,7 +209,12 @@ public class MemoryInfoActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fade_forward, R.anim.slide_out_right);
     }
 
-    public class MemoryInfoInBackground extends AsyncTask<Void, String, Void> {
+    /**
+     * PRIVATE INNER CLASS THAT WILL PERFORM THE OPERATION TO SEARCH FOR RUNNING
+     * BACKGROUND TAKS OF RAM
+     */
+
+    public class LoadProcessesInBackground extends AsyncTask<Void, String, Void> {
 
         private Integer actualApps = 0;
 
@@ -187,6 +248,7 @@ public class MemoryInfoActivity extends AppCompatActivity {
                 listProcess.setVisibility(View.VISIBLE);
                 listProcess.setAdapter(new ListAdapter(mContext, runningProcesses));
                 progressWheel.setVisibility(View.GONE);
+                getAvailableRam();
 
             } else {
                 // In case there are no processes running (not a chance :))

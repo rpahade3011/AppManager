@@ -168,10 +168,15 @@ public class AppActivity extends AppCompatActivity {
             uninstall.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
-                    intent.setData(Uri.parse("package:" + appInfo.getAPK()));
-                    intent.putExtra(Intent.EXTRA_RETURN_RESULT, true);
-                    startActivityForResult(intent, UNINSTALL_REQUEST_CODE);
+                    if (appInfo.getName().equalsIgnoreCase("AppManager")){
+                        UtilsDialog.showTitleContent(activity, "UNINSTALL ERROR","This app can't be uninstalled, because this app is in its working state. Try uninstalling manually.");
+                    }else{
+                        Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+                        intent.setData(Uri.parse("package:" + appInfo.getAPK()));
+                        intent.putExtra(Intent.EXTRA_RETURN_RESULT, true);
+                        startActivityForResult(intent, UNINSTALL_REQUEST_CODE);
+                    }
+
                 }
             });
         }

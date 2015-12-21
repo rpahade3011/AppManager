@@ -48,6 +48,7 @@
     <activity android:name=".activities.DeviceInfo"/>
         <activity android:name=".activities.ProcessActivity"/>
     <activity android:name=".activities.MemoryInfoActivity"/>
+        <activity android:name=".activities.StorageActivity"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
