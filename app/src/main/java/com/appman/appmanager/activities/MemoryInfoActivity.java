@@ -8,6 +8,8 @@ import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +47,7 @@ public class MemoryInfoActivity extends AppCompatActivity {
     private long ramCleaned;
     private ProgressBarDeterminate progressBarDeterminate;
     private Vibrator mVibrator;
+    Animation animator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,7 @@ public class MemoryInfoActivity extends AppCompatActivity {
         progressWheel.setVisibility(View.VISIBLE);
         btnCleanRam = (ButtonFlat) findViewById(R.id.buttonCleanRam);
         mVibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+        animator = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_forward);
 
 
         getAvailableRam();
@@ -95,6 +99,7 @@ public class MemoryInfoActivity extends AppCompatActivity {
                     totalRam = MemoryUtils.getTotalMemory(mContext);
                     String usedRam = MemoryUtils.getUsedRam(mContext);
                     txtTotalRam.setText(usedRam + " / " + totalRam);
+                    txtTotalRam.setAnimation(animator);
                     showRamProgressBar(mContext);
                 }
                 catch (RuntimeException re){

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/about_libraries_card">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
+
+        <com.appman.appmanager.progressbars.CircularProgressBar
+            android:id="@+id/progressCirculer"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="visible"
+            app:background_progressbar_color="#FFCDD2"
+            app:background_progressbar_width="5dp"
+            app:progressbar_color="#F44336"
+            app:progressbar_width="10dp"
+            wheel:circle_progress="0"
+            wheel:circle_max="100"
+
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"/>
+        <TextView
+            android:id="@+id/txtStoragePercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:fontFamily="sans-serif-thin"
+            android:text="60%"
+            android:textColor="@color/fab"
+            android:textSize="32sp"
+            android:visibility="gone"/>
+
+
+
+    </RelativeLayout>
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+        android:id="@+id/progress"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:visibility="gone"
+        wheel:matProg_barColor="@color/primary"
+        wheel:matProg_progressIndeterminate="true" />
+
+
+    <TextView
+        android:id="@+id/textViewTotalStorage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-thin"
+        android:text="Total"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_toRightOf="@+id/progress"
+        android:layout_toEndOf="@+id/progress"
+        android:layout_marginLeft="25dp"
+        android:textColor="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/textViewUsedStorage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/relativeLayout"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="37dp"
+        android:fontFamily="sans-serif-thin"
+        android:text="Used : "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/card_blue"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/textViewFreeStorage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewUsedStorage"
+        android:layout_alignStart="@+id/textViewUsedStorage"
+        android:layout_below="@+id/textViewUsedStorage"
+        android:layout_marginTop="25dp"
+        android:fontFamily="sans-serif-thin"
+        android:text="Free :"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/card_red"
+        android:textStyle="bold"/>
+
+
+
+</RelativeLayout>

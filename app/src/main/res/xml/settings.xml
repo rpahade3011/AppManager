@@ -55,4 +55,5 @@
             android:title="@string/app_name"
             android:summary="@string/settings_about" />
     </PreferenceCategory>
+
 </PreferenceScreen>

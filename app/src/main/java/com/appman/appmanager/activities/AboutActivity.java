@@ -9,12 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
 import com.appman.appmanager.utils.AppPreferences;
 import com.appman.appmanager.utils.UtilsApp;
 import com.appman.appmanager.utils.UtilsUI;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 
 public class AboutActivity extends AppCompatActivity {
@@ -33,6 +36,7 @@ public class AboutActivity extends AppCompatActivity {
 
         setInitialConfiguration();
         setScreenElements();
+        loadAdMob();
 
     }
 
@@ -94,6 +98,14 @@ public class AboutActivity extends AppCompatActivity {
 //                UtilsApp.goToGooglePlus(context, "109312616470328191163");
 //            }
 //        });
+    }
+
+    private void loadAdMob(){
+        Toast.makeText(context, "Inside AdMob", Toast.LENGTH_SHORT).show();
+        // Load an ad into the AdMob banner view.
+        AdView adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     @Override

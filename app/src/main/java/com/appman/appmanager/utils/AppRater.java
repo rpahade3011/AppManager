@@ -4,16 +4,21 @@ package com.appman.appmanager.utils;
  * Created by rudhraksh.pahade on 08-12-2015.
  */
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.appman.appmanager.R;
+import com.gc.materialdesign.views.ButtonFlat;
 
 
 /**
@@ -22,12 +27,13 @@ import android.widget.TextView;
  * Found at: http://www.androidsnippets.com/prompt-engaged-users-to-rate-your-app-in-the-android-market-appirater
  * @author Sissi @ http://www.androidsnippets.com/
  */
-public class AppRater {
+public class AppRater{
 
     private final static String APP_TITLE = "AppManager";
     private final static String APP_PNAME = "com.appman.appmanager";
     private final static int DAYS_UNTIL_PROMPT = 3;
     private final static int LAUNCHES_UNTIL_PROMPT = 7;
+
 
     public static void app_launched(Context mContext) {
 
@@ -62,19 +68,16 @@ public class AppRater {
     public static void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
         final Dialog dialog = new Dialog(mContext);
         dialog.setTitle("Rate " + APP_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.apprater_activity);
 
-        LinearLayout ll = new LinearLayout(mContext);
-        ll.setOrientation(LinearLayout.VERTICAL);
+        final ButtonFlat btnRateMe = (ButtonFlat) dialog.findViewById(R.id.buttonRateApp);
+        final ButtonFlat btnRemindLater = (ButtonFlat) dialog.findViewById(R.id.buttonRemindLater);
+        final ButtonFlat btnNoThanks = (ButtonFlat)dialog.findViewById(R.id.buttonNoThanks);
 
-        TextView tv = new TextView(mContext);                              // TODO: strings
-        tv.setText("If you enjoy using " + APP_TITLE + ", please take a moment to rate it. Thanks for your support!");
-        tv.setWidth(240);
-        tv.setPadding(4, 0, 4, 10);
-        ll.addView(tv);
-
-        Button b1 = new Button(mContext);
-        b1.setText("Rate " + APP_TITLE);
-        b1.setOnClickListener(new View.OnClickListener() {
+        // Button Rate Clicked
+        btnRateMe.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 try{
                     mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
@@ -85,20 +88,16 @@ public class AppRater {
                 dialog.dismiss();
             }
         });
-        ll.addView(b1);
-
-        Button b2 = new Button(mContext);
-        b2.setText("Remind me later");
-        b2.setOnClickListener(new View.OnClickListener() {
+        // Button Remind Later Clicked
+        btnRemindLater.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        ll.addView(b2);
-
-        Button b3 = new Button(mContext);
-        b3.setText("No, thanks");
-        b3.setOnClickListener(new View.OnClickListener() {
+        // Button No Thanks Clicked
+        btnNoThanks.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 if (editor != null) {
                     editor.putBoolean("dontshowagain", true);
@@ -107,9 +106,6 @@ public class AppRater {
                 dialog.dismiss();
             }
         });
-        ll.addView(b3);
-
-        dialog.setContentView(ll);
         dialog.show();
     }
 }

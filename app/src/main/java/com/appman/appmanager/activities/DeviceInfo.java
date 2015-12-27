@@ -8,8 +8,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appman.appmanager.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 
 /**
@@ -41,6 +44,7 @@ public class DeviceInfo extends AppCompatActivity {
         findViewsById();
 
         displayDeviceInfo();
+        loadAdMob();
     }
 
     private void findViewsById(){
@@ -103,6 +107,14 @@ public class DeviceInfo extends AppCompatActivity {
         txtUser.setText(_USER);
         txtHost.setText(_HOST);
 
+    }
+
+    private void loadAdMob(){
+        Toast.makeText(getApplicationContext(), "Inside AdMob", Toast.LENGTH_SHORT).show();
+        // Load an ad into the AdMob banner view.
+        AdView adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 
     @Override

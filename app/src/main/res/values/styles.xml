@@ -163,4 +163,10 @@
         <item name="progress_unreached_bar_height">0.75dp</item>
     </style>
 
+    <style name="customRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_custom_bar</item>
+
+    </style>
+
+
 </resources>

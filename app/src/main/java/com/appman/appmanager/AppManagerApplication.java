@@ -1,6 +1,7 @@
 package com.appman.appmanager;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.appman.appmanager.utils.AppPreferences;
 import com.crashlytics.android.Crashlytics;

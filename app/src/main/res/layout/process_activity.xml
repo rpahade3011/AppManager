@@ -75,7 +75,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/app_card"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:background="@drawable/edittext_drawable"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,14 +111,6 @@
             android:textColor="@color/icons"
             android:textStyle="bold" />
     </LinearLayout>
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/lnrlytRunningPro"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@color/colorPrimary"/>
     <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/progress"
         android:layout_width="80dp"
@@ -141,7 +136,8 @@
             android:layout_marginBottom="5dp"
             android:padding="10dp"
             android:transcriptMode="alwaysScroll"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:scrollbarStyle="insideOverlay">
 
         </ListView>
 
@@ -150,14 +146,14 @@
         android:id="@+id/buttonCleanRam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/view"
-        android:layout_alignLeft="@+id/view"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/view"
-        android:layout_alignStart="@+id/view"
         android:layout_marginTop="5dp"
         android:background="@color/colorPrimary"
         android:hapticFeedbackEnabled="true"
-        android:text="@string/clean_ram"/>
+        android:text="@string/clean_ram"
+        android:layout_alignRight="@+id/app_card"
+        android:layout_alignEnd="@+id/app_card"
+        android:layout_toRightOf="@+id/progress"
+        android:layout_toEndOf="@+id/progress" />
 
 </RelativeLayout>

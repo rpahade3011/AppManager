@@ -17,6 +17,7 @@
     <string name="action_ram_description">Clean memory</string>
     <string name="action_device">Device Info</string>
     <string name="action_storage">Storage</string>
+    <string name="action_sms">SMS</string>
     <string name="action_processes_info">Processes Info</string>
     <string name="send_to">Send \"%s\" using</string>
     <string name="deleting">Deleting&#8230;</string>
@@ -31,6 +32,8 @@
     <string name="available_ram">Free RAM :</string>
     <string name="ram_status">RAM Status</string>
     <string name="ram_calculation">3.84Gb / 10.46GB</string>
+    <string name="ad_mob_banner_id">ca-app-pub-5293031144790539/2510067801</string>
+    <string name="ad_mob_interstitial_id">ca-app-pub-5293031144790539/3986801004</string>
 
     <!-- Messages -->
 
@@ -44,7 +47,6 @@
         If you clear the memory manually,
         applications may take longer to launch.
     </string>
-
 
 
     <!-- Transitions -->
@@ -127,5 +129,13 @@
     <string name="about_description_2">Icon Designer</string>
 
     <!-- Toasts -->
-    <string name="tap_exit">Press back again to exit the app</string>
+    <string name="tap_exit">Press back again to exit</string>
+    <string name="title_activity_ad_mob_banner">AdMobBannerActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <!-- -
+        This is an ad unit ID for a banner test ad. Replace with your own banner ad unit id.
+        For more information, see https://support.google.com/admob/answer/3052638
+    <!- -->
+    <string name="banner_ad_unit_id">ca-app-pub-5293031144790539/2510067801</string>
 </resources>

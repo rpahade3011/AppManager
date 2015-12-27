@@ -14,6 +14,7 @@ import com.appman.appmanager.activities.AboutActivity;
 import com.appman.appmanager.activities.DeviceInfo;
 import com.appman.appmanager.activities.MemoryInfoActivity;
 import com.appman.appmanager.activities.SettingsActivity;
+import com.appman.appmanager.activities.SmsActivity;
 import com.appman.appmanager.activities.StorageActivity;
 import com.appman.appmanager.adapter.AppAdapter;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -95,9 +96,10 @@ public class UtilsUI {
                 new DividerDrawerItem(),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_ram)).withIcon(GoogleMaterial.Icon.gmd_memory).withBadge(context.getResources().getString(R.string.action_ram_description)).withSelectable(false).withIdentifier(5),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_storage)).withIcon(GoogleMaterial.Icon.gmd_storage).withSelectable(false).withIdentifier(6),
-                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_device)).withIcon(GoogleMaterial.Icon.gmd_devices).withSelectable(false).withIdentifier(7),
-                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_settings)).withIcon(GoogleMaterial.Icon.gmd_settings).withSelectable(false).withIdentifier(8),
-                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_about)).withIcon(GoogleMaterial.Icon.gmd_info).withSelectable(false).withIdentifier(9));
+                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_sms)).withIcon(GoogleMaterial.Icon.gmd_sms).withSelectable(false).withIdentifier(7),
+                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_device)).withIcon(GoogleMaterial.Icon.gmd_devices).withSelectable(false).withIdentifier(8),
+                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_settings)).withIcon(GoogleMaterial.Icon.gmd_settings).withSelectable(false).withIdentifier(9),
+                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_about)).withIcon(GoogleMaterial.Icon.gmd_info).withSelectable(false).withIdentifier(10));
 
         drawerBuilder.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
@@ -131,12 +133,15 @@ public class UtilsUI {
                         context.startActivity(new Intent(context, StorageActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
                     case 7:
-                        context.startActivity(new Intent(context, DeviceInfo.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        context.startActivity(new Intent(context, SmsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
                     case 8:
-                        context.startActivity(new Intent(context, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        context.startActivity(new Intent(context, DeviceInfo.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
                     case 9:
+                        context.startActivity(new Intent(context, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        break;
+                    case 10:
                         context.startActivity(new Intent(context, AboutActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                     default:
                         break;
