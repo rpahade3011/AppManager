@@ -1,0 +1,201 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:wave="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:counter="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_container1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        android:visibility="gone"
+        ads:adUnitId="@string/ad_mob_interstitial_id">
+
+    </com.google.android.gms.ads.AdView>
+
+    <RelativeLayout
+        android:id="@+id/layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="150dip"
+            android:visibility="visible"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <com.appman.appmanager.widget.textcounter.WaveView
+                android:visibility="visible"
+                android:id="@+id/wave_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/title_bg"
+                wave:above_wave_color="@android:color/white"
+                wave:blow_wave_color="@android:color/white"
+                wave:progress="0"
+                wave:wave_height="little"
+                wave:wave_hz="normal"
+                wave:wave_length="middle" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativeLayout3"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp">
+
+                <com.appman.appmanager.widget.textcounter.CounterView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textCounter"
+                    android:textSize="48sp"
+                    android:text="250"
+                    android:textColor="@color/white"
+                    counter:autoStart="false" />
+
+                <TextView
+                    android:layout_marginTop="10dip"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/textCounter"
+                    android:id="@+id/sufix"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="KB"
+                    android:textSize="14sp"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dip"
+                    android:layout_toRightOf="@+id/textCounter"
+                    android:layout_below="@+id/sufix"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="Freeable"
+                    android:textSize="14sp"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textViewTotalRam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:gravity="right"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:text="@string/ram_calculation"
+                android:textColor="@color/white_pressed"
+                android:textSize="20sp"
+                android:background="@drawable/rounded"
+                android:layout_below="@+id/relativeLayout3"
+                android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/progressBarText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dip"
+                android:singleLine="true"
+                android:text="@string/scanning"
+                android:visibility="visible"
+                android:textColor="@color/about_libraries_window_background"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_gravity="center_horizontal"
+                android:layout_below="@+id/textViewTotalRam"
+                android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/lnrlytRunningPro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header"
+            android:layout_centerHorizontal="true"
+            android:padding="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:layout_marginStart="19dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-thin"
+                android:singleLine="true"
+                android:text="Running Processes"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+            <TextView
+                android:id="@+id/txtViewRunningProcessCount"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="@drawable/input_circle_normal"
+                android:fontFamily="sans-serif-thin"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/icons"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp" />
+        </RelativeLayout>
+
+        <ListView
+            android:layout_below="@+id/lnrlytRunningPro"
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fastScrollEnabled="true"
+            android:focusable="true"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"
+            android:background="#e2e2e2"
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:dividerHeight="4dp"
+            android:fadingEdge="none"
+            android:fitsSystemWindows="true"
+            android:padding="12dp"
+            android:scrollbarStyle="outsideOverlay"
+            tools:ignore="overdraw" />
+
+        <LinearLayout
+            android:visibility="visible"
+            android:orientation="horizontal"
+            android:id="@+id/bottom_lin"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="16dp">
+
+            <com.gc.materialdesign.views.ButtonRectangle
+                android:id="@+id/buttonCleanRam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:background="@color/title_bg"
+                android:hapticFeedbackEnabled="true"
+                android:text="@string/clean_ram"
+                android:layout_alignRight="@+id/app_card"
+                android:layout_alignEnd="@+id/app_card"
+                android:layout_toRightOf="@+id/progress"
+                android:layout_toEndOf="@+id/progress" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -33,6 +33,10 @@ import com.appman.appmanager.utils.AppRater;
 import com.appman.appmanager.utils.UtilsApp;
 import com.appman.appmanager.utils.UtilsDialog;
 import com.appman.appmanager.utils.UtilsUI;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.mikepenz.materialdrawer.Drawer;
 import com.pnikosis.materialishprogress.ProgressWheel;
 import com.yalantis.phoenix.PullToRefreshView;
@@ -95,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setInitialConfiguration();
         checkAndAddPermissions(activity);
         setAppDir();
+        showInterstitialAd();
 
         recyclerView = (RecyclerView) findViewById(R.id.appList);
         pullToRefreshView = (PullToRefreshView) findViewById(R.id.pull_to_refresh);
@@ -165,6 +170,26 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         if(!appDir.exists()) {
             appDir.mkdir();
         }
+    }
+
+    private void showInterstitialAd(){
+        final InterstitialAd interstitialAd = new InterstitialAd(MainActivity.this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.ad_mob_interstitial_id));
+        AdView adView = (AdView) findViewById (R.id.adView);
+        adView.setVisibility(View.VISIBLE);
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        adView.loadAd(adRequest);
+        interstitialAd.loadAd(adRequest);
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                if (interstitialAd.isLoaded()){
+                    interstitialAd.show();
+                }
+            }
+        });
     }
 
     private List<AppInfo> getFavoriteList(List<AppInfo> appList, List<AppInfo> appSystemList) {
@@ -248,6 +273,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }, 2000);
         }
     }
+
+    /*@Override
+    protected void onResume() {
+        super.onResume();
+        showInterstitialAd();
+    }*/
 
     class getInstalledApps extends AsyncTask<Void, String, Void> {
         private Integer totalApps;

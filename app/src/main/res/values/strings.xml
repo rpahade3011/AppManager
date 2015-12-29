@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">AppManager</string>
     <string name="app_codename" translatable="false">AM</string>
     <string name="app_description">A simple application manager and backup tool for Android</string>
@@ -32,8 +32,16 @@
     <string name="available_ram">Free RAM :</string>
     <string name="ram_status">RAM Status</string>
     <string name="ram_calculation">3.84Gb / 10.46GB</string>
-    <string name="ad_mob_banner_id">ca-app-pub-5293031144790539/2510067801</string>
-    <string name="ad_mob_interstitial_id">ca-app-pub-5293031144790539/3986801004</string>
+    <string name="app_memory_clean">Memory acceleration</string>
+    <string name="app_rublish_clean">Garbage clean-up</string>
+    <string name="app_autostart_manage">From Kai management</string>
+    <string name="app_software_manage">Software Management</string>
+    <string name="cleaned">Rubbish (<xliff:g id="memory">%1$s</xliff:g>)</string>
+    <string name="empty_cache">The cache is empty .</string>
+    <string name="scanning">Scanning ...</string>
+    <string name="scanning_m_of_n">Scanning... %1$d/%2$d</string>
+    <string name="software_top_text">Installed - %1$s already installed software models , occupies storage space - %2$s</string>
+
 
     <!-- Messages -->
 
@@ -137,5 +145,6 @@
         This is an ad unit ID for a banner test ad. Replace with your own banner ad unit id.
         For more information, see https://support.google.com/admob/answer/3052638
     <!- -->
-    <string name="banner_ad_unit_id">ca-app-pub-5293031144790539/2510067801</string>
+    <string name="ad_mob_banner_id">ca-app-pub-5293031144790539/2510067801</string>
+    <string name="ad_mob_interstitial_id">ca-app-pub-5293031144790539/3986801004</string>
 </resources>

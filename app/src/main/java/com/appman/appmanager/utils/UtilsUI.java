@@ -12,7 +12,7 @@ import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
 import com.appman.appmanager.activities.AboutActivity;
 import com.appman.appmanager.activities.DeviceInfo;
-import com.appman.appmanager.activities.MemoryInfoActivity;
+import com.appman.appmanager.activities.MemoryCleanActivity;
 import com.appman.appmanager.activities.SettingsActivity;
 import com.appman.appmanager.activities.SmsActivity;
 import com.appman.appmanager.activities.StorageActivity;
@@ -125,8 +125,9 @@ public class UtilsUI {
                     case 4:
                         recyclerView.setAdapter(appHiddenAdapter);
                         break;
+
                     case 5:
-                        context.startActivity(new Intent(context, MemoryInfoActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        context.startActivity(new Intent(context, MemoryCleanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
 
                     case 6:

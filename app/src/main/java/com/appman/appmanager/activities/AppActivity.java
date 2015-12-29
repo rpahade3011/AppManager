@@ -33,6 +33,10 @@ import com.appman.appmanager.utils.UtilsApp;
 import com.appman.appmanager.utils.UtilsDialog;
 import com.appman.appmanager.utils.UtilsUI;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.util.Set;
 
@@ -65,6 +69,7 @@ public class AppActivity extends AppCompatActivity {
         getInitialConfiguration();
         setInitialConfiguration();
         setScreenElements();
+        showInterstitialAd();
 
     }
 
@@ -244,6 +249,26 @@ public class AppActivity extends AppCompatActivity {
         appsFavorite = appPreferences.getFavoriteApps();
         appsHidden = appPreferences.getHiddenApps();
 
+    }
+
+    private void showInterstitialAd(){
+        final InterstitialAd interstitialAd = new InterstitialAd(AppActivity.this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.ad_mob_interstitial_id));
+        AdView adView = (AdView) findViewById (R.id.adView);
+        adView.setVisibility(View.VISIBLE);
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        adView.loadAd(adRequest);
+        interstitialAd.loadAd(adRequest);
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                if (interstitialAd.isLoaded()){
+                    interstitialAd.show();
+                }
+            }
+        });
     }
 
     @Override

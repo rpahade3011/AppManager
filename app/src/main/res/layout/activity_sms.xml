@@ -17,49 +17,44 @@
         wheel:matProg_barColor="@color/primary"
         wheel:matProg_progressIndeterminate="true" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayoutSmsCount"
         android:layout_below="@id/toolbar"
-        android:orientation="horizontal"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
-        android:weightSum="2">
+        android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="70dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:ellipsize="end"
             android:fontFamily="sans-serif-thin"
             android:singleLine="true"
             android:text="SMS Count"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
         <TextView
             android:id="@+id/txtViewSmsCount"
-            android:layout_width="10dp"
+            android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="70dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/thread_count_box_light"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:background="@drawable/input_circle_normal"
             android:fontFamily="sans-serif-thin"
             android:gravity="center"
             android:text="25"
             android:textColor="@color/icons"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ListView
         android:layout_width="match_parent"
