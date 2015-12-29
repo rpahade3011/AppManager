@@ -53,19 +53,45 @@
                             android:text="@string/storage_internal"
                             android:textColor="@color/list_txt_info_5"
                             android:textSize="14.0dip" />
+                        <!--<TextView
+                            android:id="@+id/txtInternal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:singleLine="false"
+                            android:text="@string/storage_internal"
+                            android:textColor="@color/list_txt_info_5"
+                            android:textSize="14.0dip"
+                            android:fontFamily="sans"/>-->
 
                         <RelativeLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content">
 
-                            <com.appman.appmanager.views.StorageSimpleView
+                            <!--<com.appman.appmanager.views.StorageSimpleView
+                                android:id="@+id/memoryInternal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="15.0dip"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_toLeftOf="@+id/txtPercent1" />-->
+                            <com.gc.materialdesign.views.ProgressBarDeterminate
+                                android:id="@+id/memoryInternal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="15.0dip"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerVertical="true"
+                                android:layout_toLeftOf="@+id/txtPercent1"
+                                app:max="100"
+                                app:progress="50"
+                                android:background="@color/list_txt_info_3"/>
+                            <!--<me.zhanghai.android.materialprogressbar.MaterialProgressBar
                                 android:id="@+id/memoryInternal"
                                 android:layout_width="fill_parent"
                                 android:layout_height="15.0dip"
                                 android:layout_alignParentLeft="true"
                                 android:layout_centerVertical="true"
                                 android:layout_toLeftOf="@+id/txtPercent1" />
-
+-->
                             <com.appman.appmanager.views.TextView_Regular
                                 android:id="@+id/txtPercent1"
                                 android:layout_width="wrap_content"
@@ -77,6 +103,17 @@
                                 android:text="--%"
                                 android:textColor="@color/list_txt_info_5"
                                 android:textSize="14.0dip" />
+                            <!--<TextView
+                                android:id="@+id/txtPercent1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:paddingLeft="5.0dip"
+                                android:singleLine="false"
+                                android:text="&#45;&#45;%"
+                                android:textColor="@color/list_txt_info_5"
+                                android:textSize="14.0dip" />-->
                         </RelativeLayout>
 
                         <com.appman.appmanager.views.TextView_Regular

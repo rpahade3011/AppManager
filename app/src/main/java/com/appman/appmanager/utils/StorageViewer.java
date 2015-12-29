@@ -16,20 +16,21 @@ import java.io.File;
  * DETAILS, SUCH AS TOTAL, AVAILABLE & USED SPACE.
  */
 public class StorageViewer {
+    // Show SD_CARD Total Space
     public static String showSDCardTotalSpace(Context ctx){
         File path = Environment.getDataDirectory();
         StatFs stat = new StatFs(path.getPath());
         long total = (long)stat.getBlockCount() * stat.getBlockSize();
         return Formatter.formatFileSize(ctx, total);
     }
-
+    // Show SD_CARD Free Space
     public static String showSDCardFreeSpace(Context ctx){
         File path = Environment.getDataDirectory();
         StatFs stat = new StatFs(path.getPath());
         long free  = (long)stat.getAvailableBlocks() * stat.getBlockSize();
         return Formatter.formatFileSize(ctx, free);
     }
-
+    // Show SD_CARD Used Space
     public static String showSDCardUsedSpace(Context ctx){
         File path = Environment.getDataDirectory();
         StatFs stat = new StatFs(path.getPath());

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.Toast;
 
+import com.appman.appmanager.activities.FragmentStorage;
 import com.appman.appmanager.activities.StorageActivity;
 import com.appman.appmanager.utils.StorageSpaceHandler;
 
@@ -30,8 +31,8 @@ public class StoragePercentageInBackground extends AsyncTask<Void, String, Void>
 
     @Override
     protected Void doInBackground(Void... params) {
-        StorageActivity.sd_card_total_per = StorageSpaceHandler.getInternalStorageSpace();
-        StorageActivity.sd_card_used_per = StorageSpaceHandler.getInternalUsedSpace();
+        FragmentStorage.sd_card_total_per = StorageSpaceHandler.getInternalStorageSpace();
+        FragmentStorage.sd_card_used_per = StorageSpaceHandler.getInternalUsedSpace();
         return null;
     }
 
@@ -44,15 +45,19 @@ public class StoragePercentageInBackground extends AsyncTask<Void, String, Void>
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         try {
-            tempTotalPer = StorageActivity.sd_card_total_per;
-            tempUsedPer = StorageActivity.sd_card_used_per;
+            tempTotalPer = FragmentStorage.sd_card_total_per;
+            tempUsedPer = FragmentStorage.sd_card_used_per;
             tempPer = tempUsedPer / tempTotalPer * 100;
             per = (int)tempPer;
 
-            StorageActivity.progressBarCircularIndeterminate.setMax((int)tempTotalPer);
+            /*StorageActivity.progressBarCircularIndeterminate.setMax((int)tempTotalPer);
             StorageActivity.progressBarCircularIndeterminate.setProgress(per);
             StorageActivity.txtStoragePercentage.setVisibility(View.VISIBLE);
-            StorageActivity.txtStoragePercentage.setText(String.valueOf(per)+ "%");
+            StorageActivity.txtStoragePercentage.setText(String.valueOf(per)+ "%");*/
+            //FragmentStorage.storageSimpleViewInternal.mea
+            FragmentStorage.storageSimpleViewInternal.setMax((int) tempTotalPer);
+            FragmentStorage.storageSimpleViewInternal.setProgress(per);
+            FragmentStorage.txtInternalPercent.setText(String.valueOf(per)+ "%");
         }catch (NumberFormatException nfe){
             nfe.getMessage().toString();
         }catch (Exception e){
