@@ -28,6 +28,17 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
     <item name="title_bg" type="color" >#FF2c5aa9</item>
+    <color name="app_bg">#ffffffff</color>
+    <color name="app_background">#ffffffff</color>
+    <color name="tools_back_selected">#ffb3b3b3</color>
+    <color name="tools_stroke">#ffb3b3b3</color>
+    <color name="tools_back">#ffe7e7e7</color>
+    <color name="list_txt_info">#ff5a5a5a</color>
+    <color name="list_txt_info_2">#ff2f2f2f</color>
+    <color name="list_txt_info_3">#ff25a599</color>
+    <color name="list_txt_info_4">#fff3f3f3</color>
+    <color name="list_txt_info_5">#ff2c2c2c</color>
+    <color name="list_background">#ffffffff</color>
 
     <color name="gplus_color_1">#3e802f</color>
     <color name="gplus_color_2">#f4b400</color>

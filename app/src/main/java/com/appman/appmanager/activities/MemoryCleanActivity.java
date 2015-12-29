@@ -5,19 +5,15 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.format.Formatter;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -34,11 +30,9 @@ import com.appman.appmanager.service.CoreService;
 import com.appman.appmanager.utils.AppPreferences;
 import com.appman.appmanager.utils.MemoryUtils;
 import com.appman.appmanager.utils.StorageUtil;
-import com.appman.appmanager.utils.UtilsUI;
 import com.appman.appmanager.widget.textcounter.CounterView;
 import com.appman.appmanager.widget.textcounter.WaveView;
 import com.appman.appmanager.widget.textcounter.formatters.DecimalFormatter;
-import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -55,7 +49,6 @@ public class MemoryCleanActivity extends AppCompatActivity implements CoreServic
 
     // Load Settings
     private AppPreferences appPreferences;
-    Toolbar toolbar;
     Context mContext;
     ListView mListView;
     WaveView mwaveView;
@@ -98,9 +91,7 @@ public class MemoryCleanActivity extends AppCompatActivity implements CoreServic
         setContentView(R.layout.activity_memory_clean);
         this.appPreferences = AppManagerApplication.getAppPreferences();
 
-        //setInitialConfiguration();
         setTranslucentStatus(true);
-
         setScreenElements();
         showInterstitialAd();
 
@@ -114,12 +105,14 @@ public class MemoryCleanActivity extends AppCompatActivity implements CoreServic
         textCounter.setAutoFormat(false);
         textCounter.setFormatter(new DecimalFormatter());
         textCounter.setAutoStart(false);
-        textCounter.setIncrement(5f); // the amount the number increments at each time interval
-        textCounter.setTimeInterval(50); // the time interval (ms) at which the text changes
+        textCounter.setIncrement(10f); // the amount the number increments at each time interval
+        textCounter.setTimeInterval(100); // the time interval (ms) at which the text changes
     }
 
 
-
+    /**
+     * REFERENCING THE UI ELEMENTS OF {@link com.appman.appmanager.R.layout.activity_memory_clean}
+     */
     private void setScreenElements(){
         mListView = (ListView) findViewById (R.id.listview);
         mwaveView = (WaveView) findViewById(R.id.wave_view);
@@ -132,6 +125,10 @@ public class MemoryCleanActivity extends AppCompatActivity implements CoreServic
         bottom_lin = (LinearLayout) findViewById(R.id.bottom_lin);
         clearRam = (ButtonRectangle) findViewById (R.id.buttonCleanRam);
     }
+
+    /**
+     * THIS METHOD IS USED TO LOAD THE BANNER AD
+     */
 
     private void showInterstitialAd(){
         final InterstitialAd interstitialAd = new InterstitialAd(MemoryCleanActivity.this);
@@ -195,6 +192,11 @@ public class MemoryCleanActivity extends AppCompatActivity implements CoreServic
 
     }
 
+    /**
+     * THIS METHOD WILL REFRESH THE {@link com.appman.appmanager.R.id.textCounter}
+     * TO SET THE TOTAL FREEABLE MEMORY.
+     */
+
     private void refeshTextCounter() {
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -223,8 +225,11 @@ public class MemoryCleanActivity extends AppCompatActivity implements CoreServic
 
     }
 
-
-
+    /**
+     * THIS METHOD WILL SET THE STATUS BAR TRANSLUCENT ONLY ON KITKAT
+     * ENABLED DEVICES.
+     * @param on
+     */
     @TargetApi(19)
     private void setTranslucentStatus(boolean on) {
         Window win = getWindow();
@@ -255,7 +260,6 @@ public class MemoryCleanActivity extends AppCompatActivity implements CoreServic
                     txtTotalRam.setVisibility(View.VISIBLE);
                     txtTotalRam.setText(usedRam + " / " + totalRam);
                     txtTotalRam.setAnimation(animator);
-                    //showRamProgressBar(mContext);
                 }
                 catch (RuntimeException re){
                     re.getMessage().toString();
@@ -318,6 +322,11 @@ public class MemoryCleanActivity extends AppCompatActivity implements CoreServic
             }
         });
     }
+
+    /**
+     * THIS METHOD WILL KILL THE BACKGROUND PROCESSES
+     * AND WILL AGAIN RESET THE TOTAL AVAILABLE & USED RAM TEXT
+     */
 
     private void killAllBackgroundProcess(){
         long killAppmemory = 0;

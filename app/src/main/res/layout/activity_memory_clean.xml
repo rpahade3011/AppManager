@@ -168,7 +168,8 @@
             android:fitsSystemWindows="true"
             android:padding="12dp"
             android:scrollbarStyle="outsideOverlay"
-            tools:ignore="overdraw" />
+            tools:ignore="overdraw"
+            android:layout_above="@+id/bottom_lin" />
 
         <LinearLayout
             android:visibility="visible"
@@ -178,23 +179,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginLeft="16dp">
 
             <com.gc.materialdesign.views.ButtonRectangle
                 android:id="@+id/buttonCleanRam"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
                 android:background="@color/title_bg"
                 android:hapticFeedbackEnabled="true"
                 android:text="@string/clean_ram"
-                android:layout_alignRight="@+id/app_card"
-                android:layout_alignEnd="@+id/app_card"
-                android:layout_toRightOf="@+id/progress"
-                android:layout_toEndOf="@+id/progress" />
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@+id/bottom_lin"
+                android:layout_alignStart="@+id/bottom_lin" />
+
         </LinearLayout>
+
+
 
     </RelativeLayout>
 

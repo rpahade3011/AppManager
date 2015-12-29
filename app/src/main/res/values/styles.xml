@@ -168,5 +168,39 @@
 
     </style>
 
+    <style name="ToolsTheme_2">
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/tools_item</item>
+        <item name="android:layout_width">0.0dip</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:weightSum">1.0</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+
+    <style name="ViewTitle">
+        <item name="android:background">@color/list_txt_info_4</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1.0dip</item>
+    </style>
+    <style name="ListStyle_2">
+        <item name="android:scrollbars">none</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:cacheColorHint">#00000000</item>
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:dividerHeight">0.0dip</item>
+    </style>
+    <style name="TxtTitle">
+        <item name="android:textSize">14.0dip</item>
+        <item name="android:textColor">@color/list_color_info_title</item>
+        <item name="android:background">@drawable/list_row_title</item>
+        <item name="android:paddingLeft">5.0dip</item>
+        <item name="android:paddingTop">2.0dip</item>
+        <item name="android:paddingRight">5.0dip</item>
+        <item name="android:paddingBottom">2.0dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">false</item>
+    </style>
+
 
 </resources>

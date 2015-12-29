@@ -66,6 +66,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
         <activity android:name=".activities.MemoryCleanActivity"/>
+        <activity android:name=".activities.FragmentStorage"/>
 
         <service
             android:name=".service.CleanerService"

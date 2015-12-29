@@ -12,6 +12,7 @@ import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
 import com.appman.appmanager.activities.AboutActivity;
 import com.appman.appmanager.activities.DeviceInfo;
+import com.appman.appmanager.activities.FragmentStorage;
 import com.appman.appmanager.activities.MemoryCleanActivity;
 import com.appman.appmanager.activities.SettingsActivity;
 import com.appman.appmanager.activities.SmsActivity;
@@ -130,8 +131,11 @@ public class UtilsUI {
                         context.startActivity(new Intent(context, MemoryCleanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
 
-                    case 6:
+                    /*case 6:
                         context.startActivity(new Intent(context, StorageActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        break;*/
+                    case 6:
+                        context.startActivity(new Intent(context, FragmentStorage.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
                     case 7:
                         context.startActivity(new Intent(context, SmsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

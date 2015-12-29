@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:state_selected="false" android:state_pressed="false">
+        <bitmap android:src="@drawable/tools_bg_selected" android:tileMode="repeat" />
+        <shape>
+            <stroke android:width="1.0dip" android:color="@color/tools_stroke" />
+            <solid android:color="@color/tools_back_selected" />
+        </shape>
+    </item>
+    <item android:state_focused="true" android:state_selected="true" android:state_pressed="false">
+        <bitmap android:src="@drawable/tools_bg_selected" android:tileMode="repeat" />
+        <shape>
+            <stroke android:width="1.0dip" android:color="@color/tools_stroke" />
+            <solid android:color="@color/tools_back_selected" />
+        </shape>
+    </item>
+    <item android:state_selected="true" android:state_pressed="true">
+        <bitmap android:src="@drawable/tools_bg_selected" android:tileMode="repeat" />
+        <shape>
+            <stroke android:width="1.0dip" android:color="@color/tools_stroke" />
+            <solid android:color="@color/tools_back_selected" />
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <bitmap android:src="@drawable/tools_bg_selected" android:tileMode="repeat" />
+        <shape>
+            <stroke android:width="1.0dip" android:color="@color/tools_stroke" />
+            <solid android:color="@color/tools_back_selected" />
+        </shape>
+    </item>
+    <item android:state_focused="false" android:state_selected="true" android:state_pressed="false">
+        <bitmap android:src="@drawable/tools_bg" android:tileMode="repeat" />
+        <shape>
+            <stroke android:width="1.0dip" android:color="@color/tools_stroke" />
+            <solid android:color="@color/tools_back" />
+        </shape>
+    </item>
+    <item android:state_focused="false" android:state_selected="false" android:state_pressed="false">
+        <bitmap android:src="@drawable/tools_bg" android:tileMode="repeat" />
+        <shape>
+            <stroke android:width="1.0dip" android:color="@color/tools_stroke" />
+            <solid android:color="@color/tools_back" />
+        </shape>
+    </item>
+</selector>
