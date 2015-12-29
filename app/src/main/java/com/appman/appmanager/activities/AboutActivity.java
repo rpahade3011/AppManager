@@ -1,15 +1,16 @@
 package com.appman.appmanager.activities;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
@@ -64,12 +65,20 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     private void setScreenElements() {
+        AppCompatImageView imageViewProfilePic = (AppCompatImageView) findViewById (R.id.imageViewProfilePic);
         TextView header = (TextView) findViewById(R.id.header);
         TextView appNameVersion = (TextView) findViewById(R.id.app_name);
         CardView about_1 = (CardView) findViewById(R.id.about_1);
         //CardView about_2 = (CardView) findViewById(R.id.about_2);
         CardView about_googleplay = (CardView) findViewById(R.id.about_googleplay);
         //CardView about_googleplus = (CardView) findViewById(R.id.about_googleplus);
+
+        try{
+            imageViewProfilePic.setImageResource(R.drawable.about_rudraksh_pahade);
+        }catch (Exception e){
+            imageViewProfilePic.setImageResource(R.drawable.about_rudraksh_pahade);
+            e.getMessage().toString();
+        }
 
         //header.setBackgroundColor(appPreferences.getPrimaryColorPref());
         header.setBackgroundColor(getResources().getColor(R.color.bkg_card));

@@ -3,11 +3,9 @@ package com.appman.appmanager.async;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.view.View;
-import android.widget.Toast;
 
 import com.appman.appmanager.R;
 import com.appman.appmanager.activities.FragmentStorage;
-import com.appman.appmanager.activities.StorageActivity;
 import com.appman.appmanager.utils.StorageViewer;
 
 /**
@@ -53,11 +51,7 @@ public class LoadStorageInBackground extends AsyncTask<Void, String, Void>{
         super.onPostExecute(aVoid);
         FragmentStorage.progressWheel.setVisibility(View.GONE);
 
+        FragmentStorage.txtInternal.setText(mActivity.getString(R.string.storage_internal)+": "+FragmentStorage.sd_card_used_space + " / " +FragmentStorage.sd_card_total_space);
 
-        Toast.makeText(mActivity, FragmentStorage.sd_card_total_space, Toast.LENGTH_SHORT).show();
-
-        FragmentStorage.txtInternal.setText(mActivity.getString(R.string.storage_internal)+": "+FragmentStorage.sd_card_used_space + "/" +FragmentStorage.sd_card_total_space);
-        /*FragmentStorage.txtUsedStorage.setText("Used : " + StorageActivity.sd_card_used_space);
-        FragmentStorage.txtFreeStorage.setText("Free : " + StorageActivity.sd_card_free_space);*/
     }
 }

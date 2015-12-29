@@ -39,6 +39,10 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.mikepenz.materialdrawer.Drawer;
 import com.pnikosis.materialishprogress.ProgressWheel;
+import com.rampo.updatechecker.UpdateChecker;
+import com.rampo.updatechecker.UpdateCheckerResult;
+import com.rampo.updatechecker.notice.Notice;
+import com.rampo.updatechecker.store.Store;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import java.io.File;
@@ -51,7 +55,7 @@ import java.util.Set;
 import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
 
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, UpdateCheckerResult {
     private static final int MY_PERMISSIONS_REQUEST_WRITE_READ = 1;
     private static VerticalRecyclerViewFastScroller fastScroller;
     private static LinearLayout noResults;
@@ -100,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         checkAndAddPermissions(activity);
         setAppDir();
         showInterstitialAd();
+        checkForUpdate();
 
         recyclerView = (RecyclerView) findViewById(R.id.appList);
         pullToRefreshView = (PullToRefreshView) findViewById(R.id.pull_to_refresh);
@@ -192,6 +197,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         });
     }
 
+    /**
+     * THIS METHOD WILL NOTIFY THE USER ABOUT THE NEW VERSION AVAILABLE
+     */
+
+    private void checkForUpdate(){
+        UpdateChecker checker = new UpdateChecker(this);
+        checker.setSuccessfulChecksRequired(2);
+        checker.setStore(Store.GOOGLE_PLAY);
+        checker.setNotice(Notice.DIALOG);
+        checker.setNoticeIcon(R.mipmap.ic_launcher);
+        checker.start();
+    }
+
+    public String getVersionInstalled() {
+        try {
+            return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        return null;
+    }
+
     private List<AppInfo> getFavoriteList(List<AppInfo> appList, List<AppInfo> appSystemList) {
         List<AppInfo> res = new ArrayList<>();
 
@@ -272,6 +298,42 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
             }, 2000);
         }
+    }
+
+    @Override
+    public void foundUpdateAndShowIt(String versionDonwloadable) {
+
+
+    }
+
+    @Override
+    public void foundUpdateAndDontShowIt(String versionDonwloadable) {
+
+    }
+
+    @Override
+    public void returnUpToDate(String versionDonwloadable) {
+
+    }
+
+    @Override
+    public void returnMultipleApksPublished() {
+
+    }
+
+    @Override
+    public void returnNetworkError() {
+
+    }
+
+    @Override
+    public void returnAppUnpublished() {
+
+    }
+
+    @Override
+    public void returnStoreError() {
+
     }
 
     /*@Override

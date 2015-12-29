@@ -100,7 +100,8 @@ public class UtilsUI {
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_sms)).withIcon(GoogleMaterial.Icon.gmd_sms).withSelectable(false).withIdentifier(7),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_device)).withIcon(GoogleMaterial.Icon.gmd_devices).withSelectable(false).withIdentifier(8),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_settings)).withIcon(GoogleMaterial.Icon.gmd_settings).withSelectable(false).withIdentifier(9),
-                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_about)).withIcon(GoogleMaterial.Icon.gmd_info).withSelectable(false).withIdentifier(10));
+                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_share)).withIcon(GoogleMaterial.Icon.gmd_share).withSelectable(false).withIdentifier(10),
+                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_about)).withIcon(GoogleMaterial.Icon.gmd_info).withSelectable(false).withIdentifier(11));
 
         drawerBuilder.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
@@ -147,6 +148,9 @@ public class UtilsUI {
                         context.startActivity(new Intent(context, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
                     case 10:
+                        openShareIntent(context);
+                        break;
+                    case 11:
                         context.startActivity(new Intent(context, AboutActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                     default:
                         break;
@@ -158,6 +162,16 @@ public class UtilsUI {
 
         return drawerBuilder.build();
     }
+
+    private static void openShareIntent(Context ctx){
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, ctx.getResources().getString(R.string.app_name));
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Hey, look out this awesome application monitor and backup tool for Android - " + "https://play.google.com/store/apps/details?id=com.appman.appmanager&hl=en");
+        ctx.startActivity(Intent.createChooser(shareIntent, "Share via"));
+    }
+
 
     public static int getDayOrNight() {
         int actualHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
