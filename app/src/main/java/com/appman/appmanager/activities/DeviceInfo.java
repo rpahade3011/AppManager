@@ -110,7 +110,7 @@ public class DeviceInfo extends AppCompatActivity {
     }
 
     private void loadAdMob(){
-        Toast.makeText(getApplicationContext(), "Inside AdMob", Toast.LENGTH_SHORT).show();
+
         // Load an ad into the AdMob banner view.
         AdView adView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();

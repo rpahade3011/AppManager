@@ -5,10 +5,10 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
-import com.appman.appmanager.SmsInfo;
+import com.appman.appmanager.models.SmsInfo;
 import com.appman.appmanager.activities.SmsActivity;
 import com.appman.appmanager.adapter.SmsAdapter;
 
@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class LoadSmsInBackground extends AsyncTask<Void, String, Void>{
 
     private Activity mActivity;
-    private ArrayList<SmsInfo> arrayList;
 
     public LoadSmsInBackground(Activity activity){
         this.mActivity = activity;
@@ -34,41 +33,10 @@ public class LoadSmsInBackground extends AsyncTask<Void, String, Void>{
 
     @Override
     protected Void doInBackground(Void... params) {
-        arrayList = new ArrayList<SmsInfo>();
-        try{
-            Uri uri = Uri.parse("content://sms");
-            ContentResolver contentResolver = mActivity.getContentResolver();
-            Cursor SMSL = contentResolver.query(uri, null, null, null, "date asc");
-            while (SMSL.moveToFirst()){
-                long dateTimeMillis = SMSL.getLong(SMSL.getColumnIndex("date"));
-                Integer id1 = SMSL.getInt(SMSL.getColumnIndex("_id"));
-                String body = SMSL.getString(SMSL.getColumnIndex("body"));
-                Integer type1 = SMSL.getInt(SMSL.getColumnIndex("type"));
-                String address = SMSL.getString(SMSL.getColumnIndex("address"));
-                String read = SMSL.getString(SMSL.getColumnIndex("read"));
-                String seen = SMSL.getString(SMSL.getColumnIndex("seen"));
 
-                SmsInfo smsInfo = new SmsInfo();
-                smsInfo.setId(id1);
-                smsInfo.setDate(dateTimeMillis);
-                smsInfo.setBody(body);
-                smsInfo.setType(type1);
-                smsInfo.setAddress(address);
-                smsInfo.setRead(read);
-                smsInfo.setSeen(seen);
-                SMSL.close();
-                arrayList.add(smsInfo);
 
-                Log.d(SmsActivity.TAG, "--ID-->" + smsInfo.getId());
-                Log.d(SmsActivity.TAG, "--DATE-->" +smsInfo.getDate());
-                Log.d(SmsActivity.TAG, "--TYPE-->" +smsInfo.getType());
-                Log.d(SmsActivity.TAG, "--SEEN-->" +smsInfo.getSeen());
-                Log.d(SmsActivity.TAG, "--READ-->" +smsInfo.getRead());
-            }
-
-        }catch (Exception e){
-            e.getMessage().toString();
-        }
+        SmsActivity.arrayList = new ArrayList<SmsInfo>();
+        SmsActivity.arrayList =  getAllSms("inbox");
 
         return null;
     }
@@ -82,14 +50,50 @@ public class LoadSmsInBackground extends AsyncTask<Void, String, Void>{
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         SmsActivity.progressWheel.setVisibility(View.GONE);
+        if (SmsActivity.arrayList.size() < 0){
+            Toast.makeText(mActivity, "No SMS found on your device", Toast.LENGTH_SHORT).show();
+        }else{
+            int count = SmsActivity.arrayList.size();
+            SmsActivity.listViewSms.setVisibility(View.VISIBLE);
+            SmsActivity.txtSmsCount.setText(String.valueOf(count));
+            SmsActivity.listViewSms.setAdapter(new SmsAdapter(mActivity, SmsActivity.arrayList));
+        }
+    }
 
-        int count = arrayList.size();
-        SmsActivity.listViewSms.setVisibility(View.VISIBLE);
-        SmsActivity.txtSmsCount.setText(String.valueOf(count));
+    /**
+     * THIS METHOD WILL RETRIEVE ALL THE SMS FROM THE INBOX AND ADD IT TO ARRAYLIST
+     * @param folderName
+     * @return
+     */
 
-        SmsActivity.listViewSms.setAdapter(new SmsAdapter(mActivity, arrayList));
-//        SmsActivity.smsAdapter.notifyDataSetChanged();
+    public ArrayList<SmsInfo> getAllSms(String folderName) {
+        ArrayList<SmsInfo> lstSms = new ArrayList<SmsInfo>();
+        SmsInfo smsInfo = new SmsInfo();
+        Uri message = Uri.parse("content://sms");
+        ContentResolver cr = mActivity.getContentResolver();
 
+        Cursor c = cr.query(message, null, null, null, null);
+        mActivity.startManagingCursor(c);
+        int totalSMS = c.getCount();
 
+        if (c.moveToFirst()) {
+            for (int i = 0; i < totalSMS; i++) {
+
+                smsInfo = new SmsInfo();
+                smsInfo.setId(Integer.parseInt(c.getString(c.getColumnIndexOrThrow("_id"))));
+                smsInfo.setAddress(c.getString(c
+                        .getColumnIndexOrThrow("address")));
+                smsInfo.setType(Integer.parseInt(c.getString(c.getColumnIndexOrThrow("type"))));
+                System.out.println("TYPE-->" + smsInfo.getType());
+                smsInfo.setBody(c.getString(c.getColumnIndexOrThrow("body")));
+                smsInfo.setRead(c.getString(c.getColumnIndex("read")));
+                smsInfo.setDate(Long.parseLong(c.getString(c.getColumnIndexOrThrow("date"))));
+
+                lstSms.add(smsInfo);
+                c.moveToNext();
+            }
+        }
+
+        return lstSms;
     }
 }

@@ -47,7 +47,7 @@
             android:background="@drawable/input_circle_normal"
             android:fontFamily="sans-serif-thin"
             android:gravity="center"
-            android:text="25"
+            android:text=""
             android:textColor="@color/icons"
             android:textStyle="bold"
             android:layout_centerVertical="true"
@@ -60,13 +60,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listViewSms"
-        android:showDividers="end"
-        android:divider="@color/divider"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:listSelector="@drawable/list_selector"
+        style="@style/ListStyle_2"
         android:layout_below="@id/linearLayoutSmsCount"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:divider="@color/card_orange">
 
     </ListView>
 

@@ -32,6 +32,8 @@ public class LoadStorageInBackground extends AsyncTask<Void, String, Void>{
             FragmentStorage.sd_card_total_space = StorageViewer.showSDCardTotalSpace(mActivity);
             FragmentStorage.sd_card_used_space = StorageViewer.showSDCardUsedSpace(mActivity);
             FragmentStorage.sd_card_free_space = StorageViewer.showSDCardFreeSpace(mActivity);
+
+
         }catch (NumberFormatException nfe){
             nfe.getMessage().toString();
         }catch (Exception e){
@@ -51,7 +53,8 @@ public class LoadStorageInBackground extends AsyncTask<Void, String, Void>{
         super.onPostExecute(aVoid);
         FragmentStorage.progressWheel.setVisibility(View.GONE);
 
-        FragmentStorage.txtInternal.setText(mActivity.getString(R.string.storage_internal)+": "+FragmentStorage.sd_card_used_space + " / " +FragmentStorage.sd_card_total_space);
+        FragmentStorage.txtInternal.setText(mActivity.getString(R.string.storage_internal) + ": " + FragmentStorage.sd_card_used_space + " / " + FragmentStorage.sd_card_total_space);
+
 
     }
 }

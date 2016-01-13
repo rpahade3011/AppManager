@@ -26,4 +26,8 @@ public class AppManagerApplication extends Application{
         Fabric.with(this, new Crashlytics());
     }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+    }
 }

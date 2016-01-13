@@ -38,7 +38,7 @@ public class UtilsApp {
      * @return File with the path
      */
     public static File getDefaultAppFolder() {
-        return new File(Environment.getExternalStorageDirectory() + "/AppManager");
+        return new File(Environment.getExternalStorageDirectory() + "/AppManager/APK/");
     }
 
     /**

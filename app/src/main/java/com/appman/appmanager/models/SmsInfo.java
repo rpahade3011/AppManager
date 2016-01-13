@@ -1,4 +1,4 @@
-package com.appman.appmanager;
+package com.appman.appmanager.models;
 
 /**
  * Created by Rudraksh on 23-Dec-15.

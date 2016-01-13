@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activities.SmsActivityActivity">
+    <item
+        android:id="@+id/action_backup_sms"
+        android:orderInCategory="100"
+        android:icon="@mipmap/data_backup"
+        android:title="@string/action_sms_backup"
+        android:visible="true"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_restore_sms"
+        android:orderInCategory="200"
+        android:icon="@mipmap/data_recovery"
+        android:title="@string/action_sms_recover"
+        android:visible="true"
+        app:showAsAction="always" />
+</menu>

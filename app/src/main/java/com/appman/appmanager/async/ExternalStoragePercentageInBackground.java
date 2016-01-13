@@ -1,21 +1,16 @@
 package com.appman.appmanager.async;
 
 import android.app.Activity;
-import android.content.res.ColorStateList;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.appman.appmanager.activities.FragmentStorage;
-import com.appman.appmanager.activities.StorageActivity;
-import com.appman.appmanager.progressbars.NumberProgressBar;
 import com.appman.appmanager.utils.StorageSpaceHandler;
 
 /**
- * Created by Rudraksh on 22-Dec-15.
+ * Created by Rudraksh on 01-Jan-16.
  */
-public class StoragePercentageInBackground extends AsyncTask<Void, String, Void>{
+public class ExternalStoragePercentageInBackground extends AsyncTask<Void, String, Void> {
 
     private Activity mActivity;
     float tempTotalPer;
@@ -23,7 +18,7 @@ public class StoragePercentageInBackground extends AsyncTask<Void, String, Void>
     float tempPer;
     int per, totalPer;
 
-    public StoragePercentageInBackground(Activity activity){
+    public ExternalStoragePercentageInBackground(Activity activity){
         this.mActivity = activity;
     }
 
@@ -32,15 +27,13 @@ public class StoragePercentageInBackground extends AsyncTask<Void, String, Void>
         super.onPreExecute();
     }
 
+
     @Override
     protected Void doInBackground(Void... params) {
-        FragmentStorage.sd_card_total_per = StorageSpaceHandler.getInternalStorageSpace();
-        FragmentStorage.sd_card_used_per = StorageSpaceHandler.getInternalUsedSpace();
-
-
+        FragmentStorage.ext_sd_card_total_per = StorageSpaceHandler.getExternalStorageSpace();
+        FragmentStorage.ext_sd_card_used_per = StorageSpaceHandler.getExternalUsedSpace();
         return null;
     }
-
     @Override
     protected void onCancelled() {
         super.onCancelled();
@@ -51,22 +44,23 @@ public class StoragePercentageInBackground extends AsyncTask<Void, String, Void>
         super.onPostExecute(aVoid);
         try {
             // Calculating the percentage
-            tempTotalPer = FragmentStorage.sd_card_total_per;
-            tempUsedPer = FragmentStorage.sd_card_used_per;
+            tempTotalPer = FragmentStorage.ext_sd_card_total_per;
+            tempUsedPer = FragmentStorage.ext_sd_card_used_per;
             tempPer = tempUsedPer / tempTotalPer * 100;
             Log.i("TOTAL STORAGE VALUE-->", String.valueOf(tempTotalPer));
             Log.d("STORAGE PERCENTAGE-->", String.valueOf(tempPer));
             per = (int)tempPer;
             totalPer = (int) tempTotalPer;
-            Log.i("TOTAL STORAGE VALUE AFTER TYPECASTING-->", String.valueOf(totalPer));
+            Log.i("TOTAL EXT STORAGE VALUE AFTER TYPECASTING-->", String.valueOf(totalPer));
 
-            FragmentStorage.storageSimpleViewInternal.setProgress(per);
-            FragmentStorage.txtInternalPercent.setText(String.valueOf(per)+ "%");
+            // Setting up the progress bar and textview
+            //FragmentStorage.storageSimpleViewInternal = new NumberProgressBar(mActivity);
+            FragmentStorage.storageSimpleViewExternal.setProgress(per);
+            FragmentStorage.txtExternalPercent.setText(String.valueOf(per)+ "%");
         }catch (NumberFormatException nfe){
             nfe.getMessage().toString();
         }catch (Exception e){
             e.getMessage().toString();
         }
-
     }
 }
