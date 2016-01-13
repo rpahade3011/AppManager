@@ -172,9 +172,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     private void setAppDir() {
         File appDir = UtilsApp.getAppFolder();
+        File smsDir = UtilsApp.getDefaultSmsFolder();
+        File contactsDir = UtilsApp.getDefaultContactsFolder();
         if(!appDir.exists()) {
             appDir.mkdir();
+            smsDir.mkdir();
+            contactsDir.mkdir();
         }
+
     }
 
     private void showInterstitialAd(){

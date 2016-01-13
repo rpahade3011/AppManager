@@ -42,6 +42,23 @@ public class UtilsApp {
     }
 
     /**
+     * Default folder where all SMS will be saved
+     * @return File with the path
+     */
+    public static File getDefaultSmsFolder(){
+        return new File(Environment.getExternalStorageDirectory() + "/AppManager/SMS/");
+    }
+
+    /**
+     * Default folder where all contacts will be saved
+     * @return File with the path
+     */
+    public static File getDefaultContactsFolder(){
+        return new File(Environment.getExternalStorageDirectory() + "/AppManager/Contacts/");
+    }
+
+
+    /**
      * Custom folder where APKs will be saved
      * @return File with the path
      */
