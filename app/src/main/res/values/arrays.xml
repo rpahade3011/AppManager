@@ -25,4 +25,12 @@
         <item>3</item>
         <item>4</item>
     </string-array>
+
+    <string-array name="sms_array">
+        <item>Open</item>
+        <item>Edit</item>
+        <item>Copy Text</item>
+        <item>Details</item>
+        <item>Delete</item>
+    </string-array>
 </resources>

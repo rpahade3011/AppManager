@@ -5,9 +5,10 @@ import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.appman.appmanager.utils.UtilsApp;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -79,7 +80,6 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
                         + type);
 
             }
-//            generateCSVFileForSMS(smsBuffer);
         }
         return null;
     }
@@ -97,14 +97,14 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
 
     private void generateCSVFileForSMS(ArrayList<String> list){
         Date date = new Date(System.currentTimeMillis());
-        String smsFile = "SMS_"+".xml";
+        String smsFile = "SMS_"+date;
         try{
-            //String storagePath = Environment.getExternalStorageDirectory().toString() + File.separator + smsFile;
-            File file = new File(Environment.getExternalStorageDirectory() + "AppManager/SMS/");
-            if (!file.exists()){
-                file.mkdirs();
+
+            File smsDir = UtilsApp.getDefaultSmsFolder();
+            if (!smsDir.exists()){
+                smsDir.mkdir();
             }
-            File f = new File(file, smsFile);
+            File f = new File(smsDir.getPath(),smsFile+".xml");
             FileWriter writer = new FileWriter(f);
             writer.append("messageId, threadId, Address, Name, Date, msg, type");
             writer.append('\n');

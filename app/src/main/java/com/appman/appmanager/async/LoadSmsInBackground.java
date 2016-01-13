@@ -8,9 +8,9 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.Toast;
 
-import com.appman.appmanager.models.SmsInfo;
 import com.appman.appmanager.activities.SmsActivity;
 import com.appman.appmanager.adapter.SmsAdapter;
+import com.appman.appmanager.models.SmsInfo;
 
 import java.util.ArrayList;
 
@@ -84,7 +84,6 @@ public class LoadSmsInBackground extends AsyncTask<Void, String, Void>{
                 smsInfo.setAddress(c.getString(c
                         .getColumnIndexOrThrow("address")));
                 smsInfo.setType(Integer.parseInt(c.getString(c.getColumnIndexOrThrow("type"))));
-                System.out.println("TYPE-->" + smsInfo.getType());
                 smsInfo.setBody(c.getString(c.getColumnIndexOrThrow("body")));
                 smsInfo.setRead(c.getString(c.getColumnIndex("read")));
                 smsInfo.setDate(Long.parseLong(c.getString(c.getColumnIndexOrThrow("date"))));

@@ -1,35 +1,29 @@
 package com.appman.appmanager.activities;
 
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
 import com.appman.appmanager.async.BackupSmsInBackground;
-import com.appman.appmanager.models.SmsInfo;
 import com.appman.appmanager.async.LoadSmsInBackground;
+import com.appman.appmanager.models.SmsInfo;
 import com.appman.appmanager.utils.AppPreferences;
-import com.appman.appmanager.utils.UtilsApp;
 import com.appman.appmanager.utils.UtilsUI;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Rudraksh on 23-Dec-15.
@@ -90,11 +84,22 @@ public class SmsActivity extends AppCompatActivity{
     }
     private void initViews(){
         listViewSms = (ListView)findViewById(R.id.listViewSms);
+
         progressWheel = (ProgressWheel)findViewById(R.id.progress);
         txtSmsCount = (TextView)findViewById(R.id.txtViewSmsCount);
+        registerForContextMenu(listViewSms);
+
+
+
     }
     private void loadSmsInBackground(){
-        new LoadSmsInBackground(SmsActivity.this).execute();
+
+        try{
+            new LoadSmsInBackground(SmsActivity.this).execute();
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+
     }
 
     @Override
@@ -107,7 +112,11 @@ public class SmsActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_backup_sms:
-                new BackupSmsInBackground(SmsActivity.this).execute();
+                try{
+                    new BackupSmsInBackground(SmsActivity.this).execute();
+                }catch (Exception e){
+                    e.getMessage().toString();
+                }
                 break;
             case R.id.action_restore_sms:
                 break;
@@ -115,74 +124,30 @@ public class SmsActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-
-    /*private void backupSMS(){
-        smsBuffer.clear();
-        Uri mSmsinboxQueryUri = Uri.parse("content://sms");
-        Cursor cursor1 = getContentResolver().query(
-                mSmsinboxQueryUri,
-                new String[] { "_id", "thread_id", "address", "person", "date",
-                        "body", "type" }, null, null, null);
-        String[] columns = new String[] { "_id", "thread_id", "address", "person", "date", "body",
-                "type" };
-        if (cursor1.getCount() > 0) {
-            String count = Integer.toString(cursor1.getCount());
-            Log.d("Count", count);
-            while (cursor1.moveToNext()) {
-
-                String messageId = cursor1.getString(cursor1
-                        .getColumnIndex(columns[0]));
-
-                String threadId = cursor1.getString(cursor1
-                        .getColumnIndex(columns[1]));
-
-                String address = cursor1.getString(cursor1
-                        .getColumnIndex(columns[2]));
-                String name = cursor1.getString(cursor1
-                        .getColumnIndex(columns[3]));
-                String date = cursor1.getString(cursor1
-                        .getColumnIndex(columns[4]));
-                String msg = cursor1.getString(cursor1
-                        .getColumnIndex(columns[5]));
-                String type = cursor1.getString(cursor1
-                        .getColumnIndex(columns[6]));
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
 
-
-                smsBuffer.add(messageId + ","+ threadId+ ","+ address + "," + name + "," + date + " ," + msg + " ,"
-                        + type);
-
+        if (v.getId() == R.id.listViewSms){
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+            menu.setHeaderTitle("Select Options");
+            String[] menuItems = getResources().getStringArray(R.array.sms_array);
+            for (int i = 0; i < menuItems.length; i++) {
+                menu.add(Menu.NONE, i, i, menuItems[i]);
             }
-            generateCSVFileForSMS(smsBuffer);
         }
-    }*/
 
-    /*private void generateCSVFileForSMS(ArrayList<String> list){
-        Date date = new Date(System.currentTimeMillis());
-        String smsFile = "SMS_"+date+".xml";
-        try{
-            String storagePath = Environment.getExternalStorageDirectory().toString() + "AppManager/SMS/" + smsFile;
-            FileWriter writer = new FileWriter(storagePath);
-            writer.append("messageId, threadId, Address, Name, Date, msg, type");
-            writer.append('\n');
+    }
 
-            for (String info : list){
-                writer.append(info);
-                writer.append('\n');
-            }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
 
-        }catch (NullPointerException e)
-        {
-            System.out.println(TAG+"Nullpointer Exception "+e);
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int menuItemIndex = item.getItemId();
+        String[] menuItems = getResources().getStringArray(R.array.sms_array);
+        String menuItemName = menuItems[menuItemIndex];
+        Toast.makeText(SmsActivity.this, menuItemName, Toast.LENGTH_SHORT).show();
+        return true;
 
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }*/
+    }
 }
