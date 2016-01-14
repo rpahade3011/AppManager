@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.appman.appmanager.models.SmsOperationInfo;
 import com.appman.appmanager.utils.UtilsApp;
 
 import java.io.File;
@@ -23,6 +24,7 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
 
     private Activity mActivity;
     public ArrayList<String> smsBuffer;
+    public ArrayList<SmsOperationInfo> smsOperationInfoArrayList = new ArrayList<SmsOperationInfo>();
     private ProgressDialog progressDialog;
 
     public BackupSmsInBackground(Activity activity){
@@ -74,11 +76,17 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
                 String type = cursor1.getString(cursor1
                         .getColumnIndex(columns[6]));
 
-
-
                 smsBuffer.add(messageId + ","+ threadId+ ","+ address + "," + name + "," + date + " ," + msg + " ,"
                         + type);
+                SmsOperationInfo info = new SmsOperationInfo();
+                info.setMessageId(messageId);
+                info.setThreadId(threadId);
+                info.setAddress(address);
+                info.setName(name);
+                info.setMsg(msg);
+                info.setType(type);
 
+                smsOperationInfoArrayList.add(info);
             }
         }
         return null;

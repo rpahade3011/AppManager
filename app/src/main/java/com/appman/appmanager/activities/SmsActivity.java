@@ -20,6 +20,7 @@ import com.appman.appmanager.async.BackupSmsInBackground;
 import com.appman.appmanager.async.LoadSmsInBackground;
 import com.appman.appmanager.models.SmsInfo;
 import com.appman.appmanager.utils.AppPreferences;
+import com.appman.appmanager.utils.SmsCRUDOperations;
 import com.appman.appmanager.utils.UtilsUI;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
@@ -146,8 +147,15 @@ public class SmsActivity extends AppCompatActivity{
         int menuItemIndex = item.getItemId();
         String[] menuItems = getResources().getStringArray(R.array.sms_array);
         String menuItemName = menuItems[menuItemIndex];
+        if (menuItemName.equals("Open")){
+            openMessage();
+        }
         Toast.makeText(SmsActivity.this, menuItemName, Toast.LENGTH_SHORT).show();
         return true;
 
+    }
+
+    private void openMessage(){
+        //SmsCRUDOperations.openMessage();
     }
 }
