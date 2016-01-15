@@ -1,15 +1,10 @@
 package com.appman.appmanager.async;
 
 import android.app.Activity;
-import android.content.res.ColorStateList;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.appman.appmanager.activities.FragmentStorage;
-import com.appman.appmanager.activities.StorageActivity;
-import com.appman.appmanager.progressbars.NumberProgressBar;
 import com.appman.appmanager.utils.StorageSpaceHandler;
 
 /**

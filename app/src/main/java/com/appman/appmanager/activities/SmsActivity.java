@@ -4,15 +4,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
@@ -20,9 +17,11 @@ import com.appman.appmanager.async.BackupSmsInBackground;
 import com.appman.appmanager.async.LoadSmsInBackground;
 import com.appman.appmanager.models.SmsInfo;
 import com.appman.appmanager.utils.AppPreferences;
-import com.appman.appmanager.utils.SmsCRUDOperations;
 import com.appman.appmanager.utils.UtilsUI;
 import com.pnikosis.materialishprogress.ProgressWheel;
+
+import net.rdrei.android.dirchooser.DirectoryChooserConfig;
+import net.rdrei.android.dirchooser.DirectoryChooserFragment;
 
 import java.util.ArrayList;
 
@@ -40,6 +39,7 @@ public class SmsActivity extends AppCompatActivity{
 
     public static ProgressWheel progressWheel;
     public static TextView txtSmsCount;
+    private DirectoryChooserFragment chooserDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +50,16 @@ public class SmsActivity extends AppCompatActivity{
         initViews();
         loadSmsInBackground();
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.fade_forward, R.anim.slide_out_right);
     }
 
+    /**
+     * THIS WILL SET UP THE TOOL BAR AND NAVIGATION BAR OF THE DEVICE,
+     * WHICH LAYS IN THE BOTTOM OF SOME DEVICES LIKE NEXUS, HTC, ETC.
+     */
     private void setUpToolbar(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -83,16 +86,23 @@ public class SmsActivity extends AppCompatActivity{
             }
         }
     }
+
+    /**
+     * INITIALIZING THE VIEWS
+     */
     private void initViews(){
         listViewSms = (ListView)findViewById(R.id.listViewSms);
 
         progressWheel = (ProgressWheel)findViewById(R.id.progress);
         txtSmsCount = (TextView)findViewById(R.id.txtViewSmsCount);
-        registerForContextMenu(listViewSms);
-
 
 
     }
+
+    /**
+     * THIS METHOD WILL CALL THE {@link LoadSmsInBackground} CLASS
+     * TO LOAD ALL THE SMSs IN A DIFFERENT ASYNC TASK
+     */
     private void loadSmsInBackground(){
 
         try{
@@ -114,48 +124,27 @@ public class SmsActivity extends AppCompatActivity{
         switch (item.getItemId()){
             case R.id.action_backup_sms:
                 try{
+                    // To back up the sms
                     new BackupSmsInBackground(SmsActivity.this).execute();
                 }catch (Exception e){
                     e.getMessage().toString();
                 }
                 break;
             case R.id.action_restore_sms:
+                restoreMessages();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    private void restoreMessages() {
+        final DirectoryChooserConfig chooserConfig = DirectoryChooserConfig.builder()
+                .allowReadOnlyDirectory(false)
+                .initialDirectory(appPreferences.getSmsPath())
+                .build();
 
-
-        if (v.getId() == R.id.listViewSms){
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
-            menu.setHeaderTitle("Select Options");
-            String[] menuItems = getResources().getStringArray(R.array.sms_array);
-            for (int i = 0; i < menuItems.length; i++) {
-                menu.add(Menu.NONE, i, i, menuItems[i]);
-            }
-        }
-
+        chooserDialog = DirectoryChooserFragment.newInstance(chooserConfig);
+        chooserDialog.show(getFragmentManager(), null);
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        int menuItemIndex = item.getItemId();
-        String[] menuItems = getResources().getStringArray(R.array.sms_array);
-        String menuItemName = menuItems[menuItemIndex];
-        if (menuItemName.equals("Open")){
-            openMessage();
-        }
-        Toast.makeText(SmsActivity.this, menuItemName, Toast.LENGTH_SHORT).show();
-        return true;
-
-    }
-
-    private void openMessage(){
-        //SmsCRUDOperations.openMessage();
-    }
 }

@@ -48,8 +48,7 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
 
         smsBuffer.clear();
         Uri mSmsinboxQueryUri = Uri.parse("content://sms");
-        Cursor cursor1 = mActivity.getContentResolver().query(
-                mSmsinboxQueryUri,
+        Cursor cursor1 = mActivity.getContentResolver().query(mSmsinboxQueryUri,
                 new String[] { "_id", "thread_id", "address", "person", "date",
                         "body", "type" }, null, null, null);
         String[] columns = new String[] { "_id", "thread_id", "address", "person", "date", "body",

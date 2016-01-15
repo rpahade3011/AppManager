@@ -10,7 +10,6 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 import com.appman.appmanager.R;
 import com.appman.appmanager.models.AppProcessInfo;
 import com.appman.appmanager.utils.StorageUtil;

@@ -69,20 +69,24 @@ public class LoadSmsInBackground extends AsyncTask<Void, String, Void>{
     public ArrayList<SmsInfo> getAllSms(String folderName) {
         ArrayList<SmsInfo> lstSms = new ArrayList<SmsInfo>();
         SmsInfo smsInfo = new SmsInfo();
+
         Uri message = Uri.parse("content://sms");
         ContentResolver cr = mActivity.getContentResolver();
+
 
         Cursor c = cr.query(message, null, null, null, null);
         mActivity.startManagingCursor(c);
         int totalSMS = c.getCount();
+
 
         if (c.moveToFirst()) {
             for (int i = 0; i < totalSMS; i++) {
 
                 smsInfo = new SmsInfo();
                 smsInfo.setId(Integer.parseInt(c.getString(c.getColumnIndexOrThrow("_id"))));
-                smsInfo.setAddress(c.getString(c
-                        .getColumnIndexOrThrow("address")));
+                smsInfo.setThreadId(c.getString(c.getColumnIndexOrThrow("thread_id")));
+                smsInfo.setPerson(c.getString(c.getColumnIndexOrThrow("person")));
+                smsInfo.setAddress(c.getString(c.getColumnIndexOrThrow("address")));
                 smsInfo.setType(Integer.parseInt(c.getString(c.getColumnIndexOrThrow("type"))));
                 smsInfo.setBody(c.getString(c.getColumnIndexOrThrow("body")));
                 smsInfo.setRead(c.getString(c.getColumnIndex("read")));

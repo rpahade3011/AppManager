@@ -53,6 +53,32 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textColor="@color/colorAccent" />
+            <TextView
+                android:id="@+id/txtSmsDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SMS Person"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:fontFamily="sans-serif-thin"
+                android:padding="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/colorAccent" />
+            <TextView
+                android:id="@+id/txtSmsThreadId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thread id"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:fontFamily="sans-serif-thin"
+                android:padding="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/colorAccent" />
 
         </LinearLayout>
 

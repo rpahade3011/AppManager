@@ -30,7 +30,6 @@ import com.gc.materialdesign.views.ProgressBarDeterminate;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by rudhraksh.pahade on 29-12-2015.

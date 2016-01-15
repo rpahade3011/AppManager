@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.appman.appmanager.R;
 import com.appman.appmanager.models.SmsInfo;
+import com.appman.appmanager.utils.DateAndTimeUtil;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public class SmsAdapter extends BaseAdapter{
     private Activity mActivity;
     private ArrayList<SmsInfo> arrayList;
     LayoutInflater inflater;
+    int pos;
     public SmsAdapter(Activity activity, ArrayList<SmsInfo> list){
         this.mActivity = activity;
         this.arrayList = list;
@@ -46,12 +48,16 @@ public class SmsAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         final SmsInfo smsInfo = arrayList.get(position);
         View view = convertView;
+
+        pos = position;
         if (convertView == null){
             view = inflater.inflate(R.layout.list_item_sms_row, null);
         }
         ImageView imageViewSMSType = (ImageView) view.findViewById(R.id.imageViewSMSType);
         TextView txtHeading = (TextView)view.findViewById(R.id.txtSmsHeading);
         TextView txtBody = (TextView) view.findViewById(R.id.txtSmsBody);
+        TextView txtDate = (TextView) view.findViewById(R.id.txtSmsDate);
+        TextView txtThreadId = (TextView) view.findViewById(R.id.txtSmsThreadId);
 
         // If SMS TYPE IS 1 FOR INCOMING
         if (smsInfo.getType() == 1){
@@ -63,6 +69,17 @@ public class SmsAdapter extends BaseAdapter{
 
         txtHeading.setText(smsInfo.getAddress());
         txtBody.setText(smsInfo.getBody());
+        txtThreadId.setText(smsInfo.getThreadId());
+
+        try{
+            String smsDate = DateAndTimeUtil.convertSMSDate(smsInfo.getDate());
+            System.out.println("CONVERTED DATE --> "+smsDate);
+            txtDate.setText("Message date:- "+smsDate);
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+
         return view;
     }
+
 }

@@ -5,11 +5,14 @@ package com.appman.appmanager.models;
  */
 public class SmsInfo {
     Integer id;
+    String threadId;
     String body;
     Integer type;
     String address;
     String read;
     String seen;
+    long date;
+    String person;
 
     public long getDate() {
         return date;
@@ -67,6 +70,20 @@ public class SmsInfo {
         this.id = id;
     }
 
-    long date;
+    public String getThreadId() {
+        return threadId;
+    }
+
+    public void setThreadId(String threadId) {
+        this.threadId = threadId;
+    }
+    public String getPerson() {
+        return person;
+    }
+
+    public void setPerson(String person) {
+        this.person = person;
+    }
+
 
 }

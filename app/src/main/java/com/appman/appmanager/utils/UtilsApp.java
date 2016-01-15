@@ -163,6 +163,24 @@ public class UtilsApp {
     }
 
     /**
+     * OPENS FACBOOK ACCOUNT
+     * @param context
+     * @param id
+     */
+    public static void goToFacebook(Context context, String id){
+        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + id)));
+    }
+
+    /**
+     * OPENS TWITTER ACCOUNT
+     * @param context
+     * @param id
+     */
+    public static void goToTwitter(Context context, String id){
+        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.twitter.com/" + id)));
+    }
+
+    /**
      * Retrieve your own app version
      * @param context Context
      * @return String with the app version

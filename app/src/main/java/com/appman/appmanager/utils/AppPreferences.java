@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-
 import com.appman.appmanager.R;
 
 import java.util.HashSet;
@@ -26,6 +25,7 @@ public class AppPreferences {
     public static final String KeySortMode = "prefSortMode";
     public static final String KeyIsRooted = "prefIsRooted";
     public static final String KeyCustomPath = "prefCustomPath";
+    public static final String KeySmsPath = "prefSmsPath";
 
     // List
     public static final String KeyFavoriteApps = "prefFavoriteApps";
@@ -102,7 +102,13 @@ public class AppPreferences {
         editor.putString(KeyCustomPath, path);
         editor.commit();
     }
-
+    public String getSmsPath(){
+        return sharedPreferences.getString(KeySmsPath, UtilsApp.getDefaultSmsFolder().getPath());
+    }
+    public void setSmsPath(String path){
+        editor.putString(KeySmsPath, path);
+        editor.commit();
+    }
     public Set<String> getFavoriteApps() {
         return sharedPreferences.getStringSet(KeyFavoriteApps, new HashSet<String>());
     }

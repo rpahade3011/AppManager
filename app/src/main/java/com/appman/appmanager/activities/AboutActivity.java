@@ -1,7 +1,6 @@
 package com.appman.appmanager.activities;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +26,8 @@ public class AboutActivity extends AppCompatActivity {
 
     // About variables
     private Context context;
+    public static String facebook_id = "rudraksh.pahade";
+    public static String twitter_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,8 @@ public class AboutActivity extends AppCompatActivity {
         //CardView about_2 = (CardView) findViewById(R.id.about_2);
         CardView about_googleplay = (CardView) findViewById(R.id.about_googleplay);
         //CardView about_googleplus = (CardView) findViewById(R.id.about_googleplus);
+        CardView about_facebook = (CardView) findViewById (R.id.about_facebook);
+        CardView about_twitter = (CardView) findViewById (R.id.about_twitter);
 
         try{
             imageViewProfilePic.setImageResource(R.drawable.about_rudraksh_pahade);
@@ -98,7 +101,12 @@ public class AboutActivity extends AppCompatActivity {
         about_googleplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UtilsApp.goToGooglePlay(context, context.getPackageName());
+                try{
+                    UtilsApp.goToGooglePlay(context, context.getPackageName());
+                }catch (Exception e){
+                    e.getMessage().toString();
+                }
+
             }
         });
 //        about_googleplus.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +115,26 @@ public class AboutActivity extends AppCompatActivity {
 //                UtilsApp.goToGooglePlus(context, "109312616470328191163");
 //            }
 //        });
+        about_facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    UtilsApp.goToFacebook(context, facebook_id);
+                }catch (Exception e){
+                    e.getMessage().toString();
+                }
+            }
+        });
+        about_twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    UtilsApp.goToTwitter(context, twitter_id);
+                }catch (Exception e){
+                    e.getMessage().toString();
+                }
+            }
+        });
     }
 
     private void loadAdMob(){
