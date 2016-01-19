@@ -26,7 +26,7 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
     public ArrayList<String> smsBuffer;
     public ArrayList<SmsOperationInfo> smsOperationInfoArrayList = new ArrayList<SmsOperationInfo>();
     private ProgressDialog progressDialog;
-
+    private int DIALOG_STYLE = 1;
     public BackupSmsInBackground(Activity activity){
         this.mActivity = activity;
         this.smsBuffer = new ArrayList<String>();
@@ -39,6 +39,9 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
             progressDialog = new ProgressDialog(mActivity);
             progressDialog.setMessage("Please wait while we are creating a backup.");
             progressDialog.setCancelable(false);
+            progressDialog.setProgressStyle(1);
+            progressDialog.setMax(100);
+            progressDialog.setProgress(0);
             progressDialog.show();
         }
     }
@@ -94,7 +97,7 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        generateCSVFileForSMS(smsBuffer);
+        generateXMLFileForSMS(smsBuffer);
         if (progressDialog.isShowing()){
             progressDialog.dismiss();
             progressDialog = null;
@@ -102,7 +105,13 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
 
     }
 
-    private void generateCSVFileForSMS(ArrayList<String> list){
+    /**
+     * METHOD THAT WILL WRITE ALL THE SMS IN A XML FILE
+     * WHICH WILL BE STORED IN /AppManager/SMS/ WITH SYSTEM DATE AS
+     * FILE NAME
+     * @param list
+     */
+    private void generateXMLFileForSMS(ArrayList<String> list){
         Date date = new Date(System.currentTimeMillis());
         String smsFile = "SMS_"+date;
         try{
@@ -113,14 +122,17 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
             }
             File f = new File(smsDir.getPath(),smsFile+".xml");
             FileWriter writer = new FileWriter(f);
-            writer.append("messageId, threadId, Address, Name, Date, msg, type");
-            writer.append('\n');
+            writer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            writer.append((new StringBuilder("<allsms count=\"")).append(list.size()).append("\">\n\t").toString());
 
             for (String info : list){
                 writer.append(info);
                 writer.append('\n');
-            }
 
+            }
+            writer.append("</allsms>");
+            writer.flush();
+            writer.close();
         }catch (NullPointerException e)
         {
             System.out.println("Nullpointer Exception "+e);
@@ -134,6 +146,6 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
         {
             e.printStackTrace();
         }
-        Toast.makeText(mActivity, "Backup performed successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mActivity, "Backup performed successfully of "+list.size()+ " SMS's", Toast.LENGTH_SHORT).show();
     }
 }

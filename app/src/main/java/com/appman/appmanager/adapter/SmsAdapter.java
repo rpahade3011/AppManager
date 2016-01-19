@@ -57,7 +57,6 @@ public class SmsAdapter extends BaseAdapter{
         TextView txtHeading = (TextView)view.findViewById(R.id.txtSmsHeading);
         TextView txtBody = (TextView) view.findViewById(R.id.txtSmsBody);
         TextView txtDate = (TextView) view.findViewById(R.id.txtSmsDate);
-        TextView txtThreadId = (TextView) view.findViewById(R.id.txtSmsThreadId);
 
         // If SMS TYPE IS 1 FOR INCOMING
         if (smsInfo.getType() == 1){
@@ -69,7 +68,6 @@ public class SmsAdapter extends BaseAdapter{
 
         txtHeading.setText(smsInfo.getAddress());
         txtBody.setText(smsInfo.getBody());
-        txtThreadId.setText(smsInfo.getThreadId());
 
         try{
             String smsDate = DateAndTimeUtil.convertSMSDate(smsInfo.getDate());

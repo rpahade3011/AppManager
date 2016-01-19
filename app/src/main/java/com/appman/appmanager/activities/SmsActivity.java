@@ -20,9 +20,6 @@ import com.appman.appmanager.utils.AppPreferences;
 import com.appman.appmanager.utils.UtilsUI;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
-import net.rdrei.android.dirchooser.DirectoryChooserConfig;
-import net.rdrei.android.dirchooser.DirectoryChooserFragment;
-
 import java.util.ArrayList;
 
 /**
@@ -31,6 +28,7 @@ import java.util.ArrayList;
 public class SmsActivity extends AppCompatActivity{
 
     public static final String TAG = SmsActivity.class.getSimpleName();
+    private static final int REQUEST_DIRECTORY = 0;
     private AppPreferences appPreferences;
 
     public static ListView listViewSms;
@@ -39,7 +37,6 @@ public class SmsActivity extends AppCompatActivity{
 
     public static ProgressWheel progressWheel;
     public static TextView txtSmsCount;
-    private DirectoryChooserFragment chooserDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +71,7 @@ public class SmsActivity extends AppCompatActivity{
                     onBackPressed();
                 }
             });
+            // Setting navigation bar color
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 getWindow().setStatusBarColor(UtilsUI.darker(getResources().getColor(R.color.card_orange), 0.8));
@@ -95,7 +93,6 @@ public class SmsActivity extends AppCompatActivity{
 
         progressWheel = (ProgressWheel)findViewById(R.id.progress);
         txtSmsCount = (TextView)findViewById(R.id.txtViewSmsCount);
-
 
     }
 
@@ -138,13 +135,7 @@ public class SmsActivity extends AppCompatActivity{
     }
 
     private void restoreMessages() {
-        final DirectoryChooserConfig chooserConfig = DirectoryChooserConfig.builder()
-                .allowReadOnlyDirectory(false)
-                .initialDirectory(appPreferences.getSmsPath())
-                .build();
-
-        chooserDialog = DirectoryChooserFragment.newInstance(chooserConfig);
-        chooserDialog.show(getFragmentManager(), null);
+        String path = appPreferences.getSmsPath()+"/";
     }
 
 }

@@ -33,8 +33,10 @@
             android:ellipsize="end"
             android:fontFamily="sans-serif-thin"
             android:singleLine="true"
-            android:text="SMS Count"
+            android:text="Total SMS on your device "
             android:textSize="18sp"
+            android:gravity="center"
+            android:padding="10dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -42,8 +44,6 @@
             android:id="@+id/txtViewSmsCount"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
             android:background="@drawable/input_circle_normal"
             android:fontFamily="sans-serif-thin"
             android:gravity="center"
@@ -62,8 +62,7 @@
         android:id="@+id/listViewSms"
         style="@style/ListStyle_2"
         android:layout_below="@id/linearLayoutSmsCount"
-        android:visibility="gone"
-        android:divider="@color/card_orange">
+        android:visibility="visible">
 
     </ListView>
 
