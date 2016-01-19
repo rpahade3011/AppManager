@@ -26,7 +26,6 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
     public ArrayList<String> smsBuffer;
     public ArrayList<SmsOperationInfo> smsOperationInfoArrayList = new ArrayList<SmsOperationInfo>();
     private ProgressDialog progressDialog;
-    private int DIALOG_STYLE = 1;
     public BackupSmsInBackground(Activity activity){
         this.mActivity = activity;
         this.smsBuffer = new ArrayList<String>();

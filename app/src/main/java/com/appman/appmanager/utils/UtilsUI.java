@@ -11,12 +11,12 @@ import android.view.View;
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
 import com.appman.appmanager.activities.AboutActivity;
+import com.appman.appmanager.activities.ActivityContacts;
 import com.appman.appmanager.activities.DeviceInfo;
 import com.appman.appmanager.activities.FragmentStorage;
 import com.appman.appmanager.activities.MemoryCleanActivity;
 import com.appman.appmanager.activities.SettingsActivity;
 import com.appman.appmanager.activities.SmsActivity;
-import com.appman.appmanager.activities.StorageActivity;
 import com.appman.appmanager.adapter.AppAdapter;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -98,23 +98,28 @@ public class UtilsUI {
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_ram)).withIcon(GoogleMaterial.Icon.gmd_memory).withBadge(context.getResources().getString(R.string.action_ram_description)).withSelectable(false).withIdentifier(5),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_storage)).withIcon(GoogleMaterial.Icon.gmd_storage).withSelectable(false).withIdentifier(6),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_sms)).withIcon(GoogleMaterial.Icon.gmd_sms).withSelectable(false).withIdentifier(7),
-                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_device)).withIcon(GoogleMaterial.Icon.gmd_devices).withSelectable(false).withIdentifier(8),
-                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_settings)).withIcon(GoogleMaterial.Icon.gmd_settings).withSelectable(false).withIdentifier(9),
-                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_share)).withIcon(GoogleMaterial.Icon.gmd_share).withSelectable(false).withIdentifier(10),
-                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_about)).withIcon(GoogleMaterial.Icon.gmd_info).withSelectable(false).withIdentifier(11));
+                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_contacts)).withIcon(GoogleMaterial.Icon.gmd_phone).withSelectable(false).withIdentifier(8),
+                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_device)).withIcon(GoogleMaterial.Icon.gmd_devices).withSelectable(false).withIdentifier(9),
+                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_settings)).withIcon(GoogleMaterial.Icon.gmd_settings).withSelectable(false).withIdentifier(10),
+                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_share)).withIcon(GoogleMaterial.Icon.gmd_share).withSelectable(false).withIdentifier(11),
+                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_about)).withIcon(GoogleMaterial.Icon.gmd_info).withSelectable(false).withIdentifier(12));
 
         drawerBuilder.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem iDrawerItem) {
                 switch (iDrawerItem.getIdentifier()) {
+
+                    // Installed Apps
                     case 1:
                         recyclerView.setAdapter(appAdapter);
                         toolbar.setTitle("Installed Apps");
                         break;
+                    // System Apps
                     case 2:
                         recyclerView.setAdapter(appSystemAdapter);
                         toolbar.setTitle("System Apps");
                         break;
+                    // Favorite Apps
                     case 3:
                         if (appFavoriteAdapter.getItemCount() == 0){
                             UtilsDialog.showTitleContent(activity, "NO APPS", "You have not added any apps to your favorite list. Try adding some apps by selecting the star icon on app details and refresh your list by pulling down the screen. ");
@@ -128,29 +133,43 @@ public class UtilsUI {
                         recyclerView.setAdapter(appHiddenAdapter);
                         break;
 
+                    // RAM Info
                     case 5:
                         context.startActivity(new Intent(context, MemoryCleanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
 
-                    /*case 6:
-                        context.startActivity(new Intent(context, StorageActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                        break;*/
+                    // Storage
                     case 6:
                         context.startActivity(new Intent(context, FragmentStorage.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
+                    // SMS Activity
                     case 7:
                         context.startActivity(new Intent(context, SmsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
+
+                    // Contacts Activity
                     case 8:
+                        context.startActivity(new Intent(context, ActivityContacts.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        break;
+
+
+                    // Device Info
+                    case 9:
                         context.startActivity(new Intent(context, DeviceInfo.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
-                    case 9:
+
+                    // Settings Activity
+                    case 10:
                         context.startActivity(new Intent(context, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
-                    case 10:
+
+                    // Share Intent
+                    case 11:
                         openShareIntent(context);
                         break;
-                    case 11:
+
+                    // About App Activity
+                    case 12:
                         context.startActivity(new Intent(context, AboutActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                     default:
                         break;

@@ -9,11 +9,11 @@
         android:title="@string/action_sms_backup"
         android:visible="true"
         app:showAsAction="always" />
-    <item
+    <!--<item
         android:id="@+id/action_restore_sms"
         android:orderInCategory="200"
         android:icon="@mipmap/data_recovery"
         android:title="@string/action_sms_recover"
         android:visible="true"
-        app:showAsAction="always" />
+        app:showAsAction="always" />-->
 </menu>

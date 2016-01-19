@@ -120,6 +120,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         ViewGroup contentView = (ViewGroup) LayoutInflater.from(this).inflate(R.layout.activity_settings, new LinearLayout(this), false);
         toolbar = (Toolbar) contentView.findViewById(R.id.toolbar);
         //TODO Toolbar should load the default style in XML (white title and back arrow), but doesn't happen
+        toolbar.setBackgroundColor(getResources().getColor(R.color.md_blue_grey_500));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,10 +141,10 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         // Android 5.0+ devices
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(UtilsUI.darker(appPreferences.getPrimaryColorPref(), 0.8));
-            toolbar.setBackgroundColor(appPreferences.getPrimaryColorPref());
+            getWindow().setStatusBarColor(UtilsUI.darker(getResources().getColor(R.color.md_blue_grey_700), 0.8));
+            toolbar.setBackgroundColor(getResources().getColor(R.color.md_blue_grey_500));
             if (!appPreferences.getNavigationBlackPref()) {
-                getWindow().setNavigationBarColor(appPreferences.getPrimaryColorPref());
+                getWindow().setNavigationBarColor(getResources().getColor(R.color.md_blue_grey_500));
             }
         }
 

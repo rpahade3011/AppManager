@@ -14,13 +14,13 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:visibility="gone"
-        wheel:matProg_barColor="@color/card_orange"
+        wheel:matProg_barColor="@color/md_purple_500"
         wheel:matProg_progressIndeterminate="true" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayoutSmsCount"
+        android:id="@+id/linearLayoutContactsCount"
         android:layout_below="@id/toolbar"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
@@ -33,7 +33,7 @@
             android:ellipsize="end"
             android:fontFamily="sans-serif-thin"
             android:singleLine="true"
-            android:text="Total SMS on your device "
+            android:text="Total Contacts on your device "
             android:textSize="18sp"
             android:gravity="center"
             android:padding="10dp"
@@ -59,9 +59,9 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listViewSms"
+        android:id="@+id/listViewContacts"
         style="@style/ListStyle_2"
-        android:layout_below="@id/linearLayoutSmsCount"
+        android:layout_below="@id/linearLayoutContactsCount"
         android:visibility="visible">
 
     </ListView>

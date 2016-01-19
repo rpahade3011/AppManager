@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -63,8 +62,8 @@ public class ClearMemoryAdapter extends BaseAdapter {
             holder.memory = (TextView) convertView
                     .findViewById(R.id.memory);
 
-            holder.cb = (RadioButton) convertView
-                    .findViewById(R.id.choice_radio);
+            /*holder.cb = (RadioButton) convertView
+                    .findViewById(R.id.choice_radio);*/
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -73,7 +72,7 @@ public class ClearMemoryAdapter extends BaseAdapter {
         holder.appIcon.setImageDrawable(appInfo.icon);
         holder.appName.setText(appInfo.appName);
         holder.memory.setText(StorageUtil.convertStorage(appInfo.memory));
-        if (appInfo.checked) {
+        /*if (appInfo.checked) {
             holder.cb.setChecked(true);
         } else {
             holder.cb.setChecked(false);
@@ -88,7 +87,7 @@ public class ClearMemoryAdapter extends BaseAdapter {
                 }
                 notifyDataSetChanged();
             }
-        });
+        });*/
 
         return convertView;
     }
@@ -99,15 +98,15 @@ public class ClearMemoryAdapter extends BaseAdapter {
         TextView memory;
         TextView tvProcessMemSize;
         RelativeLayout cb_rl;
-        RadioButton cb;
+        //RadioButton cb;
 
-        public RadioButton getCb() {
+        /*public RadioButton getCb() {
             return cb;
         }
 
         public void setCb(RadioButton cb) {
             this.cb = cb;
-        }
+        }*/
     }
 
 }

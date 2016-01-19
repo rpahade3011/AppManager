@@ -1,5 +1,6 @@
 package com.appman.appmanager.activities;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.appman.appmanager.async.BackupSmsInBackground;
 import com.appman.appmanager.async.LoadSmsInBackground;
 import com.appman.appmanager.models.SmsInfo;
 import com.appman.appmanager.utils.AppPreferences;
+import com.appman.appmanager.utils.MyFileManager;
 import com.appman.appmanager.utils.UtilsUI;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 public class SmsActivity extends AppCompatActivity{
 
     public static final String TAG = SmsActivity.class.getSimpleName();
-    private static final int REQUEST_DIRECTORY = 0;
+
     private AppPreferences appPreferences;
 
     public static ListView listViewSms;
@@ -37,6 +39,7 @@ public class SmsActivity extends AppCompatActivity{
 
     public static ProgressWheel progressWheel;
     public static TextView txtSmsCount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,15 +130,19 @@ public class SmsActivity extends AppCompatActivity{
                     e.getMessage().toString();
                 }
                 break;
-            case R.id.action_restore_sms:
+            /*case R.id.action_restore_sms:
                 restoreMessages();
-                break;
+                break;*/
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void restoreMessages() {
-        String path = appPreferences.getSmsPath()+"/";
+        String path = appPreferences.getSmsPath();
+        Intent fileManager = new Intent(SmsActivity.this, MyFileManager.class);
+        fileManager.putExtra("path", path);
+        startActivity(fileManager);
     }
+
 
 }

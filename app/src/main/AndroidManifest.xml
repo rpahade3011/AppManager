@@ -68,6 +68,9 @@
             android:theme="@android:style/Theme.Translucent" />
         <activity android:name=".activities.MemoryCleanActivity"/>
         <activity android:name=".activities.FragmentStorage"/>
+        <activity android:name=".utils.MyFileManager"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+        <activity android:name=".activities.ActivityContacts"/>
 
         <service
             android:name=".service.CleanerService"

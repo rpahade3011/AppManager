@@ -2,7 +2,6 @@
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/card_background_white"
@@ -47,7 +46,7 @@
         android:layout_toLeftOf="@+id/choice_radio"
         android:scaleType="centerCrop" />
 
-    <RadioButton
+    <!--<RadioButton
         android:id="@+id/choice_radio"
         android:layout_width="30.0dip"
         android:layout_height="wrap_content"
@@ -56,6 +55,6 @@
         android:button="@drawable/memory_selector"
         android:clickable="false"
         android:focusable="false"
-        android:text="  " />
+        android:text="  " />-->
 </RelativeLayout>
 

@@ -20,6 +20,7 @@
     <string name="action_device">Device Info</string>
     <string name="action_storage">Storage</string>
     <string name="action_sms">SMS</string>
+    <string name="action_contacts">Contacts</string>
     <string name="action_processes_info">Processes Info</string>
     <string name="send_to">Send \"%s\" using</string>
     <string name="deleting">Deleting&#8230;</string>
