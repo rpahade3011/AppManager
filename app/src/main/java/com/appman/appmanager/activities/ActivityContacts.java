@@ -7,11 +7,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
+import com.appman.appmanager.async.LoadContactsInBackground;
+import com.appman.appmanager.models.ContactsInfo;
 import com.appman.appmanager.utils.AppPreferences;
 import com.appman.appmanager.utils.UtilsUI;
+import com.pnikosis.materialishprogress.ProgressWheel;
+
+import java.util.ArrayList;
 
 /**
  * Created by Rudraksh on 19-Jan-16.
@@ -21,6 +27,10 @@ public class ActivityContacts extends AppCompatActivity {
     private AppPreferences appPreferences;
     public static ListView listViewContacts;
     private Toolbar toolbar;
+    public static ArrayList<ContactsInfo> arrayList;
+
+    public static TextView txtContactsCount;
+    public static ProgressWheel progressWheel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +38,8 @@ public class ActivityContacts extends AppCompatActivity {
         this.appPreferences = AppManagerApplication.getAppPreferences();
 
         setUpToolbar();
+        initViews();
+        loadContactsInBackground();
     }
 
     @Override
@@ -65,6 +77,20 @@ public class ActivityContacts extends AppCompatActivity {
                     getWindow().setNavigationBarColor(getResources().getColor(R.color.md_purple_500));
                 }
             }
+        }
+    }
+
+    private void initViews(){
+        listViewContacts = (ListView) findViewById(R.id.listViewContacts);
+        progressWheel = (ProgressWheel) findViewById (R.id.progress);
+        txtContactsCount = (TextView) findViewById (R.id.txtViewContactsCount);
+    }
+
+    private void loadContactsInBackground(){
+        try{
+            new LoadContactsInBackground(ActivityContacts.this).execute();
+        }catch (Exception e){
+            e.getMessage().toString();
         }
     }
 }

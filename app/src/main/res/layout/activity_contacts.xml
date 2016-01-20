@@ -41,7 +41,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
         <TextView
-            android:id="@+id/txtViewSmsCount"
+            android:id="@+id/txtViewContactsCount"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:background="@drawable/input_circle_normal"
@@ -62,7 +62,7 @@
         android:id="@+id/listViewContacts"
         style="@style/ListStyle_2"
         android:layout_below="@id/linearLayoutContactsCount"
-        android:visibility="visible">
+        android:visibility="invisible">
 
     </ListView>
 
