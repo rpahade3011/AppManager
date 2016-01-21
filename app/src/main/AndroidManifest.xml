@@ -74,6 +74,7 @@
         <activity android:name=".utils.MyFileManager"
             android:theme="@style/Theme.AppCompat.Light.Dialog"/>
         <activity android:name=".activities.ActivityContacts"/>
+        <activity android:name=".activities.ActivityAfterMemoryCleaned"/>
 
         <service
             android:name=".service.CleanerService"

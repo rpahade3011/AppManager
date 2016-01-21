@@ -27,7 +27,7 @@ public class AboutActivity extends AppCompatActivity {
     // About variables
     private Context context;
     public static String facebook_id = "rudraksh.pahade";
-    public static String twitter_id = "";
+    public static String twitter_id = "pahade_rudraksh";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +70,7 @@ public class AboutActivity extends AppCompatActivity {
         TextView header = (TextView) findViewById(R.id.header);
         TextView appNameVersion = (TextView) findViewById(R.id.app_name);
         CardView about_1 = (CardView) findViewById(R.id.about_1);
-        //CardView about_2 = (CardView) findViewById(R.id.about_2);
         CardView about_googleplay = (CardView) findViewById(R.id.about_googleplay);
-        //CardView about_googleplus = (CardView) findViewById(R.id.about_googleplus);
         CardView about_facebook = (CardView) findViewById (R.id.about_facebook);
         CardView about_twitter = (CardView) findViewById (R.id.about_twitter);
 
@@ -83,21 +81,8 @@ public class AboutActivity extends AppCompatActivity {
             e.getMessage().toString();
         }
 
-        //header.setBackgroundColor(appPreferences.getPrimaryColorPref());
         header.setBackgroundColor(getResources().getColor(R.color.bkg_card));
         appNameVersion.setText(getResources().getString(R.string.app_name) + " " + UtilsApp.getAppVersionName(getApplicationContext()) + "(" + UtilsApp.getAppVersionCode(getApplicationContext()) + ")");
-//        about_1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                UtilsApp.goToGooglePlus(context, "109312616470328191163");
-//            }
-//        });
-//        about_2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                UtilsApp.goToGooglePlus(context, "+javitoro95");
-//            }
-//        });
         about_googleplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,12 +94,6 @@ public class AboutActivity extends AppCompatActivity {
 
             }
         });
-//        about_googleplus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                UtilsApp.goToGooglePlus(context, "109312616470328191163");
-//            }
-//        });
         about_facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

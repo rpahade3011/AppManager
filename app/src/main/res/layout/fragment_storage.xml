@@ -408,7 +408,8 @@
                 style="@style/TxtTitle"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/storage_files" />
+                android:text="@string/storage_files"
+                android:layout_marginLeft="10dp"/>
 
             <View
                 android:id="@+id/viewDel"

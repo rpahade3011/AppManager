@@ -1,12 +1,9 @@
 package com.appman.appmanager.activities;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
@@ -19,8 +16,8 @@ import com.appman.appmanager.async.BackupSmsInBackground;
 import com.appman.appmanager.async.LoadSmsInBackground;
 import com.appman.appmanager.models.SmsInfo;
 import com.appman.appmanager.utils.AppPreferences;
-import com.appman.appmanager.utils.MyFileManager;
 import com.appman.appmanager.utils.UtilsUI;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.ArrayList;
@@ -28,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by Rudraksh on 23-Dec-15.
  */
-public class SmsActivity extends AppCompatActivity{
+public class SmsActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static final String TAG = SmsActivity.class.getSimpleName();
 
@@ -41,6 +38,7 @@ public class SmsActivity extends AppCompatActivity{
     public static ProgressWheel progressWheel;
     public static TextView txtSmsCount;
     public static RelativeLayout relativeLayoutSmsCount;
+    private ButtonRectangle buttonSMSBackup;
 
 
     @Override
@@ -98,6 +96,8 @@ public class SmsActivity extends AppCompatActivity{
         relativeLayoutSmsCount = (RelativeLayout) findViewById (R.id.linearLayoutSmsCount);
         progressWheel = (ProgressWheel)findViewById(R.id.progress);
         txtSmsCount = (TextView)findViewById(R.id.txtViewSmsCount);
+        buttonSMSBackup = (ButtonRectangle) findViewById (R.id.buttonSMSBackup);
+        buttonSMSBackup.setOnClickListener(this);
 
     }
 
@@ -115,16 +115,11 @@ public class SmsActivity extends AppCompatActivity{
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.sms_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_backup_sms:
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.buttonSMSBackup:
                 try{
                     // To back up the sms
                     new BackupSmsInBackground(SmsActivity.this).execute();
@@ -132,19 +127,6 @@ public class SmsActivity extends AppCompatActivity{
                     e.getMessage().toString();
                 }
                 break;
-            /*case R.id.action_restore_sms:
-                restoreMessages();
-                break;*/
         }
-        return super.onOptionsItemSelected(item);
     }
-
-    private void restoreMessages() {
-        String path = appPreferences.getSmsPath();
-        Intent fileManager = new Intent(SmsActivity.this, MyFileManager.class);
-        fileManager.putExtra("path", path);
-        startActivity(fileManager);
-    }
-
-
 }

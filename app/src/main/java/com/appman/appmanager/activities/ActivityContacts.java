@@ -4,8 +4,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
@@ -19,6 +17,7 @@ import com.appman.appmanager.async.LoadContactsInBackground;
 import com.appman.appmanager.models.ContactsInfo;
 import com.appman.appmanager.utils.AppPreferences;
 import com.appman.appmanager.utils.UtilsUI;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -30,7 +29,7 @@ import java.util.ArrayList;
 /**
  * Created by Rudraksh on 19-Jan-16.
  */
-public class ActivityContacts extends AppCompatActivity {
+public class ActivityContacts extends AppCompatActivity implements View.OnClickListener{
 
     private AppPreferences appPreferences;
     public static ListView listViewContacts;
@@ -40,6 +39,7 @@ public class ActivityContacts extends AppCompatActivity {
     public static TextView txtContactsCount;
     public static RelativeLayout relativeLayoutContactsCount;
     public static ProgressWheel progressWheel;
+    private ButtonRectangle btnBackupContacts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +98,8 @@ public class ActivityContacts extends AppCompatActivity {
         progressWheel = (ProgressWheel) findViewById (R.id.progress);
         txtContactsCount = (TextView) findViewById (R.id.txtViewContactsCount);
         relativeLayoutContactsCount = (RelativeLayout) findViewById (R.id.linearLayoutContactsCount);
+        btnBackupContacts = (ButtonRectangle) findViewById (R.id.buttonContactsBackup);
+        btnBackupContacts.setOnClickListener(this);
     }
 
     /**
@@ -112,28 +114,6 @@ public class ActivityContacts extends AppCompatActivity {
         }catch (Exception e){
             e.getMessage().toString();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.contacts_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id){
-            case R.id.action_backup_contacts:
-                try{
-                    new BackupContactsInBackground(ActivityContacts.this).execute();
-                }catch (Exception e){
-                    e.getMessage().toString();
-                }
-        }
-
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -157,5 +137,16 @@ public class ActivityContacts extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == btnBackupContacts){
+            try{
+                new BackupContactsInBackground(ActivityContacts.this).execute();
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
+        }
     }
 }

@@ -113,7 +113,7 @@ public class LoadContactsInBackground extends AsyncTask<Void, String, Void>{
 
                     //Adding model class to ArrayList<ContactsInfo>
                     info.add(contactsInfo);
-                    cursor.close();
+//                    cursor.close();
                 }
             }
         }catch (Exception e){

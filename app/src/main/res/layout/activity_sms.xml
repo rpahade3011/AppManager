@@ -63,8 +63,20 @@
         android:id="@+id/listViewSms"
         style="@style/ListStyle_2"
         android:layout_below="@id/linearLayoutSmsCount"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:layout_above="@+id/buttonSMSBackup">
 
     </ListView>
+    <com.gc.materialdesign.views.ButtonRectangle
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonSMSBackup"
+        android:background="@color/card_orange"
+        android:text="@string/action_sms_backup"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+    </com.gc.materialdesign.views.ButtonRectangle>
 
 </RelativeLayout>

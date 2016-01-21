@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -55,8 +54,18 @@ public class FragmentStorage extends AppCompatActivity{
 
     public static TextView_Regular txtImage;
     public static TextView_Light txtImageSize;
+    public static TextView_Regular txtVideo;
+    public static TextView_Light txtVideoSize;
     public static TextView_Regular txtSound;
     public static TextView_Light txtSoundSize;
+    public static TextView_Regular txtDocuments;
+    public static TextView_Light txtDocumentsSize;
+    public static TextView_Regular txtApp;
+    public static TextView_Light txtAppSize;
+    public static TextView_Regular txtText;
+    public static TextView_Light txtTextSize;
+    public static TextView_Regular txtOther;
+    public static TextView_Light txtOtherSize;
 
     public static String sd_card_total_space;
     public static String sd_card_used_space;
@@ -66,8 +75,16 @@ public class FragmentStorage extends AppCompatActivity{
     public static String ext_sd_card_used_space;
     public static String ext_sd_card_free_space;
 
+    public static String apps_size;
+    public static String alarms_size;
     public static String image_size;
+    public static String documents_size;
+    public static String downloads_size;
     public static String music_size;
+    public static String movies_size;
+    public static String pictures_size;
+    public static String ringtones_size;
+    public static String other_size;
 
     public static float sd_card_total_per;
     public static float sd_card_used_per;
@@ -75,7 +92,10 @@ public class FragmentStorage extends AppCompatActivity{
     public static float ext_sd_card_total_per;
     public static float ext_sd_card_used_per;
 
-    private String[] storageLocations = new String[]{Environment.DIRECTORY_ALARMS,
+    private String APPS_DIR = Environment.getExternalStorageDirectory()+"data/app";
+
+    private String[] storageLocations = new String[]{APPS_DIR,
+            Environment.DIRECTORY_ALARMS,
             Environment.DIRECTORY_DCIM,
             Environment.DIRECTORY_DOCUMENTS,
             Environment.DIRECTORY_DOWNLOADS,
@@ -83,7 +103,7 @@ public class FragmentStorage extends AppCompatActivity{
             Environment.DIRECTORY_MUSIC,
             Environment.DIRECTORY_PICTURES,
             Environment.DIRECTORY_RINGTONES};
-    private String[] storageLocationsName = new String[]{"Storage.ALARMS",
+    private String[] storageLocationsName = new String[]{"Storage.APPS","Storage.ALARMS",
             "Storage.DCIM",
             "Storage.DOCUMENTS",
             "Storage.DOWNLOADS",
@@ -173,8 +193,18 @@ public class FragmentStorage extends AppCompatActivity{
 
         txtImage = (TextView_Regular) findViewById (R.id.txtImage);
         txtImageSize = (TextView_Light) findViewById (R.id.txtImageSize);
+        txtVideo = (TextView_Regular) findViewById (R.id.txtVideo);
+        txtVideoSize= (TextView_Light) findViewById (R.id.txtVideoSize);
         txtSound = (TextView_Regular) findViewById (R.id.txtSound);
         txtSoundSize = (TextView_Light) findViewById (R.id.txtSoundSize);
+        txtDocuments = (TextView_Regular) findViewById (R.id.txtDocument);
+        txtDocumentsSize = (TextView_Light) findViewById (R.id.txtDocumentSize);
+        txtApp = (TextView_Regular) findViewById (R.id.txtApp);
+        txtAppSize = (TextView_Light) findViewById (R.id.txtAppSize);
+        txtText = (TextView_Regular) findViewById (R.id.txtText);
+        txtTextSize = (TextView_Light) findViewById (R.id.txtTextSize);
+        txtOther = (TextView_Regular) findViewById (R.id.txtOther);
+        txtOtherSize = (TextView_Light) findViewById (R.id.txtOtherSize);
         listViewStorage = (ListView) findViewById (R.id.listview);
     }
 
@@ -218,22 +248,36 @@ public class FragmentStorage extends AppCompatActivity{
 
     }
 
+    /**
+     * THIS METHOD IS USED TO CALCULATE THE TOTAL SIZES
+     * OF EACH FOLDER PRESENT IN INTERNAL STORAGE.
+     */
     private void getFullStatistics() {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+                apps_size = SpaceStatistics.getAppsStatistics(FragmentStorage.this);
+                alarms_size = SpaceStatistics.getAlarmsStatistics(FragmentStorage.this);
                 image_size = SpaceStatistics.getImagesStatistics(FragmentStorage.this);
+                documents_size = SpaceStatistics.getDocumentsStatistics(FragmentStorage.this);
+                downloads_size = SpaceStatistics.getDownloadsStatistics(FragmentStorage.this);
                 music_size = SpaceStatistics.getMusicStatistics(FragmentStorage.this);
-                Log.d("IMAGE SIZE-->", image_size);
-                setStatisticsData();
+                movies_size = SpaceStatistics.getMoviesStatistics(FragmentStorage.this);
+                pictures_size = SpaceStatistics.getPicturesStatistics(FragmentStorage.this);
+                ringtones_size = SpaceStatistics.getRingtonesStatistics(FragmentStorage.this);
+
+                txtImageSize.setText(image_size);
+                txtVideoSize.setText(movies_size);
+                txtSoundSize.setText(music_size);
+                txtDocumentsSize.setText(documents_size);
+                txtAppSize.setText(apps_size);
+                txtTextSize.setText(pictures_size);
+                txtDocumentsSize.setText(downloads_size);
+                txtOtherSize.setText(alarms_size);
             }
         });
         t.start();
-    }
 
-    private void setStatisticsData(){
-        txtImageSize.setText(image_size);
-        txtSoundSize.setText(music_size);
     }
 
     /**

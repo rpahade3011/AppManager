@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.appman.appmanager.AppManagerApplication;
@@ -337,15 +336,20 @@ public class MemoryCleanActivity extends AppCompatActivity implements CoreServic
                 mCoreService.killBackgroundProcesses(mAppProcessInfos.get(i).processName);
                 mAppProcessInfos.remove(mAppProcessInfos.get(i));
                 mClearMemoryAdapter.notifyDataSetChanged();
-                getAvailableRam();
+                //getAvailableRam();
             }
         }
         Allmemory = Allmemory - killAppmemory;
-        String msg = getString(R.string.cleaned, StorageUtil.convertStorage(killAppmemory));
-        Toast.makeText(mContext, msg + " cleaned", Toast.LENGTH_SHORT).show();
-        if (Allmemory > 0) {
-            refeshTextCounter();
-        }
+        String memKilled = textCounter.getText().toString();
+        Intent intent = new Intent(MemoryCleanActivity.this, ActivityAfterMemoryCleaned.class);
+        intent.putExtra("memoryKilled", memKilled);
+        intent.putExtra("memorySuffix", sufix.getText().toString());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+
+
+
 
     }
     @Override

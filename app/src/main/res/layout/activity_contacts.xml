@@ -71,8 +71,21 @@
         android:id="@+id/listViewContacts"
         style="@style/ListStyle_2"
         android:layout_below="@id/linearLayoutContactsCount"
-        android:visibility="invisible">
+        android:visibility="visible"
+        android:layout_above="@+id/buttonContactsBackup">
 
     </ListView>
+
+    <com.gc.materialdesign.views.ButtonRectangle
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonContactsBackup"
+        android:background="@color/md_purple_500"
+        android:text="@string/action_contacts_backup"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+    </com.gc.materialdesign.views.ButtonRectangle>
 
 </RelativeLayout>
