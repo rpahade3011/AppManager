@@ -38,9 +38,6 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
             progressDialog = new ProgressDialog(mActivity);
             progressDialog.setMessage("Please wait while we are creating a backup.");
             progressDialog.setCancelable(false);
-            progressDialog.setProgressStyle(1);
-            progressDialog.setMax(100);
-            progressDialog.setProgress(0);
             progressDialog.show();
         }
     }
@@ -101,7 +98,7 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
             progressDialog.dismiss();
             progressDialog = null;
         }
-
+        Toast.makeText(mActivity, "Backup performed successfully of "+smsOperationInfoArrayList.size()+ " SMS's", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -145,6 +142,5 @@ public class BackupSmsInBackground extends AsyncTask<Void, Void, Void>{
         {
             e.printStackTrace();
         }
-        Toast.makeText(mActivity, "Backup performed successfully of "+list.size()+ " SMS's", Toast.LENGTH_SHORT).show();
     }
 }

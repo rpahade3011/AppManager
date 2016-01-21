@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.appman.appmanager.R;
 import com.appman.appmanager.models.StorageDir;
 
@@ -26,7 +28,6 @@ public class StorageDirAdapter extends BaseAdapter{
         this.mArrayList = list;
         this.inflater = LayoutInflater.from(mContext);
     }
-
 
 
     @Override
@@ -57,6 +58,25 @@ public class StorageDirAdapter extends BaseAdapter{
 
         txtHeader.setText(storageDir.getDirectoryName());
         txtPath.setText("Path : " + "/" +storageDir.getDirectoryPath());
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext);
+                builder.title(storageDir.getDirectoryName());
+                builder.icon(mContext.getDrawable(R.mipmap.ic_action_file_folder));
+                builder.content("Path : " + "/" + storageDir.getDirectoryPath());
+                builder.positiveText("OK");
+                builder.onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        dialog.dismiss();
+                    }
+                });
+                MaterialDialog dialog = builder.build();
+                dialog.show();
+            }
+        });
         return view;
     }
 }

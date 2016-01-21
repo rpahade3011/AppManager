@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
 import android.text.format.Formatter;
-import android.widget.Toast;
 
 import java.io.File;
 
@@ -63,6 +62,11 @@ public class StorageViewer {
 
     }
 
+    /**
+     * THIS METHOD IS USED TO GET THE TOTAL SPACE OF EXTERNAL MEDIA
+     * @param ctx
+     * @return total memory with formatter.
+     */
     public static String showExternalSDCardFreeSpace(Context ctx){
         File path = Environment.getExternalStorageDirectory();
         StatFs fs = new StatFs(path.getPath());
@@ -70,6 +74,11 @@ public class StorageViewer {
         return Formatter.formatFileSize(ctx, aval);
     }
 
+    /**
+     * THIS METHOD IS USED TO GET THE USED SPACE OF EXTERNAL MEDIA
+     * @param ctx
+     * @return used memory with formatter.
+     */
     public static String showExternalSDCardUsedSpace(Context ctx){
         if (externalMemoryAvailable()){
             File path = Environment.getExternalStorageDirectory();
@@ -90,6 +99,11 @@ public class StorageViewer {
 
     }
 
+    /**
+     * THIS METHOD IS TO CHECK WHETHER EXTERNAL MEDIA IS MOUNTED OR NOT
+     * ON THE DEVICE.
+     * @return status OF EXTERNAL MEDIA.
+     */
     public static boolean externalMemoryAvailable() {
         return android.os.Environment.getExternalStorageState().equals(
                 android.os.Environment.MEDIA_MOUNTED);

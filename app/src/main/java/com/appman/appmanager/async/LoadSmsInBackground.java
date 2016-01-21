@@ -50,13 +50,20 @@ public class LoadSmsInBackground extends AsyncTask<Void, String, Void>{
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         SmsActivity.progressWheel.setVisibility(View.GONE);
-        if (SmsActivity.arrayList.size() < 0){
+        if (SmsActivity.arrayList.size() < 0 || SmsActivity.arrayList == null){
             Toast.makeText(mActivity, "No SMS found on your device", Toast.LENGTH_SHORT).show();
         }else{
             int count = SmsActivity.arrayList.size();
-            SmsActivity.listViewSms.setVisibility(View.VISIBLE);
+            SmsActivity.relativeLayoutSmsCount.setVisibility(View.VISIBLE);
             SmsActivity.txtSmsCount.setText(String.valueOf(count));
-            SmsActivity.listViewSms.setAdapter(new SmsAdapter(mActivity, SmsActivity.arrayList));
+            SmsActivity.listViewSms.setVisibility(View.VISIBLE);
+            try{
+                SmsActivity.listViewSms.setAdapter(new SmsAdapter(mActivity, SmsActivity.arrayList));
+            }catch (NullPointerException npe){
+                npe.getMessage().toString();
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
         }
     }
 

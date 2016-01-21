@@ -43,41 +43,7 @@ public class LoadContactsInBackground extends AsyncTask<Void, String, Void>{
     protected Void doInBackground(Void... params) {
 
         ActivityContacts.arrayList = new ArrayList<ContactsInfo>();
-
-        Cursor cursor = mActivity.getContentResolver().query(Contacts.People.CONTENT_URI, null,
-                null, null, Contacts.People.NAME + " ASC");
-        mActivity.startManagingCursor(cursor);
-
-        //BIND THE NAME AND THE NUMBER FIELDS
-        String[] columns = new String[] { Contacts.People.NAME, Contacts.People.NUMBER };
-
-
-        if (cursor.getCount() > 0){
-
-            int idCol = cursor.getColumnIndex(Contacts.People._ID);
-            int nameCol = cursor.getColumnIndex(Contacts.People.NAME);
-            int numCol = cursor.getColumnIndex(Contacts.People.NUMBER);
-
-            while (cursor.moveToNext()){
-                name = cursor.getString(nameCol);
-                number = cursor.getString(numCol);
-                id = cursor.getLong(idCol);
-
-                // RETRIEVE THE CONTACT PHOTO AS A BITMAP
-                Uri uri = ContentUris.withAppendedId(Contacts.People.CONTENT_URI, id);
-                bitmap = Contacts.People.loadContactPhoto(mActivity, uri, R.mipmap.ic_circled_user, null);
-
-                // Setting values in our model classes
-                ContactsInfo contactsInfo = new ContactsInfo();
-                contactsInfo.setContactId(id);
-                contactsInfo.setContactImage(bitmap);
-                contactsInfo.setContactName(name);
-                contactsInfo.setContactNumber(number);
-
-                //Adding model class to ArrayList<ContactsInfo>
-                ActivityContacts.arrayList.add(contactsInfo);
-            }
-        }
+        ActivityContacts.arrayList = getAllContacts();
         return null;
     }
 
@@ -94,9 +60,65 @@ public class LoadContactsInBackground extends AsyncTask<Void, String, Void>{
             Toast.makeText(mActivity, "No Contacts found on your device", Toast.LENGTH_SHORT).show();
         }else {
             int count  = ActivityContacts.arrayList.size();
-            ActivityContacts.listViewContacts.setVisibility(View.VISIBLE);
+            ActivityContacts.relativeLayoutContactsCount.setVisibility(View.VISIBLE);
             ActivityContacts.txtContactsCount.setText("" + count);
-            ActivityContacts.listViewContacts.setAdapter(new ContactsAdapter(mActivity, ActivityContacts.arrayList));
+            ActivityContacts.listViewContacts.setVisibility(View.VISIBLE);
+            try{
+                ActivityContacts.listViewContacts.setAdapter(new ContactsAdapter(mActivity, ActivityContacts.arrayList));
+            }catch (NullPointerException npe){
+                npe.getMessage().toString();
+            }catch (Exception e){
+                e.getMessage().toString();
+            }
         }
+    }
+
+    /**
+     * THIS METHOD WILL FETCH ALL THE CONTACTS STORED IN THE DEVICE,
+     * AND SHOW IT IN THE LISTVIEW.
+     * @return info
+     */
+    public ArrayList<ContactsInfo> getAllContacts(){
+        ArrayList<ContactsInfo> info = new ArrayList<ContactsInfo>();
+        try{
+
+            Cursor cursor = mActivity.getContentResolver().query(Contacts.People.CONTENT_URI, null,
+                    null, null, Contacts.People.NAME + " ASC");
+            mActivity.startManagingCursor(cursor);
+
+            //BIND THE NAME AND THE NUMBER FIELDS
+            String[] columns = new String[] { Contacts.People.NAME, Contacts.People.NUMBER };
+
+            if (cursor.getCount() > 0){
+
+                int idCol = cursor.getColumnIndex(Contacts.People._ID);
+                int nameCol = cursor.getColumnIndex(Contacts.People.NAME);
+                int numCol = cursor.getColumnIndex(Contacts.People.NUMBER);
+
+                while (cursor.moveToNext()){
+                    name = cursor.getString(nameCol);
+                    number = cursor.getString(numCol);
+                    id = cursor.getLong(idCol);
+
+                    // RETRIEVE THE CONTACT PHOTO AS A BITMAP
+                    Uri uri = ContentUris.withAppendedId(Contacts.People.CONTENT_URI, id);
+                    bitmap = Contacts.People.loadContactPhoto(mActivity, uri, R.mipmap.ic_circled_user, null);
+
+                    // Setting values in our model classes
+                    ContactsInfo contactsInfo = new ContactsInfo();
+                    contactsInfo.setContactId(id);
+                    contactsInfo.setContactImage(bitmap);
+                    contactsInfo.setContactName(name);
+                    contactsInfo.setContactNumber(number);
+
+                    //Adding model class to ArrayList<ContactsInfo>
+                    info.add(contactsInfo);
+                    cursor.close();
+                }
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return info;
     }
 }

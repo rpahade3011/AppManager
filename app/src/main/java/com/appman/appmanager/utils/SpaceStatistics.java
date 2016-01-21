@@ -2,11 +2,9 @@ package com.appman.appmanager.utils;
 
 import android.content.Context;
 import android.os.Environment;
-import android.os.StatFs;
 import android.text.format.Formatter;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by Rudraksh on 01-Jan-16.
@@ -14,21 +12,45 @@ import java.io.IOException;
 public class SpaceStatistics {
 
     // Global Definitions
-
+    private static String DCIM =  Environment.DIRECTORY_DCIM;
+    private static String MUSIC = Environment.DIRECTORY_MUSIC;
+    private static String MOVIES = Environment.DIRECTORY_MOVIES;
+    private static String PICTURES = Environment.DIRECTORY_PICTURES;
+    private static String RINGTONES = Environment.DIRECTORY_RINGTONES;
 
     public static String getImagesStatistics(Context ctx){
+        long size = 0;
 
         try{
-            StatFs fs = new StatFs(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath());
-            long total = ((long)fs.getBlockCount() * fs.getBlockSize());
-            long free  = ((long)fs.getAvailableBlocks() * fs.getBlockSize());
-            long busy  = total - free;
-            return Formatter.formatFileSize(ctx, busy);
-
+            File path = new File(DCIM);
+            if (path.isDirectory()){
+                for (File file : path.listFiles()){
+                    size += file.length();
+                }
+            }else {
+                size = path.length();
+            }
         }catch (Exception e){
             e.getMessage().toString();
         }
-        return "";
+        return Formatter.formatFileSize(ctx, size);
+    }
 
+    public static String getMusicStatistics(Context ctx){
+        long size = 0;
+
+        try{
+            File path = new File(MUSIC);
+            if (path.isDirectory()){
+                for (File file : path.listFiles()){
+                    size += file.length();
+                }
+            }else {
+                size = path.length();
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return Formatter.formatFileSize(ctx, size);
     }
 }

@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.appman.appmanager.AppManagerApplication;
@@ -39,6 +40,7 @@ public class SmsActivity extends AppCompatActivity{
 
     public static ProgressWheel progressWheel;
     public static TextView txtSmsCount;
+    public static RelativeLayout relativeLayoutSmsCount;
 
 
     @Override
@@ -93,7 +95,7 @@ public class SmsActivity extends AppCompatActivity{
      */
     private void initViews(){
         listViewSms = (ListView)findViewById(R.id.listViewSms);
-
+        relativeLayoutSmsCount = (RelativeLayout) findViewById (R.id.linearLayoutSmsCount);
         progressWheel = (ProgressWheel)findViewById(R.id.progress);
         txtSmsCount = (TextView)findViewById(R.id.txtViewSmsCount);
 

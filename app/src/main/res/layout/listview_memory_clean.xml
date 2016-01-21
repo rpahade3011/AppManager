@@ -46,7 +46,7 @@
         android:layout_toLeftOf="@+id/choice_radio"
         android:scaleType="centerCrop" />
 
-    <!--<RadioButton
+    <RadioButton
         android:id="@+id/choice_radio"
         android:layout_width="30.0dip"
         android:layout_height="wrap_content"
@@ -55,6 +55,7 @@
         android:button="@drawable/memory_selector"
         android:clickable="false"
         android:focusable="false"
-        android:text="  " />-->
+        android:text="  "
+        android:visibility="invisible"/>
 </RelativeLayout>
 

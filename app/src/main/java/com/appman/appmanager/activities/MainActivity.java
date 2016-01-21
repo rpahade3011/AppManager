@@ -340,12 +340,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     }
 
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        showInterstitialAd();
-    }*/
-
     class getInstalledApps extends AsyncTask<Void, String, Void> {
         private Integer totalApps;
         private Integer actualApps;

@@ -24,7 +24,8 @@
         android:layout_below="@id/toolbar"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"

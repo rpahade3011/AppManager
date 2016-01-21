@@ -1,15 +1,20 @@
 package com.appman.appmanager.activities;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
+import com.appman.appmanager.utils.AppPreferences;
+import com.appman.appmanager.utils.UtilsUI;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
@@ -23,25 +28,38 @@ public class DeviceInfo extends AppCompatActivity {
     TextView txtOSVersion, txtVersionRelease, txtApiLevel, txtDevice, txtModel,
     txtProduct, txtBrand, txtDisplay, txtCpuAbi1, txtCpuAbi2, txtHardware, txtId, txtManufacturer, txtSerial, txtUser, txtHost;
     ScrollView scrollView;
+    private AppPreferences appPreferences;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.device_info);
+        this.appPreferences = AppManagerApplication.getAppPreferences();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getResources().getString(R.string.action_device));
+        toolbar.setBackgroundColor(getResources().getColor(R.color.md_grey_500));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
+        // Setting navigation bar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().setStatusBarColor(UtilsUI.darker(getResources().getColor(R.color.md_grey_700), 0.8));
+
+
+            toolbar.setBackgroundColor(getResources().getColor(R.color.md_grey_500));
+            if (!appPreferences.getNavigationBlackPref()) {
+                getWindow().setNavigationBarColor(getResources().getColor(R.color.md_grey_500));
+            }
+        }
 
         findViewsById();
-
         displayDeviceInfo();
         loadAdMob();
     }
@@ -78,7 +96,6 @@ public class DeviceInfo extends AppCompatActivity {
         String _BRAND = android.os.Build.BRAND;
         String _DISPLAY = android.os.Build.DISPLAY;
         String _CPU_ABI = android.os.Build.CPU_ABI;
-        String _CPU_ABI2 = android.os.Build.CPU_ABI2;
         String _HARDWARE = android.os.Build.HARDWARE;
         String _ID = android.os.Build.ID;
         String _MANUFACTURER = android.os.Build.MANUFACTURER;
@@ -98,7 +115,6 @@ public class DeviceInfo extends AppCompatActivity {
         txtBrand.setText(_BRAND);
         txtDisplay.setText(_DISPLAY);
         txtCpuAbi1.setText(_CPU_ABI);
-        txtCpuAbi2.setText(_CPU_ABI2);
         txtHardware.setText(_HARDWARE);
         txtId.setText(_ID);
         txtManufacturer.setText(_MANUFACTURER);

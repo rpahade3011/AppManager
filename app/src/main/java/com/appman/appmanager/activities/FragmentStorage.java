@@ -55,6 +55,8 @@ public class FragmentStorage extends AppCompatActivity{
 
     public static TextView_Regular txtImage;
     public static TextView_Light txtImageSize;
+    public static TextView_Regular txtSound;
+    public static TextView_Light txtSoundSize;
 
     public static String sd_card_total_space;
     public static String sd_card_used_space;
@@ -65,6 +67,7 @@ public class FragmentStorage extends AppCompatActivity{
     public static String ext_sd_card_free_space;
 
     public static String image_size;
+    public static String music_size;
 
     public static float sd_card_total_per;
     public static float sd_card_used_per;
@@ -170,6 +173,8 @@ public class FragmentStorage extends AppCompatActivity{
 
         txtImage = (TextView_Regular) findViewById (R.id.txtImage);
         txtImageSize = (TextView_Light) findViewById (R.id.txtImageSize);
+        txtSound = (TextView_Regular) findViewById (R.id.txtSound);
+        txtSoundSize = (TextView_Light) findViewById (R.id.txtSoundSize);
         listViewStorage = (ListView) findViewById (R.id.listview);
     }
 
@@ -218,10 +223,17 @@ public class FragmentStorage extends AppCompatActivity{
             @Override
             public void run() {
                 image_size = SpaceStatistics.getImagesStatistics(FragmentStorage.this);
-                Log.d("IMAGE SIZE-->",image_size);
+                music_size = SpaceStatistics.getMusicStatistics(FragmentStorage.this);
+                Log.d("IMAGE SIZE-->", image_size);
+                setStatisticsData();
             }
         });
         t.start();
+    }
+
+    private void setStatisticsData(){
+        txtImageSize.setText(image_size);
+        txtSoundSize.setText(music_size);
     }
 
     /**

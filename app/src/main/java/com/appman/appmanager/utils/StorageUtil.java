@@ -19,7 +19,6 @@ import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
 
-
 import com.appman.appmanager.models.SDCardInfo;
 import com.appman.appmanager.models.StorageSize;
 
@@ -82,8 +81,6 @@ public class StorageUtil {
     }
 
     public static SDCardInfo getSDCardInfo() {
-        // String sDcString = Environment.getExternalStorageState();
-
         if (Environment.isExternalStorageRemovable()) {
             String sDcString = Environment.getExternalStorageState();
             if (sDcString.equals(Environment.MEDIA_MOUNTED)) {
@@ -94,23 +91,23 @@ public class StorageUtil {
                     StatFs statfs = new StatFs(
                             pathFile.getPath());
 
-                    // 获取SDCard上BLOCK总数
+
                     long nTotalBlocks = statfs.getBlockCount();
 
-                    // 获取SDCard上每个block的SIZE
+
                     long nBlocSize = statfs.getBlockSize();
 
-                    // 获取可供程序使用的Block的数量
+
                     long nAvailaBlock = statfs.getAvailableBlocks();
 
-                    // 获取剩下的所有Block的数量(包括预留的一般程序无法使用的块)
+
                     long nFreeBlock = statfs.getFreeBlocks();
 
                     SDCardInfo info = new SDCardInfo();
-                    // 计算SDCard 总容量大小MB
+
                     info.total = nTotalBlocks * nBlocSize;
 
-                    // 计算 SDCard 剩余大小MB
+
                     info.free = nAvailaBlock * nBlocSize;
 
                     return info;
@@ -124,7 +121,6 @@ public class StorageUtil {
 
     public static SDCardInfo getSystemSpaceInfo(Context context) {
         File path = Environment.getDataDirectory();
-        // File path = context.getCacheDir().getAbsoluteFile();
         StatFs stat = new StatFs(path.getPath());
         long blockSize = stat.getBlockSize();
         long totalBlocks = stat.getBlockCount();

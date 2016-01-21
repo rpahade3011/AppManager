@@ -255,12 +255,5 @@
             </android.support.v7.widget.CardView>-->
         </RelativeLayout>
     </ScrollView>
-    <!--<FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include
-            android:id="@+id/fab"
-            layout="@layout/fab_multiple" />
-    </FrameLayout>-->
 
 </RelativeLayout>

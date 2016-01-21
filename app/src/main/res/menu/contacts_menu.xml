@@ -1,12 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activities.SmsActivity">
+    tools:context=".activities.ActivityContacts">
     <item
-        android:id="@+id/action_backup_sms"
+        android:id="@+id/action_backup_contacts"
         android:orderInCategory="100"
         android:icon="@mipmap/data_backup"
-        android:title="@string/action_sms_backup"
+        android:title="@string/action_contacts_backup"
         android:visible="true"
         app:showAsAction="always" />
     <!--<item

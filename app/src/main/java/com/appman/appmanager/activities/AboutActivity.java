@@ -140,6 +140,7 @@ public class AboutActivity extends AppCompatActivity {
     private void loadAdMob(){
         // Load an ad into the AdMob banner view.
         AdView adView = (AdView) findViewById(R.id.adView);
+        adView.setVisibility(View.VISIBLE);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
