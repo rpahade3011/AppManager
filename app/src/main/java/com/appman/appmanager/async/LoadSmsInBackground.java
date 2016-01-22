@@ -1,10 +1,13 @@
 package com.appman.appmanager.async;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Toast;
 
@@ -77,10 +80,19 @@ public class LoadSmsInBackground extends AsyncTask<Void, String, Void>{
         ArrayList<SmsInfo> lstSms = new ArrayList<SmsInfo>();
         SmsInfo smsInfo = new SmsInfo();
 
+        if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            //return true;
+        }
+
         Uri message = Uri.parse("content://sms");
         ContentResolver cr = mActivity.getContentResolver();
-
-
         Cursor c = cr.query(message, null, null, null, null);
         mActivity.startManagingCursor(c);
         int totalSMS = c.getCount();

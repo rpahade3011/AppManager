@@ -26,7 +26,7 @@ public class DeviceInfo extends AppCompatActivity {
 
     Toolbar toolbar;
     TextView txtOSVersion, txtVersionRelease, txtApiLevel, txtDevice, txtModel,
-    txtProduct, txtBrand, txtDisplay, txtCpuAbi1, txtCpuAbi2, txtHardware, txtId, txtManufacturer, txtSerial, txtUser, txtHost;
+    txtProduct, txtBrand, txtDisplay, txtCpuAbi1, txtHardware, txtId, txtManufacturer, txtSerial, txtUser, txtHost;
     ScrollView scrollView;
     private AppPreferences appPreferences;
 
@@ -75,7 +75,6 @@ public class DeviceInfo extends AppCompatActivity {
         txtBrand = (TextView)findViewById(R.id.txtDeviceBrand);
         txtDisplay = (TextView)findViewById(R.id.txtDisplay);
         txtCpuAbi1 = (TextView)findViewById(R.id.txtCpuAbi1);
-        txtCpuAbi2 = (TextView)findViewById(R.id.txtCpuAbi2);
         txtHardware = (TextView)findViewById(R.id.txtHardware);
         txtId = (TextView)findViewById(R.id.txtID);
         txtManufacturer = (TextView)findViewById(R.id.txtManufacturer);
