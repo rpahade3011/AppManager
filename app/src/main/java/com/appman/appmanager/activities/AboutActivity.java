@@ -1,6 +1,7 @@
 package com.appman.appmanager.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
 import com.appman.appmanager.utils.AppPreferences;
+import com.appman.appmanager.utils.InternetConnection;
 import com.appman.appmanager.utils.UtilsApp;
 import com.appman.appmanager.utils.UtilsUI;
 import com.google.android.gms.ads.AdRequest;
@@ -28,6 +30,9 @@ public class AboutActivity extends AppCompatActivity {
     private Context context;
     public static String facebook_id = "rudraksh.pahade";
     public static String twitter_id = "pahade_rudraksh";
+    private boolean isInternetConnected = false;
+
+    private InternetConnection internetConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         this.appPreferences = AppManagerApplication.getAppPreferences();
         this.context = this;
+        internetConnection = new InternetConnection();
 
         setInitialConfiguration();
         setScreenElements();
@@ -83,35 +89,55 @@ public class AboutActivity extends AppCompatActivity {
 
         header.setBackgroundColor(getResources().getColor(R.color.bkg_card));
         appNameVersion.setText(getResources().getString(R.string.app_name) + " " + UtilsApp.getAppVersionName(getApplicationContext()) + "(" + UtilsApp.getAppVersionCode(getApplicationContext()) + ")");
+
+        // If clicks on Google Play
         about_googleplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
-                    UtilsApp.goToGooglePlay(context, context.getPackageName());
-                }catch (Exception e){
-                    e.getMessage().toString();
+                isInternetConnected = internetConnection.isInternetConnetion(AboutActivity.this);
+                if (isInternetConnected == true){
+                    try{
+                        UtilsApp.goToGooglePlay(context, context.getPackageName());
+                    }catch (Exception e){
+                        e.getMessage().toString();
+                    }
+                }else {
+                    startActivity(new Intent(AboutActivity.this,ActivityNoInternetConnection.class));
+                }
+            }
+        });
+        // If clicks on Facebook
+        about_facebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isInternetConnected = internetConnection.isInternetConnetion(AboutActivity.this);
+                if (isInternetConnected == true){
+                    try{
+                        UtilsApp.goToFacebook(context, facebook_id);
+                    }catch (Exception e){
+                        e.getMessage().toString();
+                    }
+                }else {
+                    startActivity(new Intent(AboutActivity.this,ActivityNoInternetConnection.class));
                 }
 
             }
         });
-        about_facebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    UtilsApp.goToFacebook(context, facebook_id);
-                }catch (Exception e){
-                    e.getMessage().toString();
-                }
-            }
-        });
+        // If clicks on Twitter
         about_twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    UtilsApp.goToTwitter(context, twitter_id);
-                }catch (Exception e){
-                    e.getMessage().toString();
+                isInternetConnected = internetConnection.isInternetConnetion(AboutActivity.this);
+                if (isInternetConnected == true){
+                    try{
+                        UtilsApp.goToTwitter(context, twitter_id);
+                    }catch (Exception e){
+                        e.getMessage().toString();
+                    }
+                }else {
+                    startActivity(new Intent(AboutActivity.this,ActivityNoInternetConnection.class));
                 }
+
             }
         });
     }

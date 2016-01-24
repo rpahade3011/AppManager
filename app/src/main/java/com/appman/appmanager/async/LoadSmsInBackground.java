@@ -1,13 +1,10 @@
 package com.appman.appmanager.async;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,7 +20,7 @@ import java.util.ArrayList;
 public class LoadSmsInBackground extends AsyncTask<Void, String, Void>{
 
     private Activity mActivity;
-
+    private static final int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 1;
     public LoadSmsInBackground(Activity activity){
         this.mActivity = activity;
     }
@@ -80,40 +77,33 @@ public class LoadSmsInBackground extends AsyncTask<Void, String, Void>{
         ArrayList<SmsInfo> lstSms = new ArrayList<SmsInfo>();
         SmsInfo smsInfo = new SmsInfo();
 
-        if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            //return true;
-        }
-
-        Uri message = Uri.parse("content://sms");
-        ContentResolver cr = mActivity.getContentResolver();
-        Cursor c = cr.query(message, null, null, null, null);
-        mActivity.startManagingCursor(c);
-        int totalSMS = c.getCount();
+        try{
+            Uri message = Uri.parse("content://sms");
+            ContentResolver cr = mActivity.getContentResolver();
+            Cursor c = cr.query(message, null, null, null, null);
+            mActivity.startManagingCursor(c);
+            int totalSMS = c.getCount();
 
 
-        if (c.moveToFirst()) {
-            for (int i = 0; i < totalSMS; i++) {
+            if (c.moveToFirst()) {
+                for (int i = 0; i < totalSMS; i++) {
 
-                smsInfo = new SmsInfo();
-                smsInfo.setId(Integer.parseInt(c.getString(c.getColumnIndexOrThrow("_id"))));
-                smsInfo.setThreadId(c.getString(c.getColumnIndexOrThrow("thread_id")));
-                smsInfo.setPerson(c.getString(c.getColumnIndexOrThrow("person")));
-                smsInfo.setAddress(c.getString(c.getColumnIndexOrThrow("address")));
-                smsInfo.setType(Integer.parseInt(c.getString(c.getColumnIndexOrThrow("type"))));
-                smsInfo.setBody(c.getString(c.getColumnIndexOrThrow("body")));
-                smsInfo.setRead(c.getString(c.getColumnIndex("read")));
-                smsInfo.setDate(Long.parseLong(c.getString(c.getColumnIndexOrThrow("date"))));
+                    smsInfo = new SmsInfo();
+                    smsInfo.setId(Integer.parseInt(c.getString(c.getColumnIndexOrThrow("_id"))));
+                    smsInfo.setThreadId(c.getString(c.getColumnIndexOrThrow("thread_id")));
+                    smsInfo.setPerson(c.getString(c.getColumnIndexOrThrow("person")));
+                    smsInfo.setAddress(c.getString(c.getColumnIndexOrThrow("address")));
+                    smsInfo.setType(Integer.parseInt(c.getString(c.getColumnIndexOrThrow("type"))));
+                    smsInfo.setBody(c.getString(c.getColumnIndexOrThrow("body")));
+                    smsInfo.setRead(c.getString(c.getColumnIndex("read")));
+                    smsInfo.setDate(Long.parseLong(c.getString(c.getColumnIndexOrThrow("date"))));
 
-                lstSms.add(smsInfo);
-                c.moveToNext();
+                    lstSms.add(smsInfo);
+                    c.moveToNext();
+                }
             }
+        }catch ( Exception e){
+            e.getMessage().toString();
         }
 
         return lstSms;

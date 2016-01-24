@@ -1,5 +1,7 @@
 package com.appman.appmanager.activities;
 
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,8 @@ import com.appman.appmanager.async.BackupSmsInBackground;
 import com.appman.appmanager.async.LoadSmsInBackground;
 import com.appman.appmanager.models.SmsInfo;
 import com.appman.appmanager.utils.AppPreferences;
+import com.appman.appmanager.utils.UtilsApp;
+import com.appman.appmanager.utils.UtilsDialog;
 import com.appman.appmanager.utils.UtilsUI;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.pnikosis.materialishprogress.ProgressWheel;
@@ -28,6 +32,7 @@ import java.util.ArrayList;
 public class SmsActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static final String TAG = SmsActivity.class.getSimpleName();
+    private static final int MY_PERMISSIONS_REQUEST_READ_SMS = 1;
 
     private AppPreferences appPreferences;
 
@@ -48,6 +53,7 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
         this.appPreferences = AppManagerApplication.getAppPreferences();
         setUpToolbar();
         initViews();
+        checkAndAddPermissions(SmsActivity.this);
         loadSmsInBackground();
     }
     @Override
@@ -102,6 +108,16 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     /**
+     * THIS METHOD IS USED TO CHECK THE SELF PERMISSIONS, REQUIRED FOR
+     * ANDROID 6.0 TO ASK USER TO ALLOW THE PERMISSION.
+     * @param activity
+     */
+
+    private void checkAndAddPermissions(Activity activity) {
+        UtilsApp.checkSMSPermissions(activity);
+    }
+
+    /**
      * THIS METHOD WILL CALL THE {@link LoadSmsInBackground} CLASS
      * TO LOAD ALL THE SMSs IN A DIFFERENT ASYNC TASK
      */
@@ -127,6 +143,25 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
                     e.getMessage().toString();
                 }
                 break;
+        }
+    }
+
+    /**
+     * A PERMISSION CALLBACK JUST LIKE onActivityResult GETS THE GRANTED PERMISSION
+     * FROM THE USER, IF USER DOES NOT ALLOW , WE SHOW THE DIALOG REQUESTING USER TO
+     * ALLOW THE PERMISSION.
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_SMS: {
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    UtilsDialog.showTitleContent(SmsActivity.this, getResources().getString(R.string.dialog_permissions), getResources().getString(R.string.dialog_permissions_description));
+                }
+            }
         }
     }
 }

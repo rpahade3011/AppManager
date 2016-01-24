@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_gravity="center">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:src="@mipmap/cellular_network"
+                android:layout_marginLeft="20dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/app_name"/>
+            <com.appman.appmanager.views.TextView_Regular
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_internet_heading"
+                android:textSize="28sp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/md_blue_500"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:fontFamily="sans-serif-condensed"/>
+            <com.appman.appmanager.views.TextView_Light
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_internet_message"
+                android:textSize="26sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/md_blue_500"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"/>
+
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <com.gc.materialdesign.views.ButtonFlat
+            android:id="@+id/buttonGoToData"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Turn on data"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:fontFamily="sans-serif-condensed">
+        </com.gc.materialdesign.views.ButtonFlat>
+
+        <com.gc.materialdesign.views.ButtonFlat
+            android:id="@+id/buttonGoToWifi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Turn On Wifi"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:fontFamily="sans-serif-condensed">
+
+        </com.gc.materialdesign.views.ButtonFlat>
+
+    </LinearLayout>
+
+</LinearLayout>

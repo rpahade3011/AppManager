@@ -30,7 +30,8 @@
                 android:fontFamily="sans-serif-thin"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:drawableRight="@mipmap/thumb_up"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -43,7 +44,7 @@
                 android:layout_marginTop="10dp"
                 android:rating="3.0"
                 style="@style/customRatingBar"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center|clip_horizontal"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -54,11 +55,11 @@
                 android:text="If you enjoy using AppManager, please take a moment to rate it. Thanks for your support!"
                 android:padding="10dp"
                 android:textSize="18sp"
-                android:gravity="center_vertical"
+                android:gravity="center_horizontal"
                 android:fontFamily="sans-serif-thin"
+                android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edittext_drawable"/>
+                android:layout_marginTop="10dp"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -99,10 +100,10 @@
 
                 <com.gc.materialdesign.views.ButtonFlat
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/buttonRateApp"
                     android:layout_weight="1"
-                    android:text="Rate"
+                    android:text="Rate Now"
                     android:layout_gravity="center_horizontal"
                     android:padding="10dp"
                     android:background="@color/colorPrimary"

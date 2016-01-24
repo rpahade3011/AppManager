@@ -1,5 +1,7 @@
 package com.appman.appmanager.activities;
 
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,8 @@ import com.appman.appmanager.async.BackupContactsInBackground;
 import com.appman.appmanager.async.LoadContactsInBackground;
 import com.appman.appmanager.models.ContactsInfo;
 import com.appman.appmanager.utils.AppPreferences;
+import com.appman.appmanager.utils.UtilsApp;
+import com.appman.appmanager.utils.UtilsDialog;
 import com.appman.appmanager.utils.UtilsUI;
 import com.gc.materialdesign.views.ButtonRectangle;
 import com.google.android.gms.ads.AdListener;
@@ -30,6 +34,7 @@ import java.util.ArrayList;
  * Created by Rudraksh on 19-Jan-16.
  */
 public class ActivityContacts extends AppCompatActivity implements View.OnClickListener{
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
     private AppPreferences appPreferences;
     public static ListView listViewContacts;
@@ -48,6 +53,7 @@ public class ActivityContacts extends AppCompatActivity implements View.OnClickL
 
         setUpToolbar();
         initViews();
+        checkAndAddPermissions(ActivityContacts.this);
         loadContactsInBackground();
         showInterstitialAd();
     }
@@ -103,6 +109,16 @@ public class ActivityContacts extends AppCompatActivity implements View.OnClickL
     }
 
     /**
+     * THIS METHOD IS USED TO CHECK THE SELF PERMISSIONS, REQUIRED FOR
+     * ANDROID 6.0 TO ASK USER TO ALLOW THE PERMISSION.
+     * @param activity
+     */
+
+    private void checkAndAddPermissions(Activity activity) {
+        UtilsApp.checkContactsPermissions(activity);
+    }
+
+    /**
      * METHOD TO LOAD ALL CONTACTS WHICH ARE STORED IN THE DEVICE.
      * THIS METHOD CALLS TO {@link LoadContactsInBackground} ASYNC TASK AND PERFORM
      * THE LOADING PROCEDURE AND SHOWS IT IN LISTVIEW.
@@ -146,6 +162,24 @@ public class ActivityContacts extends AppCompatActivity implements View.OnClickL
                 new BackupContactsInBackground(ActivityContacts.this).execute();
             }catch (Exception e){
                 e.getMessage().toString();
+            }
+        }
+    }
+    /**
+     * A PERMISSION CALLBACK JUST LIKE onActivityResult GETS THE GRANTED PERMISSION
+     * FROM THE USER, IF USER DOES NOT ALLOW , WE SHOW THE DIALOG REQUESTING USER TO
+     * ALLOW THE PERMISSION.
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+                if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    UtilsDialog.showTitleContent(ActivityContacts.this, getResources().getString(R.string.dialog_permissions), getResources().getString(R.string.dialog_permissions_description));
+                }
             }
         }
     }

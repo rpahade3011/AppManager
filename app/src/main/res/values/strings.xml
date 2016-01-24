@@ -53,6 +53,8 @@
     <string name="storage_files_short">files</string>
     <string name="storage_full">Full statistics</string>
     <string name="storage_image">Image</string>
+    <string name="no_internet_heading">You\&apos;re offline</string>
+    <string name="no_internet_message">You need a WIFI or data connection  in order to proceed to view a content on web page.</string>
 
 
     <!-- Messages -->

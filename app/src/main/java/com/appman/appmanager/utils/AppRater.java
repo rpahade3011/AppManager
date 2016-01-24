@@ -4,25 +4,19 @@ package com.appman.appmanager.utils;
  * Created by rudhraksh.pahade on 08-12-2015.
  */
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.appman.appmanager.R;
 import com.gc.materialdesign.views.ButtonFlat;
 
 
 /**
- * AppRater promts prompts engaged users to rate your app in the Android market. It requires a certain number
+ * AppRater prompts engaged users to rate your app in the Android market. It requires a certain number
  * of launches of the app and days since the installation before the rating dialog appears.<br/>
  * Found at: http://www.androidsnippets.com/prompt-engaged-users-to-rate-your-app-in-the-android-market-appirater
  * @author Sissi @ http://www.androidsnippets.com/
@@ -34,6 +28,13 @@ public class AppRater{
     private final static int DAYS_UNTIL_PROMPT = 3;
     private final static int LAUNCHES_UNTIL_PROMPT = 7;
 
+
+    /**
+     * METHOD TO INITIALIZE AND SETUP THE SHARED PREFS VALUES,
+     * GET THE SYSTEM DATE AND INSTALLED DATE OF APPLICATION, WAIT FOR N DAYS
+     * THE CALL THE {@link showRateDialog}
+     * @param mContext
+     */
 
     public static void app_launched(Context mContext) {
 
@@ -65,6 +66,11 @@ public class AppRater{
         editor.commit();
     }
 
+    /**
+     * MEHTOD TO DISPLAY THE CUSTOM DIALOG TO ENGAGED USERS TO RATE THE APPLICATION
+     * @param mContext
+     * @param editor
+     */
     public static void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
         final Dialog dialog = new Dialog(mContext);
         dialog.setTitle("Rate " + APP_TITLE);

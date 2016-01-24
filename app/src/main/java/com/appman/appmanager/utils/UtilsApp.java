@@ -31,6 +31,8 @@ import java.util.Set;
 
 public class UtilsApp {
     private static final int MY_PERMISSIONS_REQUEST_WRITE_READ = 1;
+    private static final int MY_PERMISSIONS_REQUEST_READ_SMS = 1;
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
 
     /**
@@ -360,10 +362,49 @@ public class UtilsApp {
         return res;
     }
 
+    /**
+     * METHOD TO CHECK PERMISSIONS FOR WRITE EXTERNAL STORAGE,
+     * REQUIRED FOR ANDROID 6.0 RUN TIME PERMISSIONS.
+     * @param activity
+     * @return
+     */
     public static Boolean checkPermissions(Activity activity) {
         Boolean res = false;
         if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_READ);
+        } else {
+            res = true;
+        }
+
+        return res;
+    }
+    /**
+     * METHOD TO CHECK PERMISSIONS FOR READ SMS,
+     * REQUIRED FOR ANDROID 6.0 RUN TIME PERMISSIONS.
+     * @param activity
+     * @return
+     */
+    public static Boolean checkSMSPermissions(Activity activity) {
+        Boolean res = false;
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+            activity.requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.READ_SMS}, MY_PERMISSIONS_REQUEST_READ_SMS);
+        } else {
+            res = true;
+        }
+
+        return res;
+    }
+
+    /**
+     * METHOD TO CHECK PERMISSIONS FOR READ CONTACTS,
+     * REQUIRED FOR ANDROID 6.0 RUN TIME PERMISSIONS.
+     * @param activity
+     * @return
+     */
+    public static Boolean checkContactsPermissions(Activity activity) {
+        Boolean res = false;
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            activity.requestPermissions(new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
         } else {
             res = true;
         }
