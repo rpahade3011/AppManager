@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import com.appman.appmanager.AppInfo;
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
-import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import org.apache.commons.io.FileUtils;
 
@@ -274,7 +273,7 @@ public class UtilsApp {
      * @param fabHide FAB button to change
      * @param isHidden true if the app is hidden, false otherwise
      */
-    public static void setAppHidden(Context context, FloatingActionButton fabHide, Boolean isHidden) {
+    /*public static void setAppHidden(Context context, FloatingActionButton fabHide, Boolean isHidden) {
         if (isHidden) {
             fabHide.setTitle(context.getResources().getString(R.string.action_unhide));
             fabHide.setIcon(R.drawable.ic_visibility_white);
@@ -282,7 +281,7 @@ public class UtilsApp {
             fabHide.setTitle(context.getResources().getString(R.string.action_hide));
             fabHide.setIcon(R.drawable.ic_visibility_off_white);
         }
-    }
+    }*/
 
     /**
      * Save an app icon to cache folder
@@ -342,7 +341,7 @@ public class UtilsApp {
         return res;
     }
 
-    public static Boolean extractMLManagerPro(Context context, AppInfo appInfo) {
+    /*public static Boolean extractMLManagerPro(Context context, AppInfo appInfo) {
         Boolean res = false;
         File finalFile = new File(getAppFolder().getPath(), getAPKFilename(appInfo) + ".png");
 
@@ -360,7 +359,7 @@ public class UtilsApp {
         }
 
         return res;
-    }
+    }*/
 
     /**
      * METHOD TO CHECK PERMISSIONS FOR WRITE EXTERNAL STORAGE,

@@ -62,6 +62,8 @@ public class StorageViewer {
 
     }
 
+
+
     /**
      * THIS METHOD IS USED TO GET THE TOTAL SPACE OF EXTERNAL MEDIA
      * @param ctx
@@ -73,6 +75,8 @@ public class StorageViewer {
         aval = (long)fs.getAvailableBlocks() * fs.getBlockSize();
         return Formatter.formatFileSize(ctx, aval);
     }
+
+
 
     /**
      * THIS METHOD IS USED TO GET THE USED SPACE OF EXTERNAL MEDIA
@@ -98,6 +102,8 @@ public class StorageViewer {
         return Formatter.formatFileSize(ctx, used);
 
     }
+
+
 
     /**
      * THIS METHOD IS TO CHECK WHETHER EXTERNAL MEDIA IS MOUNTED OR NOT

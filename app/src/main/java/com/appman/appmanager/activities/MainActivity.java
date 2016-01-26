@@ -170,7 +170,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         File contactsDir = UtilsApp.getDefaultContactsFolder();
         if(!appDir.exists()) {
             appDir.mkdir();
+        }else if (!smsDir.exists()){
             smsDir.mkdir();
+        }else if (!contactsDir.exists()){
             contactsDir.mkdir();
         }
 

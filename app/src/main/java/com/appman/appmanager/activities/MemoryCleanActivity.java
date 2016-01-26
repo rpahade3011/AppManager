@@ -64,7 +64,6 @@ public class MemoryCleanActivity extends AppCompatActivity implements CoreServic
     LinearLayout bottom_lin;
     ButtonRectangle clearRam;
     private Vibrator mVibrator;
-    private long ramCleaned;
 
     private CoreService mCoreService;
 
@@ -104,8 +103,8 @@ public class MemoryCleanActivity extends AppCompatActivity implements CoreServic
         textCounter.setAutoFormat(false);
         textCounter.setFormatter(new DecimalFormatter());
         textCounter.setAutoStart(false);
-        textCounter.setIncrement(10f); // the amount the number increments at each time interval
-        textCounter.setTimeInterval(100); // the time interval (ms) at which the text changes
+        textCounter.setIncrement(50f); // the amount the number increments at each time interval
+        textCounter.setTimeInterval(200); // the time interval (ms) at which the text changes
     }
 
 
@@ -200,10 +199,10 @@ public class MemoryCleanActivity extends AppCompatActivity implements CoreServic
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                mwaveView.setProgress(20);
                 StorageSize mStorageSize = StorageUtil.convertStorageSize(Allmemory);
                 textCounter.setStartValue(0f);
                 textCounter.setEndValue(mStorageSize.value);
+                mwaveView.setProgress((int)mStorageSize.value);
                 sufix.setText(mStorageSize.suffix);
                 textCounter.start();
             }

@@ -81,9 +81,9 @@ public class AboutActivity extends AppCompatActivity {
         CardView about_twitter = (CardView) findViewById (R.id.about_twitter);
 
         try{
-            imageViewProfilePic.setImageResource(R.drawable.about_rudraksh_pahade);
+            imageViewProfilePic.setImageResource(R.mipmap.about_rudraksh_pahade_profile_pic);
         }catch (Exception e){
-            imageViewProfilePic.setImageResource(R.drawable.about_rudraksh_pahade);
+            imageViewProfilePic.setImageResource(R.mipmap.about_rudraksh_pahade_profile_pic);
             e.getMessage().toString();
         }
 

@@ -11,6 +11,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +28,13 @@ import net.rdrei.android.dirchooser.DirectoryChooserConfig;
 import net.rdrei.android.dirchooser.DirectoryChooserFragment;
 
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener, DirectoryChooserFragment.OnFragmentInteractionListener {
+    private static final String TAG = SettingsActivity.class.getSimpleName();
     // Load Settings
     private AppPreferences appPreferences;
     private Toolbar toolbar;
     private Context context;
 
-    private Preference prefVersion, prefDeleteAll, prefCustomPath;
+    private Preference prefVersion, prefDeleteAll, prefCustomPath, prefCustomSMSPath, prefCustomContactsPath;
 
     private ListPreference prefCustomFilename, prefSortMode;
     private DirectoryChooserFragment chooserDialog;
@@ -52,7 +54,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         prefCustomFilename = (ListPreference) findPreference("prefCustomFilename");
         prefSortMode = (ListPreference) findPreference("prefSortMode");
         prefCustomPath = findPreference("prefCustomPath");
-
+        prefCustomSMSPath = findPreference("prefCustomSMSPath");
+        prefCustomContactsPath = findPreference("prefCustomContactsPath");
         setInitialConfiguration();
 
         String versionName = UtilsApp.getAppVersionName(context);
@@ -76,6 +79,12 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
         // prefCustomPath
         setCustomPathSummary();
+
+        // prefSmsPath
+        setCustomSMSPath();
+
+        // prefContactsPath
+        setCustomContactsPath();
 
         // prefDeleteAll
         prefDeleteAll.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -168,6 +177,22 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             prefCustomPath.setSummary(path);
         }
     }
+    private void setCustomSMSPath() {
+        String path = appPreferences.getSmsPath();
+        if (path.equals(UtilsApp.getDefaultAppFolder().getPath())) {
+            prefCustomSMSPath.setSummary(getResources().getString(R.string.button_default) + ": " + UtilsApp.getDefaultSmsFolder().getPath());
+        } else {
+            prefCustomSMSPath.setSummary(path);
+        }
+    }
+    private void setCustomContactsPath() {
+        String path = appPreferences.getContactsPath();
+        if (path.equals(UtilsApp.getDefaultContactsFolder().getPath())) {
+            prefCustomContactsPath.setSummary(getResources().getString(R.string.button_default) + ": " + UtilsApp.getDefaultContactsFolder().getPath());
+        } else {
+            prefCustomContactsPath.setSummary(path);
+        }
+    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -179,11 +204,16 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             setSortModeSummary();
         } else if (pref == prefCustomPath) {
             setCustomPathSummary();
+        }else if (pref == prefCustomSMSPath){
+            setCustomSMSPath();
+        }else if (pref == prefCustomContactsPath){
+            setCustomContactsPath();
         }
     }
 
     @Override
     public void onSelectDirectory(@NonNull String path) {
+        Log.d(TAG, "PATH --> " + path);
         appPreferences.setCustomPath(path);
         setCustomPathSummary();
         chooserDialog.dismiss();

@@ -26,6 +26,7 @@ public class AppPreferences {
     public static final String KeyIsRooted = "prefIsRooted";
     public static final String KeyCustomPath = "prefCustomPath";
     public static final String KeySmsPath = "prefSmsPath";
+    public static final String KeyContactsPath = "prefContactsPath";
 
     // List
     public static final String KeyFavoriteApps = "prefFavoriteApps";
@@ -107,6 +108,13 @@ public class AppPreferences {
     }
     public void setSmsPath(String path){
         editor.putString(KeySmsPath, path);
+        editor.commit();
+    }
+    public String getContactsPath(){
+        return sharedPreferences.getString(KeyContactsPath, UtilsApp.getDefaultContactsFolder().getPath());
+    }
+    public void setContactsPath(String path){
+        editor.putString(KeyContactsPath, path);
         editor.commit();
     }
     public Set<String> getFavoriteApps() {

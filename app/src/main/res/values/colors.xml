@@ -24,6 +24,8 @@
     <color name="card_green">#8CC24A</color>
     <color name="card_red">#DE6262</color>
     <color name="card_orange">#FF7043</color>
+    <color name="card_facebook">#3b5998</color>
+    <color name="card_twitter">#4099FF</color>
 
     <color name="primary_light">#FFCDD2</color>
     <color name="accent">#9E9E9E</color>

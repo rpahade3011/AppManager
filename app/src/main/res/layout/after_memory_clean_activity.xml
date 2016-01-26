@@ -8,11 +8,13 @@
         android:layout_width="225dp"
         android:layout_height="225dp"
         android:id="@+id/circleImageView"
-        android:src="@mipmap/android_checkmark_circle"
+        android:src="@mipmap/ic_check"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:adjustViewBounds="true"
-        android:contentDescription="@string/app_name"/>
+        android:contentDescription="@string/app_name"
+        android:background="@drawable/memory_clean_circle"
+        android:padding="20dp"/>
     <com.appman.appmanager.views.TextView_Regular
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +27,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:fontFamily="sans-serif"
-        android:id="@+id/view2" />
+        android:id="@+id/view2"
+        android:layout_marginTop="10dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

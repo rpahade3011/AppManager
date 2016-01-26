@@ -10,6 +10,12 @@
         <Preference
             android:key="prefCustomPath"
             android:title="@string/settings_custom_path" />
+        <Preference
+            android:key="prefCustomSMSPath"
+            android:title="@string/settings_custom_sms_path"/>
+        <Preference
+            android:key="prefCustomContactsPath"
+            android:title="@string/settings_custom_contacts_path"/>
         <ListPreference
             android:key="prefCustomFilename"
             android:title="@string/settings_custom_filename"
@@ -23,33 +29,9 @@
             android:entryValues="@array/sortValues"
             android:defaultValue="1" />
     </PreferenceCategory>
-    <!--<PreferenceCategory
-        android:title="@string/settings_customizations">
-        <yuku.ambilwarna.widget.AmbilWarnaPreference
-            android:key="prefPrimaryColor"
-            android:defaultValue="@color/fab"
-            android:title="@string/settings_primary_color"
-            android:summary="@string/settings_primary_color_description"/>
-        <yuku.ambilwarna.widget.AmbilWarnaPreference
-            android:key="prefFABColor"
-            android:defaultValue="@color/fab"
-            android:title="@string/settings_fab_color"
-            android:summary="@string/settings_fab_color_description"/>
-        <CheckBoxPreference
-            android:key="prefNavigationBlack"
-            android:title="@string/settings_navigation_black"
-            android:summary="@string/settings_navigation_black_description"
-            android:defaultValue="false" />
-        <Preference
-            android:key="prefDefaultValues"
-            android:title="@string/settings_default_customization"
-            android:summary="@string/settings_default_customization_description" />
-    </PreferenceCategory>-->
+
     <PreferenceCategory
         android:title="@string/action_about">
-        <!--<Preference
-            android:key="prefLicense"
-            android:title="@string/settings_license" />-->
         <Preference
             android:key="prefVersion"
             android:title="@string/app_name"
