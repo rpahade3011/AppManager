@@ -113,6 +113,8 @@
     <string name="dialog_uninstalled_root_description">Some changes will not be applied until you restart your device. Do you want to restart now?</string>
     <string name="dialog_permissions">Permissions are required</string>
     <string name="dialog_permissions_description">You must accept the permissions to extract and share APKs, clean cache and data.</string>
+    <string name="dialog_permissions_description_sms">You must accept the permissions to backup the SMSs.</string>
+    <string name="dialog_permissions_description_contacts">You must accept the permissions to backup the Contacts.</string>
 
     <!-- Settings -->
     <string name="settings_delete_all">Delete all extracted APKs</string>

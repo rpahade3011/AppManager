@@ -28,8 +28,6 @@ public class BackupContactsInBackground extends AsyncTask<Void, String, Void> {
     private Activity mActivity;
     private ProgressDialog progressDialog;
 
-
-
     public BackupContactsInBackground(Activity activity){
         this.mActivity = activity;
     }

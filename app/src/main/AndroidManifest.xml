@@ -51,9 +51,6 @@
         <activity android:name=".activities.AppActivity" />
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.AboutActivity" />
-        <activity
-            android:name=".activities.StorageActivity"
-            android:label="Storage Details" />
         <activity android:name=".activities.DeviceInfo" />
         <activity android:name=".activities.SmsActivity" />
 

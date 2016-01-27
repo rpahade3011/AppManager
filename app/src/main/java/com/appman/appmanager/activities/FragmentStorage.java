@@ -1,6 +1,7 @@
 package com.appman.appmanager.activities;
 
 import android.annotation.TargetApi;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -215,11 +216,13 @@ public class FragmentStorage extends AppCompatActivity{
     private void loadStorageInBackground() {
         try{
             // AN ASYNC CALL TO LOAD INTERNAL STORAGE DETAILS
-            new LoadStorageInBackground(FragmentStorage.this).execute();
+            new LoadStorageInBackground(FragmentStorage.this)
+                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             // CALL THE METHOD TO CHECK WHETHER EXTERNAL STORAGE SUCH AS SD CARD
             // IS AVAILABLE AND MOUNTED.
-            new LoadExternalStorageInBackground(FragmentStorage.this).execute();
+            new LoadExternalStorageInBackground(FragmentStorage.this)
+                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             getFullStatistics();
 
@@ -287,10 +290,12 @@ public class FragmentStorage extends AppCompatActivity{
     private void calculateStoragePercentage() {
         try{
             // AN ASYNC CALL TO CALCULATE INTERNAL STORAGE SPACE AND LOAD IN BACKGROUND
-            new StoragePercentageInBackground(FragmentStorage.this).execute();
+            new StoragePercentageInBackground(FragmentStorage.this)
+                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
             // AN ASYNC CALL TO CALCULATE EXTERNAL STORAGE SPACE AND LOAD IN BACKGROUND
-            new ExternalStoragePercentageInBackground(FragmentStorage.this).execute();
+            new ExternalStoragePercentageInBackground(FragmentStorage.this)
+                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }catch (Exception e){
             e.getMessage().toString();
         }

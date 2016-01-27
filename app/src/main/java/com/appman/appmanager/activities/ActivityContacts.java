@@ -2,6 +2,7 @@ package com.appman.appmanager.activities;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -52,8 +53,8 @@ public class ActivityContacts extends AppCompatActivity implements View.OnClickL
         this.appPreferences = AppManagerApplication.getAppPreferences();
 
         setUpToolbar();
-        initViews();
         checkAndAddPermissions(ActivityContacts.this);
+        initViews();
         loadContactsInBackground();
         showInterstitialAd();
     }
@@ -126,7 +127,8 @@ public class ActivityContacts extends AppCompatActivity implements View.OnClickL
 
     private void loadContactsInBackground(){
         try{
-            new LoadContactsInBackground(ActivityContacts.this).execute();
+            new LoadContactsInBackground(ActivityContacts.this)
+                    .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }catch (Exception e){
             e.getMessage().toString();
         }
@@ -159,7 +161,8 @@ public class ActivityContacts extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         if (v == btnBackupContacts){
             try{
-                new BackupContactsInBackground(ActivityContacts.this).execute();
+                new BackupContactsInBackground(ActivityContacts.this)
+                        .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }catch (Exception e){
                 e.getMessage().toString();
             }
@@ -178,7 +181,8 @@ public class ActivityContacts extends AppCompatActivity implements View.OnClickL
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    UtilsDialog.showTitleContent(ActivityContacts.this, getResources().getString(R.string.dialog_permissions), getResources().getString(R.string.dialog_permissions_description));
+                    UtilsDialog.showTitleContent(ActivityContacts.this, getResources().getString(R.string.dialog_permissions),
+                            getResources().getString(R.string.dialog_permissions_description_contacts));
                 }
             }
         }

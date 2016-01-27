@@ -1,12 +1,14 @@
 package com.appman.appmanager.async;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.Contacts;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Toast;
 
@@ -78,7 +80,7 @@ public class LoadContactsInBackground extends AsyncTask<Void, String, Void>{
      * AND SHOW IT IN THE LISTVIEW.
      * @return info
      */
-    public ArrayList<ContactsInfo> getAllContacts(){
+    /*public ArrayList<ContactsInfo> getAllContacts(){
         ArrayList<ContactsInfo> info = new ArrayList<ContactsInfo>();
         try{
 
@@ -114,6 +116,51 @@ public class LoadContactsInBackground extends AsyncTask<Void, String, Void>{
                     //Adding model class to ArrayList<ContactsInfo>
                     info.add(contactsInfo);
 //                    cursor.close();
+                }
+            }
+        }catch (Exception e){
+            e.getMessage().toString();
+        }
+        return info;
+    }*/
+    public ArrayList<ContactsInfo> getAllContacts(){
+        ArrayList<ContactsInfo> info = new ArrayList<ContactsInfo>();
+        try{
+
+            ContentResolver cr = mActivity.getContentResolver();
+            Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
+                    null, null, null, null);
+            if (cur.getCount() > 0){
+                while (cur.moveToNext()){
+                    id = Long.parseLong(cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID)));
+                    name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                    if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0){
+                        System.out.println("name : " + name + ", ID : " + id);
+                        // get the phone number
+                        Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
+                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",
+                                new String[]{String.valueOf(id)}, null);
+                        while (pCur.moveToNext()) {
+                            number = pCur.getString(
+                                    pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            System.out.println("phone" + number);
+                            // RETRIEVE THE CONTACT PHOTO AS A BITMAP
+                            Uri uri = ContentUris.withAppendedId(Contacts.People.CONTENT_URI, id);
+                            bitmap = Contacts.People.loadContactPhoto(mActivity, uri, R.mipmap.ic_circled_user, null);
+
+                            // Setting values in our model classes
+                            ContactsInfo contactsInfo = new ContactsInfo();
+                            contactsInfo.setContactId(id);
+                            contactsInfo.setContactImage(bitmap);
+                            contactsInfo.setContactName(name);
+                            contactsInfo.setContactNumber(number);
+
+                            //Adding model class to ArrayList<ContactsInfo>
+                            info.add(contactsInfo);
+
+                        }
+                        pCur.close();
+                    }
                 }
             }
         }catch (Exception e){

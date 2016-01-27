@@ -369,8 +369,10 @@ public class UtilsApp {
      */
     public static Boolean checkPermissions(Activity activity) {
         Boolean res = false;
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_READ);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            activity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_READ);
         } else {
             res = true;
         }
@@ -385,8 +387,10 @@ public class UtilsApp {
      */
     public static Boolean checkSMSPermissions(Activity activity) {
         Boolean res = false;
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-            activity.requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.READ_SMS}, MY_PERMISSIONS_REQUEST_READ_SMS);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            activity.requestPermissions(new String[]{Manifest.permission.READ_SMS,
+                    Manifest.permission.READ_SMS}, MY_PERMISSIONS_REQUEST_READ_SMS);
         } else {
             res = true;
         }
@@ -402,8 +406,10 @@ public class UtilsApp {
      */
     public static Boolean checkContactsPermissions(Activity activity) {
         Boolean res = false;
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            activity.requestPermissions(new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            activity.requestPermissions(new String[]{Manifest.permission.READ_CONTACTS,
+                    Manifest.permission.READ_CONTACTS}, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
         } else {
             res = true;
         }

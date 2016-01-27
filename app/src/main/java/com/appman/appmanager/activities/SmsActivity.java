@@ -2,6 +2,7 @@ package com.appman.appmanager.activities;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -52,8 +53,8 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_sms);
         this.appPreferences = AppManagerApplication.getAppPreferences();
         setUpToolbar();
-        initViews();
         checkAndAddPermissions(SmsActivity.this);
+        initViews();
         loadSmsInBackground();
     }
     @Override
@@ -124,7 +125,7 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
     private void loadSmsInBackground(){
 
         try{
-            new LoadSmsInBackground(SmsActivity.this).execute();
+            new LoadSmsInBackground(SmsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }catch (Exception e){
             e.getMessage().toString();
         }
@@ -138,7 +139,7 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.buttonSMSBackup:
                 try{
                     // To back up the sms
-                    new BackupSmsInBackground(SmsActivity.this).execute();
+                    new BackupSmsInBackground(SmsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }catch (Exception e){
                     e.getMessage().toString();
                 }
@@ -159,7 +160,8 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_SMS: {
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    UtilsDialog.showTitleContent(SmsActivity.this, getResources().getString(R.string.dialog_permissions), getResources().getString(R.string.dialog_permissions_description));
+                    UtilsDialog.showTitleContent(SmsActivity.this, getResources().getString(R.string.dialog_permissions),
+                            getResources().getString(R.string.dialog_permissions_description_sms));
                 }
             }
         }

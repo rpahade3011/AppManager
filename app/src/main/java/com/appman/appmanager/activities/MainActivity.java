@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         progressWheel.setBarColor(appPreferences.getPrimaryColorPref());
         progressWheel.setVisibility(View.VISIBLE);
-        new getInstalledApps().execute();
+        new getInstalledApps().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
     }
@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_WRITE_READ: {
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
