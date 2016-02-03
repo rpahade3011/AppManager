@@ -234,7 +234,6 @@ public class UtilsApp {
         if (appFavorites.contains(apk)) {
            res = true;
         }
-
         return res;
     }
 
