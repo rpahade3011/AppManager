@@ -168,8 +168,17 @@ public class UtilsApp {
      * @param context
      * @param id
      */
-    public static void goToFacebook(Context context, String id){
+    /*public static void goToFacebook(Context context, String id){
         context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + id)));
+    }*/
+    public static Intent getFacebookIntent(Context context, String id){
+        try{
+            context.getPackageManager().getPackageInfo("com.facebook.katana",0);
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/" + id));
+        }catch (PackageManager.NameNotFoundException nnfe){
+            nnfe.getMessage().toString();
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + id));
+        }
     }
 
     /**
@@ -177,8 +186,18 @@ public class UtilsApp {
      * @param context
      * @param id
      */
-    public static void goToTwitter(Context context, String id){
+    /*public static void goToTwitter(Context context, String id){
         context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.twitter.com/" + id)));
+    }*/
+
+    public static Intent getTwitterIntent(Context context, String id){
+        try{
+           context.getPackageManager().getPackageInfo("com.twitter.android", 0);
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?user_id="+id));
+        }catch (PackageManager.NameNotFoundException nnfe){
+            nnfe.getMessage().toString();
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.twitter.com/" + id));
+        }
     }
 
     /**

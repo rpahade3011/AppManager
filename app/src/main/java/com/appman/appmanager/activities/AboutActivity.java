@@ -113,7 +113,9 @@ public class AboutActivity extends AppCompatActivity {
                 isInternetConnected = internetConnection.isInternetConnetion(AboutActivity.this);
                 if (isInternetConnected == true){
                     try{
-                        UtilsApp.goToFacebook(context, facebook_id);
+                        //UtilsApp.goToFacebook(context, facebook_id);
+                        Intent facebookIntent = UtilsApp.getFacebookIntent(context, facebook_id);
+                        context.startActivity(facebookIntent);
                     }catch (Exception e){
                         e.getMessage().toString();
                     }
@@ -130,7 +132,9 @@ public class AboutActivity extends AppCompatActivity {
                 isInternetConnected = internetConnection.isInternetConnetion(AboutActivity.this);
                 if (isInternetConnected == true){
                     try{
-                        UtilsApp.goToTwitter(context, twitter_id);
+                        //UtilsApp.goToTwitter(context, twitter_id);
+                        Intent twitterIntent = UtilsApp.getTwitterIntent(context, twitter_id);
+                        context.startActivity(twitterIntent);
                     }catch (Exception e){
                         e.getMessage().toString();
                     }
