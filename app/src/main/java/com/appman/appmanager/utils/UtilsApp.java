@@ -1,6 +1,7 @@
 package com.appman.appmanager.utils;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
@@ -385,6 +387,7 @@ public class UtilsApp {
      * @param activity
      * @return
      */
+    @TargetApi(Build.VERSION_CODES.M)
     public static Boolean checkPermissions(Activity activity) {
         Boolean res = false;
         if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -403,6 +406,7 @@ public class UtilsApp {
      * @param activity
      * @return
      */
+    @TargetApi(Build.VERSION_CODES.M)
     public static Boolean checkSMSPermissions(Activity activity) {
         Boolean res = false;
         if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_SMS)
@@ -422,6 +426,7 @@ public class UtilsApp {
      * @param activity
      * @return
      */
+    @TargetApi(Build.VERSION_CODES.M)
     public static Boolean checkContactsPermissions(Activity activity) {
         Boolean res = false;
         if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS)

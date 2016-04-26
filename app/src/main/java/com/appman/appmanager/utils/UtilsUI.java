@@ -13,6 +13,7 @@ import com.appman.appmanager.R;
 import com.appman.appmanager.activities.AboutActivity;
 import com.appman.appmanager.activities.ActivityContacts;
 import com.appman.appmanager.activities.DeviceInfo;
+import com.appman.appmanager.activities.FragmentStorage;
 import com.appman.appmanager.activities.MemoryCleanActivity;
 import com.appman.appmanager.activities.SettingsActivity;
 import com.appman.appmanager.activities.SmsActivity;
@@ -95,7 +96,7 @@ public class UtilsUI {
                 new PrimaryDrawerItem().withName(context.getResources().getString(R.string.action_favorites)).withIcon(GoogleMaterial.Icon.gmd_star).withBadge(favoriteApps).withBadgeStyle(badgeStyle).withIdentifier(3),
                 new DividerDrawerItem(),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_ram)).withIcon(GoogleMaterial.Icon.gmd_memory).withBadge(context.getResources().getString(R.string.action_ram_description)).withSelectable(false).withIdentifier(5),
-                //new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_storage)).withIcon(GoogleMaterial.Icon.gmd_storage).withSelectable(false).withIdentifier(6),
+                new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_storage)).withIcon(GoogleMaterial.Icon.gmd_storage).withSelectable(false).withIdentifier(6),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_sms)).withIcon(GoogleMaterial.Icon.gmd_sms).withSelectable(false).withIdentifier(6),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_contacts)).withIcon(GoogleMaterial.Icon.gmd_phone).withSelectable(false).withIdentifier(7),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_device)).withIcon(GoogleMaterial.Icon.gmd_devices).withSelectable(false).withIdentifier(8),
@@ -138,37 +139,37 @@ public class UtilsUI {
                         break;
 
                     // Storage
-                    /*case 6:
-                        context.startActivity(new Intent(context, FragmentStorage.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                        break;*/
-                    // SMS Activity
                     case 6:
+                        context.startActivity(new Intent(context, FragmentStorage.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                        break;
+                    // SMS Activity
+                    case 7:
                         context.startActivity(new Intent(context, SmsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
 
                     // Contacts Activity
-                    case 7:
+                    case 8:
                         context.startActivity(new Intent(context, ActivityContacts.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
 
 
                     // Device Info
-                    case 8:
+                    case 9:
                         context.startActivity(new Intent(context, DeviceInfo.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
 
                     // Settings Activity
-                    case 9:
+                    case 10:
                         context.startActivity(new Intent(context, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
 
                     // Share Intent
-                    case 10:
+                    case 11:
                         openShareIntent(context);
                         break;
 
                     // About App Activity
-                    case 11:
+                    case 12:
                         context.startActivity(new Intent(context, AboutActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                     default:
                         break;

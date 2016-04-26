@@ -1,5 +1,6 @@
 package com.appman.appmanager.async;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -31,8 +32,6 @@ public class StoragePercentageInBackground extends AsyncTask<Void, String, Void>
     protected Void doInBackground(Void... params) {
         FragmentStorage.sd_card_total_per = StorageSpaceHandler.getInternalStorageSpace();
         FragmentStorage.sd_card_used_per = StorageSpaceHandler.getInternalUsedSpace();
-
-
         return null;
     }
 
@@ -41,6 +40,7 @@ public class StoragePercentageInBackground extends AsyncTask<Void, String, Void>
         super.onCancelled();
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
