@@ -80,7 +80,8 @@
     <string name="dialog_saving">Saving %s APK&#8230;</string>
     <string name="dialog_saving_description">AppManager is saving the APK into \"AppManager\" folder.</string>
     <string name="dialog_about">About %s</string>
-    <string name="dialog_about_description">Developed by Rudraksh Pahade.</string>
+    <string name="dialog_about_description">Rudraksh Pahade</string>
+    <string name="dialog_about_profession">App Developer</string>
     <string name="dialog_run">Open</string>
     <string name="dialog_run_description">Run this app now</string>
     <string name="dialog_extract">Extract</string>

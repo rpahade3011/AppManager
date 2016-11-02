@@ -1,3 +1,6 @@
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
@@ -7,20 +10,18 @@ buildscript {
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }
-apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
 
 android {
     signingConfigs {
     }
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.appman.appmanager"
-        minSdkVersion 15
-        targetSdkVersion 23
+        minSdkVersion 17
+        targetSdkVersion 25
         versionCode 3
-        versionName "1.5"
+        versionName "2.0"
         multiDexEnabled true
     }
     buildTypes {
@@ -36,11 +37,26 @@ android {
         abortOnError false
     }
     packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
     }
     dexOptions {
         incremental true
+    }
+    sourceSets.main {
+        jniLibs.srcDir 'libs'
+        jni.srcDirs = [] //disable automatic ndk-build call
+    }
+    lintOptions {
+        disable "ResourceType"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -51,36 +67,38 @@ android {
 }
 repositories {
     mavenCentral()
-    maven { url 'http://guardian.github.com/maven/repo-releases' }
     maven { url 'https://maven.fabric.io/public' }
 
+}
+
+/*
+* Diagonalify
+*/
+
+repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile('com.mikepenz:materialdrawer:4.0.5@aar') { transitive = true; }
-    compile('net.rdrei.android.dirchooser:library:3.0@aar') { transitive = true; }
-    compile('com.mikepenz:aboutlibraries:5.2.1@aar') { transitive = true; }
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:design:25.0.0'
+    compile 'com.android.support:cardview-v7:25.0.0'
+    compile 'com.android.support:recyclerview-v7:25.0.0'
+    compile 'com.google.android.gms:play-services-ads:9.8.0'
+
+    // Bottom navigation bar
+    compile 'com.github.armcha:SpaceNavigationView:1.4.1'
+    // Loader view
+    compile 'com.elyeproj.libraries:loaderviewlibrary:1.2.2'
+    // Diagonalify
+    compile 'com.github.developer-shivam:Diagonalify:1.1'
+    // Fabric Crashlytics
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
         transitive = true;
     }
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.3@aar') {
-        transitive = true
-    }
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support:cardview-v7:23.1.1'
-    compile 'com.android.support:support-v4:23.1.1'
-    compile 'commons-io:commons-io:2.4'
-    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
-    compile 'com.getbase:floatingactionbutton:1.10.0'
-    compile 'com.github.yukuku:ambilwarna:2.0'
-    compile 'com.pnikosis:materialish-progress:1.5'
-    compile 'xyz.danoz:recyclerviewfastscroller:0.1.3'
-    compile 'com.yalantis:phoenix:1.2.2'
-    compile 'com.mikepenz:google-material-typeface:1.2.0.1@aar'
-    compile 'com.google.android.gms:play-services-ads:8.1.0'
-    compile 'com.sromku:simple-storage:1.2.0'
+    // Check new app version
+    compile 'com.github.jrvansuita:CheckNewAppVersionAvailable:v1.0.0'
 }

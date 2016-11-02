@@ -1,157 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:diagonal="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
     <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+        android:id="@+id/toolbarAbout"
+        layout="@layout/toolbar"/>
+
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:id="@+id/relativeLayout1">
-        <TextView
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            android:background="@color/primary" />
-        <ImageView
-            android:id="@+id/app_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-        <TextView
-            android:id="@+id/app_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textSize="22dp"
-            android:textColor="@color/white"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_below="@id/app_icon"
-            android:layout_centerHorizontal="true" />
-        <TextView
-            android:id="@+id/app_description"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-thin"
-            android:text="@string/app_description"
-            android:lines="3"
-            android:textSize="15sp"
-            android:textColor="@android:color/white"
-            android:gravity="center_horizontal"
-            android:layout_below="@id/app_name"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
-    <!-- view for AdMob Banner Ad -->
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayout1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        ads:adSize="BANNER"
-        android:visibility="gone"
-        ads:adUnitId="@string/ad_mob_banner_id"/>
+        android:layout_height="320dp"
+        android:id="@+id/relativeAboutMain"
+        android:layout_below="@+id/toolbarAbout">
+
+        <developer.shivam.library.DiagonalView
+            android:id="@+id/diagonal_view"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/header_day"
+            diagonal:angle="15"
+            diagonal:backgroundColor="#00F44336"
+            diagonal:diagonalColor="#FFFFFF"
+            diagonal:diagonalGravity="left"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:gravity="right"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_about_description"
+                android:textSize="28sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_about_profession"
+                android:textSize="22sp"
+                android:layout_gravity="right"/>
+
+        </LinearLayout>
+
+        <com.appman.appmanager.customviews.ShapeImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/about_rudraksh_pahade_profile_pic"
+            diagonal:shape="Circle"
+            diagonal:borderColor="@color/primary_text"
+            diagonal:borderWidth="3dp"
+            android:scaleType="fitCenter"
+            diagonal:backgroundColor="@null"
+            android:layout_above="@+id/linearLayoutDescription"
+            android:layout_alignParentEnd="true"/>
+    </RelativeLayout>
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/adView">
+        android:layout_below="@id/relativeAboutMain">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
-            <android.support.v7.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/about_1"
-                android:layout_margin="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:foreground="?android:attr/selectableItemBackground">
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp">
 
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/imageViewProfilePic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:layout_marginLeft="@dimen/horizontal_margin"
-                    android:layout_marginStart="@dimen/horizontal_margin"
-                    android:layout_marginTop="10dp"
-                    android:maxWidth="100dp"
-                    android:maxHeight="80dp"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/about_rudraksh_pahade_profile_pic"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginStart="50dp"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:orientation="vertical">
-                    <TextView
-                        android:fontFamily="sans-serif-light"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rudraksh Pahade"
-                        android:textSize="22sp" />
-                    <TextView
-                        android:fontFamily="sans-serif-thin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_description_1"
-                        android:textSize="18sp" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-            <!--<android.support.v7.widget.CardView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/about_2"
-                android:layout_below="@id/about_1"
-                android:layout_margin="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:foreground="?android:attr/selectableItemBackground">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:layout_marginLeft="@dimen/horizontal_margin"
-                    android:layout_marginStart="@dimen/horizontal_margin"
-                    android:layout_marginTop="10dp"
-                    android:maxWidth="30dp"
-                    android:maxHeight="30dp"
-                    android:src="@drawable/about_javiertoro" />
-                <TextView
-                    android:fontFamily="sans-serif-light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Javier Toro"
-                    android:textSize="22sp"
-                    android:gravity="start"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="70dp"
-                    android:layout_marginStart="70dp" />
-                <TextView
-                    android:fontFamily="sans-serif-thin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/about_description_2"
-                    android:textSize="18sp"
-                    android:layout_gravity="end|center_vertical"
-                    android:layout_marginRight="@dimen/horizontal_margin"
-                    android:layout_marginEnd="@dimen/horizontal_margin" />
-            </android.support.v7.widget.CardView>-->
             <android.support.v7.widget.CardView
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/about_googleplay"
-                android:layout_below="@id/about_1"
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"

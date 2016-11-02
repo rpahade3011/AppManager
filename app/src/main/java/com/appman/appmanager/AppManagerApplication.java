@@ -2,9 +2,11 @@ package com.appman.appmanager;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
 
-import com.appman.appmanager.utils.AppPreferences;
+import com.appman.appmanager.utils.TypefaceUtil;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
@@ -13,22 +15,39 @@ import io.fabric.sdk.android.Fabric;
 /**
  * Created by rudhraksh.pahade on 03-12-2015.
  */
-public class AppManagerApplication extends Application implements Application.ActivityLifecycleCallbacks{
+public class AppManagerApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
-    private static AppPreferences sAppPreferences;
     private static AppManagerApplication mInstance;
     private Activity mCurrentActivity;
-    public static AppPreferences getAppPreferences() {
-        return sAppPreferences;
-    }
+
 
     @Override
     public void onCreate() {
-        sAppPreferences = new AppPreferences(this);
         super.onCreate();
         Fabric.with(this, new Crashlytics());
+        TypefaceUtil.overrideFont(this, "SERIF", "fonts/Avenir-Book.ttf");
+        TypefaceUtil.overrideFont(this, "MONOSPACE", "fonts/Avenir-Book.ttf");
+        TypefaceUtil.overrideFont(this, "DEFAULT", "fonts/Avenir-Book.ttf");
         mInstance = this;
         mInstance.registerActivityLifecycleCallbacks(this);
+    }
+    /**
+     * To avoid crashing of crashlytics below version Lollipop
+     *
+     * @param base Context - context for application-specific operations
+     */
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    /**
+     * Gets instance of current application class.
+     *
+     * @return the instance
+     */
+    public static synchronized AppManagerApplication getInstance() {
+        return mInstance;
     }
 
     @Override
@@ -48,7 +67,7 @@ public class AppManagerApplication extends Application implements Application.Ac
 
     @Override
     public void onActivityResumed(Activity activity) {
-        setmCurrentActivity(activity);
+        setCurrentActivity(activity);
     }
 
     @Override
@@ -76,17 +95,17 @@ public class AppManagerApplication extends Application implements Application.Ac
      * GETTER SETTER METHODS FOR GET AND SET CURRENT ACTIVITY INSTANCE
      * @return activity instance
      */
-    public Activity getmCurrentActivity() {
+    public Activity getCurrentActivity() {
         return mCurrentActivity;
     }
 
-    public void setmCurrentActivity(Activity mCurrentActivity) {
+    public void setCurrentActivity(Activity mCurrentActivity) {
         this.mCurrentActivity = mCurrentActivity;
     }
 
     private void clearReferences(){
-        Activity currActivity = getmCurrentActivity();
+        Activity currActivity = getCurrentActivity();
         if (this.equals(currActivity))
-            setmCurrentActivity(null);
+            setCurrentActivity(null);
     }
 }
