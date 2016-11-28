@@ -4,15 +4,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <include
+    <!--<include
         android:id="@+id/toolbarAbout"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar"/>-->
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="320dp"
-        android:id="@+id/relativeAboutMain"
-        android:layout_below="@+id/toolbarAbout">
+        android:id="@+id/relativeAboutMain">
 
         <developer.shivam.library.DiagonalView
             android:id="@+id/diagonal_view"

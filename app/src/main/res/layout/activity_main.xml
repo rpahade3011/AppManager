@@ -15,14 +15,58 @@
         android:layout_height="match_parent"
         android:id="@+id/container"
         android:layout_below="@+id/mainToolbar"
-        android:layout_above="@+id/space">
+        android:layout_above="@+id/bottom_navigation">
 
     </FrameLayout>
 
-    <com.luseen.spacenavigation.SpaceNavigationView
+    <!--<com.luseen.spacenavigation.SpaceNavigationView
         android:id="@+id/space"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        app:space_background_color="@color/app_background"/>
+        app:space_background_color="@color/app_background"/>-->
+
+    <com.ss.bottomnavigation.BottomNavigation
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:mode="phone">
+        <com.ss.bottomnavigation.TabItem
+            android:id="@+id/tab_home"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:tab_text="Home"
+            app:tab_icon="@drawable/ic_home"/>
+        <com.ss.bottomnavigation.TabItem
+            android:id="@+id/tab_favorites"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:tab_text="Favorites"
+            app:tab_icon="@drawable/ic_favorite"/>
+        <com.ss.bottomnavigation.TabItem
+            android:id="@+id/tab_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:tab_text="Search"
+            app:tab_icon="@drawable/ic_search"/>
+        <com.ss.bottomnavigation.TabItem
+            android:id="@+id/tab_about"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:tab_text="About"
+            app:tab_icon="@drawable/ic_about_person"/>
+        <com.ss.bottomnavigation.TabItem
+            android:id="@+id/tab_more"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:tab_text="More"
+            app:tab_icon="@drawable/ic_more_white_24dp"/>
+    </com.ss.bottomnavigation.BottomNavigation>
 </RelativeLayout>

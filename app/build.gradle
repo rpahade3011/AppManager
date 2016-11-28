@@ -48,9 +48,9 @@ android {
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
     }
-    dexOptions {
+    /*dexOptions {
         incremental true
-    }
+    }*/
     sourceSets.main {
         jniLibs.srcDir 'libs'
         jni.srcDirs = [] //disable automatic ndk-build call
@@ -91,6 +91,7 @@ dependencies {
 
     // Bottom navigation bar
     compile 'com.github.armcha:SpaceNavigationView:1.4.1'
+    compile 'com.ss.bottomnavigation:bottomnavigation:1.4.2'
     // Loader view
     compile 'com.elyeproj.libraries:loaderviewlibrary:1.2.2'
     // Diagonalify
