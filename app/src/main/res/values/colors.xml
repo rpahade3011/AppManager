@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F44336</color>
-    <color name="colorPrimaryDark">#D32F2F</color>
+    <color name="colorPrimary">#ff25a599</color>
+    <color name="colorPrimaryDark">#ff25a599</color>
     <color name="colorAccent">#9E9E9E</color>
-    <color name="primary">#F44336</color>
-    <color name="primary_dark">#D32F2F</color>
+    <color name="primary">#ff25a599</color>
+    <color name="primary_dark">#ff25a599</color>
     <color name="fab">#607D8B</color>
     <color name="md_blue_grey_500">#607D8B</color>
     <color name="md_blue_grey_700">#455A64</color>
@@ -57,4 +57,8 @@
         <item>@color/gplus_color_4</item>
     </integer-array>
 
+
+    <!-- [Material Design Library] -->
+    <color name="green">#00FF00</color>
+    <color name="thumbColor">#66aaaaaa</color>
 </resources>

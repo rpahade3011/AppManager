@@ -66,4 +66,38 @@
         <attr name="android:text" />
     </declare-styleable>
 
+    <!-- [Material Design Library] -->
+
+    <declare-styleable name="CustomAttributes">
+
+        <!-- Color of ripple animation -->
+        <attr name="materialDesign_rippleColor" format="color|reference" />
+        <!-- Speed of ripple animation -->
+        <attr name="materialDesign_rippleSpeed" format="float" />
+        <!-- indicate if the slider must show number indicator -->
+        <attr name="materialDesign_showNumberIndicator" format="boolean" />
+        <!-- in progress view indicate max value of progress -->
+        <attr name="materialDesign_max" format="integer" />
+        <!-- in progress view indicate min value of progress -->
+        <attr name="materialDesign_min" format="integer" />
+        <!-- in progress view indicate value of progress -->
+        <attr name="materialDesign_value" format="integer" />
+        <!-- in progress view indicate value of progress -->
+        <attr name="materialDesign_progress" format="integer" />
+        <attr name="materialDesign_ringWidth" format="dimension" />
+        <!-- in switche's view indicate state of view -->
+        <attr name="materialDesign_check" format="boolean" />
+        <attr name="materialDesign_checkBoxSize" format="dimension" />
+        <attr name="materialDesign_thumbSize" format="dimension" />
+        <!-- in float button indicate icon resource -->
+        <attr name="materialDesign_iconDrawable" format="integer" />
+        <!-- in button whitch contains drawable indicate icon resource -->
+        <attr name="materialDesign_iconSize" format="dimension" />
+        <!-- in float button indicate if must start with animation -->
+        <attr name="materialDesign_animate" format="boolean" />
+        <!-- set the border of the ripple frame -->
+        <attr name="materialDesign_rippleBorderRadius" format="float" />
+        <!-- if true, delays calls to OnClickListeners until ripple effect ends -->
+        <attr name="materialDesign_clickAfterRipple" format="boolean" />
+    </declare-styleable>
 </resources>

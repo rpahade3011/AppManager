@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
 
+import com.appman.appmanager.utils.AppPreferences;
 import com.appman.appmanager.utils.TypefaceUtil;
 import com.crashlytics.android.Crashlytics;
 
@@ -17,12 +18,19 @@ import io.fabric.sdk.android.Fabric;
  */
 public class AppManagerApplication extends Application implements Application.ActivityLifecycleCallbacks {
 
+    private static AppPreferences sAppPreferences;
     private static AppManagerApplication mInstance;
     private Activity mCurrentActivity;
 
 
+    public static AppPreferences getAppPreferences() {
+        return sAppPreferences;
+    }
+
+
     @Override
     public void onCreate() {
+        sAppPreferences = new AppPreferences(this);
         super.onCreate();
         Fabric.with(this, new Crashlytics());
         TypefaceUtil.overrideFont(this, "SERIF", "fonts/Avenir-Book.ttf");
