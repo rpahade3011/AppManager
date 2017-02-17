@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -12,11 +13,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.appman.appmanager.AppManagerApplication;
+import com.appman.appmanager.BuildConfig;
 import com.appman.appmanager.R;
+import com.appman.appmanager.utils.AdModDeviceIdUtils;
 import com.appman.appmanager.utils.AppPreferences;
 import com.appman.appmanager.utils.UtilsUI;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 
 /**
@@ -61,7 +65,7 @@ public class DeviceInfo extends AppCompatActivity {
 
         findViewsById();
         displayDeviceInfo();
-        loadAdMob();
+        showInterstitialAd();
     }
 
     private void findViewsById(){
@@ -123,12 +127,27 @@ public class DeviceInfo extends AppCompatActivity {
 
     }
 
-    private void loadAdMob(){
-
-        // Load an ad into the AdMob banner view.
+    private void showInterstitialAd() {
+        MobileAds.initialize(DeviceInfo.this, getResources().getString(R.string.ad_mob_interstitial_id));
         AdView adView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+
+        assert adView != null;
+        adView.setVisibility(View.VISIBLE);
+
+        if (BuildConfig.DEBUG) {
+            String deviceIdForTestAds = AdModDeviceIdUtils.getAdMobDeviceId(DeviceInfo.this);
+            Log.e("DeviceInfo", "Hashed device id to load test ads - " + deviceIdForTestAds);
+
+            AdRequest adRequest = new AdRequest.Builder().addTestDevice(deviceIdForTestAds).build();;
+            adView.loadAd(adRequest);
+        } else {
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .build();
+
+            // Start loading the ad in the background.
+            adView.loadAd(adRequest);
+        }
     }
 
     @Override

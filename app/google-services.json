@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "622778668495",
+    "firebase_url": "https://appmanager-88bec.firebaseio.com",
+    "project_id": "appmanager-88bec",
+    "storage_bucket": "appmanager-88bec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622778668495:android:b745d3a2d833fa2e",
+        "android_client_info": {
+          "package_name": "com.appman.appmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "622778668495-g4ssbqvemuc47oek26ck54hume3j0bhs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAt55_qt3SaDvtBBiUtzit9zoAHBrE9B_Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

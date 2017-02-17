@@ -24,9 +24,12 @@
     <application
         android:name=".AppManagerApplication"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:largeHeap="true"
+        android:hardwareAccelerated="true"
         android:theme="@style/AppManager"
         tools:replace="android:theme">
         <activity

@@ -26,17 +26,18 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.appman.appmanager.AppInfo;
 import com.appman.appmanager.AppManagerApplication;
+import com.appman.appmanager.BuildConfig;
 import com.appman.appmanager.R;
 import com.appman.appmanager.async.ExtractFileInBackground;
+import com.appman.appmanager.utils.AdModDeviceIdUtils;
 import com.appman.appmanager.utils.AppPreferences;
 import com.appman.appmanager.utils.UtilsApp;
 import com.appman.appmanager.utils.UtilsDialog;
 import com.appman.appmanager.utils.UtilsUI;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.Set;
 
@@ -251,24 +252,27 @@ public class AppActivity extends AppCompatActivity {
 
     }
 
-    private void showInterstitialAd(){
-        final InterstitialAd interstitialAd = new InterstitialAd(AppActivity.this);
-        interstitialAd.setAdUnitId(getResources().getString(R.string.ad_mob_interstitial_id));
-        AdView adView = (AdView) findViewById (R.id.adView);
-        adView.setVisibility(View.VISIBLE);
-        AdRequest adRequest = new AdRequest.Builder().build();
+    private void showInterstitialAd() {
+        MobileAds.initialize(AppActivity.this, getResources().getString(R.string.ad_mob_interstitial_id));
+        AdView adView = (AdView) findViewById(R.id.adView);
 
-        adView.loadAd(adRequest);
-        interstitialAd.loadAd(adRequest);
-        interstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                if (interstitialAd.isLoaded()){
-                    interstitialAd.show();
-                }
-            }
-        });
+        assert adView != null;
+        adView.setVisibility(View.VISIBLE);
+
+        if (BuildConfig.DEBUG) {
+            String deviceIdForTestAds = AdModDeviceIdUtils.getAdMobDeviceId(AppActivity.this);
+            Log.e("AppActivity", "Hashed device id to load test ads - " + deviceIdForTestAds);
+
+            AdRequest adRequest = new AdRequest.Builder().addTestDevice(deviceIdForTestAds).build();;
+            adView.loadAd(adRequest);
+        } else {
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .build();
+
+            // Start loading the ad in the background.
+            adView.loadAd(adRequest);
+        }
     }
 
     @Override

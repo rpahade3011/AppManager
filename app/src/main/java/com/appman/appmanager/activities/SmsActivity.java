@@ -127,7 +127,7 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
         try{
             new LoadSmsInBackground(SmsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }catch (Exception e){
-            e.getMessage().toString();
+            e.getMessage();
         }
 
     }
@@ -141,7 +141,7 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
                     // To back up the sms
                     new BackupSmsInBackground(SmsActivity.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }catch (Exception e){
-                    e.getMessage().toString();
+                    e.getMessage();
                 }
                 break;
         }
@@ -162,6 +162,8 @@ public class SmsActivity extends AppCompatActivity implements View.OnClickListen
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     UtilsDialog.showTitleContent(SmsActivity.this, getResources().getString(R.string.dialog_permissions),
                             getResources().getString(R.string.dialog_permissions_description_sms));
+                } else {
+                    loadSmsInBackground();
                 }
             }
         }

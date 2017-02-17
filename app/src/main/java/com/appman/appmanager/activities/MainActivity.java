@@ -1,5 +1,6 @@
 package com.appman.appmanager.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
@@ -53,7 +54,10 @@ import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScrol
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private static final int MY_PERMISSIONS_REQUEST_WRITE_READ = 1;
+    private static final String TAG = "MainActivity";
+    @SuppressLint("StaticFieldLeak")
     private static VerticalRecyclerViewFastScroller fastScroller;
+    @SuppressLint("StaticFieldLeak")
     private static LinearLayout noResults;
     // Load Settings
     private AppPreferences appPreferences;
@@ -120,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         progressWheel.setVisibility(View.VISIBLE);
         new getInstalledApps().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-
     }
 
     private void setInitialConfiguration() {
@@ -168,20 +171,20 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         File appDir = UtilsApp.getAppFolder();
         File smsDir = UtilsApp.getDefaultSmsFolder();
         File contactsDir = UtilsApp.getDefaultContactsFolder();
-        if(!appDir.exists()) {
+        if (!appDir.exists()) {
             appDir.mkdir();
-        }else if (!smsDir.exists()){
+        } else if (!smsDir.exists()) {
             smsDir.mkdir();
-        }else if (!contactsDir.exists()){
+        } else if (!contactsDir.exists()) {
             contactsDir.mkdir();
         }
 
     }
 
-    private void showInterstitialAd(){
+    private void showInterstitialAd() {
         final InterstitialAd interstitialAd = new InterstitialAd(MainActivity.this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.ad_mob_interstitial_id));
-        AdView adView = (AdView) findViewById (R.id.adView);
+        AdView adView = (AdView) findViewById(R.id.adView);
         adView.setVisibility(View.VISIBLE);
         AdRequest adRequest = new AdRequest.Builder().build();
 
@@ -191,14 +194,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                if (interstitialAd.isLoaded()){
+                if (interstitialAd.isLoaded()) {
                     interstitialAd.show();
                 }
             }
         });
     }
-
-
 
     public String getVersionInstalled() {
         try {
@@ -258,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     @Override
-     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_WRITE_READ: {
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
@@ -288,6 +289,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
             }, 2000);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
 

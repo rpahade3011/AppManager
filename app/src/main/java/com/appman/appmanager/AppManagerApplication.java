@@ -1,5 +1,6 @@
 package com.appman.appmanager;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
@@ -13,9 +14,13 @@ import io.fabric.sdk.android.Fabric;
 /**
  * Created by rudhraksh.pahade on 03-12-2015.
  */
-public class AppManagerApplication extends Application implements Application.ActivityLifecycleCallbacks{
+public class AppManagerApplication extends Application implements
+        Application.ActivityLifecycleCallbacks {
 
+    private static final String TAG = "AppManagerApplication";
+    @SuppressLint("StaticFieldLeak")
     private static AppPreferences sAppPreferences;
+    @SuppressLint("StaticFieldLeak")
     private static AppManagerApplication mInstance;
     private Activity mCurrentActivity;
     public static AppPreferences getAppPreferences() {
@@ -30,6 +35,8 @@ public class AppManagerApplication extends Application implements Application.Ac
         mInstance = this;
         mInstance.registerActivityLifecycleCallbacks(this);
     }
+
+    public static synchronized AppManagerApplication getInstance() {return mInstance;}
 
     @Override
     public void onTerminate() {

@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/app_card"
@@ -37,6 +37,7 @@
                 android:fontFamily="sans-serif-thin"
                 android:gravity="center_vertical"
                 android:text="Package"
+                android:ellipsize="end"
                 android:textSize="14sp"/>
             <ImageView
                 android:id="@+id/imgIcon"
@@ -62,13 +63,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorPrimaryDark"
                     android:text="@string/button_extract" />
                 <com.gc.materialdesign.views.ButtonFlat
                     android:id="@+id/btnShare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorPrimaryDark"
                     android:text="@string/button_share" />
             </LinearLayout>
         </RelativeLayout>

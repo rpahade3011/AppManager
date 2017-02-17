@@ -183,6 +183,8 @@ public class ActivityContacts extends AppCompatActivity implements View.OnClickL
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     UtilsDialog.showTitleContent(ActivityContacts.this, getResources().getString(R.string.dialog_permissions),
                             getResources().getString(R.string.dialog_permissions_description_contacts));
+                } else {
+                    loadContactsInBackground();
                 }
             }
         }

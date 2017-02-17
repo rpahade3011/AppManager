@@ -3,6 +3,7 @@ package com.appman.appmanager.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -27,14 +28,19 @@ import com.appman.appmanager.utils.UtilsUI;
 import net.rdrei.android.dirchooser.DirectoryChooserConfig;
 import net.rdrei.android.dirchooser.DirectoryChooserFragment;
 
-public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener, DirectoryChooserFragment.OnFragmentInteractionListener {
+public class SettingsActivity extends PreferenceActivity implements
+        SharedPreferences.OnSharedPreferenceChangeListener,
+        DirectoryChooserFragment.OnFragmentInteractionListener {
+
     private static final String TAG = SettingsActivity.class.getSimpleName();
     // Load Settings
     private AppPreferences appPreferences;
     private Toolbar toolbar;
     private Context context;
 
-    private Preference prefVersion, prefDeleteAll, prefCustomPath, prefCustomSMSPath, prefCustomContactsPath;
+    private Preference prefVersion, prefDeleteAll, prefCustomPath,
+            prefCustomSMSPath, prefCustomContactsPath;
+    private Preference prefPrivacyPolicy;
 
     private ListPreference prefCustomFilename, prefSortMode;
     private DirectoryChooserFragment chooserDialog;
@@ -56,6 +62,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         prefCustomPath = findPreference("prefCustomPath");
         prefCustomSMSPath = findPreference("prefCustomSMSPath");
         prefCustomContactsPath = findPreference("prefCustomContactsPath");
+        prefPrivacyPolicy = findPreference("prefPrivacyPolicy");
         setInitialConfiguration();
 
         String versionName = UtilsApp.getAppVersionName(context);
@@ -103,7 +110,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
             }
         });
 
-
         // prefCustomPath
         prefCustomPath.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
@@ -121,7 +127,17 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
                 return false;
             }
         });
-
+        // Privacy Policy
+        prefPrivacyPolicy.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                // Opening a url
+                Intent privacyPolicyIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(getResources().getString(R.string.appmanager_privacy_policy_url)));
+                startActivity(privacyPolicyIntent);
+                return true;
+            }
+        });
     }
 
     @Override

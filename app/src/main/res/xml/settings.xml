@@ -33,6 +33,9 @@
     <PreferenceCategory
         android:title="@string/action_about">
         <Preference
+            android:key="prefPrivacyPolicy"
+            android:title="@string/privacy_policy"/>
+        <Preference
             android:key="prefVersion"
             android:title="@string/app_name"
             android:summary="@string/settings_about" />

@@ -2,6 +2,8 @@
     <string name="app_name">AppManager</string>
     <string name="app_codename" translatable="false">AM</string>
     <string name="app_description">A simple application manager and backup tool for Android</string>
+    <!--<string name="appmanager_privacy_policy_url">https://docs.google.com/document/d/1O-IEn2_9pjP7kWCvkrE2D3t63bsSKihb4tYJNj9jusc/edit?usp=sharing</string>-->
+    <string name="appmanager_privacy_policy_url">https://docs.google.com/document/d/1O-IEn2_9pjP7kWCvkrE2D3t63bsSKihb4tYJNj9jusc/pub</string>
 
     <!-- Labels -->
     <string name="action_sms_backup">Backup SMS</string>
@@ -53,6 +55,7 @@
     <string name="storage_files_short">files</string>
     <string name="storage_full">Full statistics</string>
     <string name="storage_image">Image</string>
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="no_internet_heading">You\&apos;re offline</string>
     <string name="no_internet_message">You need a WIFI or data connection  in order to proceed to view a content on web page.</string>
 
