@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:diagonal="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -47,15 +48,13 @@
 
         </LinearLayout>
 
-        <com.appman.appmanager.customviews.ShapeImageView
+        <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@mipmap/about_rudraksh_pahade_profile_pic"
-            diagonal:shape="Circle"
-            diagonal:borderColor="@color/primary_text"
-            diagonal:borderWidth="3dp"
+            app:siBorderWidth="3dp"
             android:scaleType="fitCenter"
-            diagonal:backgroundColor="@null"
+            app:siBorderColor="@color/colorPrimary"
             android:layout_above="@+id/linearLayoutDescription"
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
@@ -84,19 +83,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:layout_marginLeft="@dimen/horizontal_margin"
                     android:layout_marginStart="@dimen/horizontal_margin"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/ic_googleplay" />
                 <TextView
-                    android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/settings_googleplay"
                     android:textColor="@android:color/white"
                     android:textSize="22sp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/horizontal_margin"
                     android:layout_marginStart="@dimen/horizontal_margin" />
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
@@ -113,14 +109,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:layout_marginLeft="@dimen/horizontal_margin"
                     android:layout_marginStart="@dimen/horizontal_margin"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/facebook_100"
                     android:maxWidth="100dp"
                     android:maxHeight="80dp" />
                 <TextView
-                    android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/settings_facebook"
@@ -128,9 +122,7 @@
                     android:textSize="20sp"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="70dp"
                     android:layout_marginStart="70dp"
-                    android:layout_marginRight="30dp"
                     android:layout_marginEnd="30dp"
                     android:textColor="@android:color/white"/>
             </android.support.v7.widget.CardView>
@@ -148,14 +140,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:layout_marginLeft="@dimen/horizontal_margin"
                     android:layout_marginStart="@dimen/horizontal_margin"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/twitter_100"
                     android:maxWidth="100dp"
                     android:maxHeight="80dp"/>
                 <TextView
-                    android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/settings_twitter"
@@ -163,9 +153,7 @@
                     android:gravity="center"
                     android:textSize="20sp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="70dp"
                     android:layout_marginStart="70dp"
-                    android:layout_marginRight="30dp"
                     android:layout_marginEnd="30dp"
                     android:textColor="@android:color/white"/>
             </android.support.v7.widget.CardView>

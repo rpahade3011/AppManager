@@ -3,6 +3,7 @@ package com.appman.appmanager.utils;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,13 +22,17 @@ import android.view.View;
 
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
+import com.appman.appmanager.models.AppFavInfo;
 import com.appman.appmanager.models.AppInfo;
+import com.varunest.sparkbutton.SparkButton;
+import com.varunest.sparkbutton.SparkButtonBuilder;
 
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -39,8 +44,8 @@ public class Utility {
     private static final int MY_PERMISSIONS_REQUEST_WRITE_READ = 1;
     private static final int MY_PERMISSIONS_REQUEST_READ_SMS = 1;
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
-
-
+    private static SparkButton sparkButton;
+    public static List<AppFavInfo> appFavInfoList;
     /**
      * Default folder where APKs will be saved
      * @return File with the path
@@ -90,12 +95,50 @@ public class Utility {
         return res;
     }
 
+    public static Boolean copyFavFile(AppFavInfo appInfo) {
+        Boolean res = false;
+
+        File initialFile = new File(appInfo.getSource());
+        File finalFile = getFavOutputFilename(appInfo);
+
+        try {
+            FileUtils.copyFile(initialFile, finalFile);
+            res = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
     /**
      * Retrieve the name of the extracted APK
      * @param appInfo AppInfo
      * @return String with the output name
      */
     public static String getAPKFilename(AppInfo appInfo) {
+        AppPreferences appPreferences = AppManagerApplication.getAppPreferences();
+        String res;
+
+        switch (appPreferences.getCustomFilename()) {
+            case "1":
+                res = appInfo.getAPK() + "_" + appInfo.getVersion();
+                break;
+            case "2":
+                res = appInfo.getName() + "_" + appInfo.getVersion();
+                break;
+            case "4":
+                res = appInfo.getName();
+                break;
+            default:
+                res = appInfo.getAPK();
+                break;
+        }
+
+        return res;
+    }
+
+    public static String getFavAPKFilename(AppFavInfo appInfo) {
         AppPreferences appPreferences = AppManagerApplication.getAppPreferences();
         String res;
 
@@ -124,6 +167,10 @@ public class Utility {
      */
     public static File getOutputFilename(AppInfo appInfo) {
         return new File(getAppFolder().getPath() + "/" + getAPKFilename(appInfo) + ".apk");
+    }
+
+    public static File getFavOutputFilename(AppFavInfo appInfo) {
+        return new File(getAppFolder().getPath() + "/" + getFavAPKFilename(appInfo) + ".apk");
     }
 
     /**
@@ -225,12 +272,20 @@ public class Utility {
      * @param context Context
      * @param menuItem Item of the ActionBar
      * @param isFavorite true if the app is favorite, false otherwise
-     */
+
     public static void setAppFavorite(Context context, MenuItem menuItem, Boolean isFavorite) {
         if (isFavorite) {
-            menuItem.setIcon(context.getResources().getDrawable(R.drawable.ic_star_white));
+            menuItem.setIcon(context.getResources().getDrawable(R.drawable.ic_favorite_black_24dp));
         } else {
-            menuItem.setIcon(context.getResources().getDrawable(R.drawable.ic_star_border_white));
+            menuItem.setIcon(context.getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp));
+        }
+    }*/
+
+    public static void setAppFavorite(Context context, MenuItem menuItem, Boolean isFavorite) {
+        if (isFavorite) {
+            sparkButton = new SparkButtonBuilder(context).setActiveImage(R.drawable.ic_favorite_black_24dp).build();
+        } else {
+            sparkButton = new SparkButtonBuilder(context).setInactiveImage(R.drawable.ic_favorite_border_black_24dp).build();
         }
     }
 
@@ -323,5 +378,66 @@ public class Utility {
         }
 
         return res;
+    }
+
+    /**
+     * Opens Google Play if installed, if not opens browser
+     * @param context Context
+     * @param id PackageName on Google Play
+     */
+    public static void goToGooglePlay(Context context, String id) {
+        try {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + id))
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        } catch (ActivityNotFoundException e) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + id))
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+        }
+    }
+
+    /**
+     * Opens Google Plus
+     * @param context Context
+     * @param id Name on Google Play
+     */
+    public static void goToGooglePlus(Context context, String id) {
+        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://plus.google.com/u/0/" + id)));
+    }
+
+    /**
+     * OPENS FACBOOK ACCOUNT
+     * @param context
+     * @param id
+     */
+    /*public static void goToFacebook(Context context, String id){
+        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + id)));
+    }*/
+    public static Intent getFacebookIntent(Context context, String id){
+        try{
+            context.getPackageManager().getPackageInfo("com.facebook.katana",0);
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/" + id));
+        }catch (PackageManager.NameNotFoundException nnfe){
+            nnfe.getMessage().toString();
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + id));
+        }
+    }
+
+    /**
+     * OPENS TWITTER ACCOUNT
+     * @param context
+     * @param id
+     */
+    /*public static void goToTwitter(Context context, String id){
+        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.twitter.com/" + id)));
+    }*/
+
+    public static Intent getTwitterIntent(Context context, String id){
+        try{
+            context.getPackageManager().getPackageInfo("com.twitter.android", 0);
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?user_id="+id));
+        }catch (PackageManager.NameNotFoundException nnfe){
+            nnfe.getMessage().toString();
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.twitter.com/" + id));
+        }
     }
 }

@@ -35,6 +35,8 @@ import com.appman.appmanager.models.AppInfo;
 import com.appman.appmanager.utils.AppPreferences;
 import com.appman.appmanager.utils.Utility;
 import com.appman.appmanager.utils.UtilsDialog;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.BottomBarTab;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import java.io.File;
@@ -68,7 +70,7 @@ public class FragmentHome extends Fragment implements SearchView.OnQueryTextList
     private List<AppInfo> appHiddenList;
     private AppAdapter appAdapter;
     private AppAdapter appSystemAdapter;
-    private AppAdapter appFavoriteAdapter;
+    public static AppAdapter appFavoriteAdapter;
     private AppAdapter appHiddenAdapter;
     // Configuration variables
     private Boolean doubleBackToExitPressedOnce = false;
@@ -79,6 +81,7 @@ public class FragmentHome extends Fragment implements SearchView.OnQueryTextList
     private PullToRefreshView pullToRefreshView;
     private MenuItem searchItem;
     private SearchView searchView;
+    public static BottomBarTab bb = null;
 
     private GetInstalledApps getInstalledApps = null;
 
@@ -120,9 +123,9 @@ public class FragmentHome extends Fragment implements SearchView.OnQueryTextList
     private void setInitialConfiguration() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.list_txt_info_3));
-            ActivityMain.mainToolbar.setBackgroundColor(getActivity().getResources().getColor(R.color.list_txt_info_3));
-            getActivity().getWindow().setNavigationBarColor(getActivity().getResources().getColor(R.color.list_txt_info_3));
+            getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.colorPrimary));
+            ActivityMain.mainToolbar.setBackgroundColor(getActivity().getResources().getColor(R.color.colorPrimary));
+            getActivity().getWindow().setNavigationBarColor(getActivity().getResources().getColor(R.color.colorPrimary));
         }
     }
 
@@ -130,14 +133,17 @@ public class FragmentHome extends Fragment implements SearchView.OnQueryTextList
         if (getInstalledApps != null) {
             getInstalledApps.cancel(true);
         }
-        Handler handler = new Handler();
+        /*Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 getInstalledApps = new GetInstalledApps();
                 getInstalledApps.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
-        }, 1000);
+        }, 1000);*/
+
+        getInstalledApps = new GetInstalledApps();
+        getInstalledApps.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private void setPullToRefreshView(final PullToRefreshView pullToRefreshView) {
@@ -148,6 +154,9 @@ public class FragmentHome extends Fragment implements SearchView.OnQueryTextList
                 appSystemAdapter.clear();
                 appFavoriteAdapter.clear();
                 recyclerView.setAdapter(null);
+                if (noResults.getVisibility() == View.VISIBLE) {
+                    noResults.setVisibility(View.GONE);
+                }
                 loadInstalledApps();
 
                 pullToRefreshView.postDelayed(new Runnable() {
@@ -379,16 +388,10 @@ public class FragmentHome extends Fragment implements SearchView.OnQueryTextList
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            /*appAdapter = new AppAdapter(appList, context);
-            appSystemAdapter = new AppAdapter(appSystemList, context);
-            appFavoriteAdapter = new AppAdapter(getFavoriteList(appList, appSystemList), context);
-            appHiddenAdapter = new AppAdapter(appHiddenList, context);*/
-
             appAdapter = new AppAdapter(appList, getActivity());
             appSystemAdapter = new AppAdapter(appSystemList, getActivity());
             appFavoriteAdapter = new AppAdapter(getFavoriteList(appList, appSystemList), getActivity());
             appHiddenAdapter = new AppAdapter(appHiddenList, getActivity());
-
 
             fastScroller.setVisibility(View.VISIBLE);
             recyclerView.setAdapter(appAdapter);
@@ -398,6 +401,11 @@ public class FragmentHome extends Fragment implements SearchView.OnQueryTextList
 
             fastScroller.setRecyclerView(recyclerView);
             recyclerView.setOnScrollListener(fastScroller.getOnScrollListener());
+
+            if (ActivityMain.bottomBar != null) {
+                bb = ActivityMain.bottomBar.getTabWithId(R.id.tab_home);
+                bb.setBadgeCount(appList.size());
+            }
 
             setPullToRefreshView(pullToRefreshView);
         }

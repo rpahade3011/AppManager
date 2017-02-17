@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.appman.appmanager.R;
+import com.appman.appmanager.models.AppFavInfo;
 import com.appman.appmanager.models.AppInfo;
 import com.appman.appmanager.utils.Utility;
 import com.appman.appmanager.utils.UtilsDialog;
@@ -20,6 +21,7 @@ public class ExtractFileInBackground extends AsyncTask<Void, String, Boolean> {
     private Activity activity;
     private MaterialDialog dialog;
     private AppInfo appInfo;
+    private AppFavInfo appFavInfo;
 
 
     public ExtractFileInBackground(Context context, MaterialDialog dialog, AppInfo appInfo) {
@@ -27,6 +29,13 @@ public class ExtractFileInBackground extends AsyncTask<Void, String, Boolean> {
         this.context = context;
         this.dialog = dialog;
         this.appInfo = appInfo;
+    }
+
+    public ExtractFileInBackground(Context context, MaterialDialog dialog, AppFavInfo appInfo) {
+        this.activity = (Activity) context;
+        this.context = context;
+        this.dialog = dialog;
+        this.appFavInfo = appInfo;
     }
 
     @Override

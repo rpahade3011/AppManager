@@ -22,8 +22,10 @@
     <com.roughike.bottombar.BottomBar
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         app:bb_tabXmlResource="@xml/bottombar_color_changing_tabs"
-        app:bb_behavior="shifting|underNavbar" />
+        app:bb_behavior="shifting|underNavbar"
+        app:bb_showShadow="true"
+        app:bb_badgeBackgroundColor="@color/card_red" />
 </RelativeLayout>

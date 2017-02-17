@@ -14,6 +14,7 @@ import android.view.WindowManager;
 
 import com.appman.appmanager.R;
 import com.appman.appmanager.fragments.FragmentAbout;
+import com.appman.appmanager.fragments.FragmentFavorites;
 import com.appman.appmanager.fragments.FragmentHome;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
@@ -30,6 +31,7 @@ public class ActivityMain extends AppCompatActivity {
     public static Toolbar mainToolbar = null;
     private FragmentManager mFragmentManager = null;
     private FragmentTransaction mFragmentTransaction = null;
+    public static BottomBar bottomBar = null;
 
 
     @Override
@@ -54,14 +56,14 @@ public class ActivityMain extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.list_txt_info_3));
-            mainToolbar.setBackgroundColor(getResources().getColor(R.color.list_txt_info_3));
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.list_txt_info_3));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+            mainToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
         }
     }
 
     private void setupBottomNavigationBar() {
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottom_navigation);
+        bottomBar = (BottomBar) findViewById(R.id.bottom_navigation);
         bottomBar.setDefaultTab(R.id.tab_home);
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -74,6 +76,11 @@ public class ActivityMain extends AppCompatActivity {
                         break;
                     // Favorites
                     case R.id.tab_favorites:
+                        if (FragmentHome.bb != null) {
+                            FragmentHome.bb.removeBadge();
+                        }
+                        FragmentFavorites fragmentFavorites = FragmentFavorites.newInstance(FragmentHome.appFavoriteAdapter);
+                        changeFragment(fragmentFavorites);
                         break;
                     // Search
                     case R.id.tab_clean:
@@ -100,6 +107,8 @@ public class ActivityMain extends AppCompatActivity {
                         break;
                     // Favorites
                     case R.id.tab_favorites:
+                        FragmentFavorites fragmentFavorites = FragmentFavorites.newInstance(FragmentHome.appFavoriteAdapter);
+                        changeFragment(fragmentFavorites);
                         break;
                     // Search
                     case R.id.tab_clean:

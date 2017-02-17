@@ -33,9 +33,9 @@ public class AppManagerApplication extends Application implements Application.Ac
         sAppPreferences = new AppPreferences(this);
         super.onCreate();
         Fabric.with(this, new Crashlytics());
-        TypefaceUtil.overrideFont(this, "SERIF", "fonts/Avenir-Book.ttf");
-        TypefaceUtil.overrideFont(this, "MONOSPACE", "fonts/Avenir-Book.ttf");
-        TypefaceUtil.overrideFont(this, "DEFAULT", "fonts/Avenir-Book.ttf");
+        TypefaceUtil.overrideFont(this, "SERIF", "fonts/Sertig.otf");
+        TypefaceUtil.overrideFont(this, "MONOSPACE", "fonts/Sertig.otf");
+        TypefaceUtil.overrideFont(this, "DEFAULT", "fonts/Sertig.otf");
         mInstance = this;
         mInstance.registerActivityLifecycleCallbacks(this);
     }

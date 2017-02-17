@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/apptheme_btn_check_off_focused_holo_light">
 
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_margin="5dp"
+        android:background="@drawable/apptheme_btn_check_off_focused_holo_light"
         android:foreground="?android:attr/selectableItemBackground">
 
         <RelativeLayout
@@ -19,7 +22,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_add_user_close_bg"
+                android:src="@drawable/field_corner"
                 android:layout_alignParentEnd="true"/>
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
@@ -30,12 +33,10 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
-                android:fontFamily="sans-serif-thin"
                 android:singleLine="true"
                 android:text="App"
                 android:textSize="25sp"
-                app:use_gradient="true"
-                android:textStyle="bold"/>
+                app:use_gradient="true"/>
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/txtApk"
@@ -43,7 +44,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
-                android:fontFamily="sans-serif-thin"
                 android:gravity="center_vertical"
                 android:text="Package"
                 android:textSize="14sp" />
@@ -65,14 +65,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="75dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="RelativeOverlap">
 
                 <Button
                     android:id="@+id/btnExtract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:textColor="@color/list_txt_info_3"
+                    android:textColor="@color/colorPrimary"
                     android:text="@string/button_extract"
                     style="?android:attr/buttonBarStyle"
                     android:textStyle="bold"/>
@@ -81,7 +82,7 @@
                     android:id="@+id/btnShare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/list_txt_info_3"
+                    android:textColor="@color/colorPrimary"
                     android:text="@string/button_share"
                     style="?android:attr/buttonBarStyle"
                     android:layout_marginStart="10dp"
