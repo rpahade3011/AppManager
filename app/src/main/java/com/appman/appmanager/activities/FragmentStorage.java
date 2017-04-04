@@ -28,8 +28,6 @@ import com.appman.appmanager.views.TextView_Light;
 import com.appman.appmanager.views.TextView_Regular;
 import com.gc.materialdesign.views.ProgressBarDeterminate;
 import com.pnikosis.materialishprogress.ProgressWheel;
-import com.sromku.simple.storage.SimpleStorage;
-import com.sromku.simple.storage.Storage;
 
 import java.util.ArrayList;
 
@@ -133,7 +131,6 @@ public class FragmentStorage extends AppCompatActivity{
     }
 
     private void sample() {
-        Storage storage = SimpleStorage.getInternalStorage(FragmentStorage.this);
         //List<File> file = storage.getFiles(storageLocationsName, OrderType.NAME, "");
     }
 

@@ -43,7 +43,7 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="20dp"
-                android:textColor="@color/md_blue_500"
+                android:textColor="@color/black_semi_transparent"
                 android:textStyle="normal"
                 android:fontFamily="sans-serif-light"
                 android:layout_marginTop="10dp"

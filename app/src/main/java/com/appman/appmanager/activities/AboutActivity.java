@@ -94,7 +94,7 @@ public class AboutActivity extends AppCompatActivity {
         about_googleplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isInternetConnected = internetConnection.isInternetConnetion(AboutActivity.this);
+                isInternetConnected = internetConnection.isInternetConnection(AboutActivity.this);
                 if (isInternetConnected == true){
                     try{
                         UtilsApp.goToGooglePlay(context, context.getPackageName());
@@ -110,7 +110,7 @@ public class AboutActivity extends AppCompatActivity {
         about_facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isInternetConnected = internetConnection.isInternetConnetion(AboutActivity.this);
+                isInternetConnected = internetConnection.isInternetConnection(AboutActivity.this);
                 if (isInternetConnected == true){
                     try{
                         //UtilsApp.goToFacebook(context, facebook_id);
@@ -129,7 +129,7 @@ public class AboutActivity extends AppCompatActivity {
         about_twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isInternetConnected = internetConnection.isInternetConnetion(AboutActivity.this);
+                isInternetConnected = internetConnection.isInternetConnection(AboutActivity.this);
                 if (isInternetConnected == true){
                     try{
                         //UtilsApp.goToTwitter(context, twitter_id);

@@ -96,7 +96,6 @@ public class UtilsUI {
                 new PrimaryDrawerItem().withName(context.getResources().getString(R.string.action_favorites)).withIcon(GoogleMaterial.Icon.gmd_star).withBadge(favoriteApps).withBadgeStyle(badgeStyle).withIdentifier(3),
                 new DividerDrawerItem(),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_ram)).withIcon(GoogleMaterial.Icon.gmd_memory).withBadge(context.getResources().getString(R.string.action_ram_description)).withSelectable(false).withIdentifier(5),
-                //new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_storage)).withIcon(GoogleMaterial.Icon.gmd_storage).withSelectable(false).withIdentifier(6),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_sms)).withIcon(GoogleMaterial.Icon.gmd_sms).withSelectable(false).withIdentifier(6),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_contacts)).withIcon(GoogleMaterial.Icon.gmd_phone).withSelectable(false).withIdentifier(7),
                 new SecondaryDrawerItem().withName(context.getResources().getString(R.string.action_device)).withIcon(GoogleMaterial.Icon.gmd_devices).withSelectable(false).withIdentifier(8),
@@ -131,16 +130,10 @@ public class UtilsUI {
                     case 4:
                         recyclerView.setAdapter(appHiddenAdapter);
                         break;
-
                     // RAM Info
                     case 5:
                         context.startActivity(new Intent(context, MemoryCleanActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
-
-                    // Storage
-                    /*case 6:
-                        context.startActivity(new Intent(context, FragmentStorage.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                        break;*/
                     // SMS Activity
                     case 6:
                         context.startActivity(new Intent(context, SmsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -150,8 +143,6 @@ public class UtilsUI {
                     case 7:
                         context.startActivity(new Intent(context, ActivityContacts.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
-
-
                     // Device Info
                     case 8:
                         context.startActivity(new Intent(context, DeviceInfo.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

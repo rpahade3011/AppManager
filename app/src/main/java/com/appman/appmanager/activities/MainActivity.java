@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,6 +30,8 @@ import com.appman.appmanager.AppInfo;
 import com.appman.appmanager.AppManagerApplication;
 import com.appman.appmanager.R;
 import com.appman.appmanager.adapter.AppAdapter;
+import com.appman.appmanager.appupdater.AppUpdateHandler;
+import com.appman.appmanager.appupdater.UpdateListener;
 import com.appman.appmanager.utils.AppPreferences;
 import com.appman.appmanager.utils.AppRater;
 import com.appman.appmanager.utils.UtilsApp;
@@ -81,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private MenuItem searchItem;
     private SearchView searchView;
 
+    /** [App Updater variables] */
+    private AppUpdateHandler appUpdateHandler = null;
+    private boolean isNewUpdateAvailable = false;
+    private String CHANGE_LOGS = "";
+
     public static void setResultsMessage(Boolean result) {
         if (result) {
             noResults.setVisibility(View.VISIBLE);
@@ -95,7 +103,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AppRater.app_launched(this);
+        //AppRater.app_launched(this);
+        try{
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    // Check for updates
+                    startCheckingForNewUpdates();
+                }
+            });
+        } catch (Exception ex) {
+            Log.e(TAG, "Exception while performing app update: " + ex.getMessage());
+        }
         this.appPreferences = AppManagerApplication.getAppPreferences();
         this.activity = this;
         this.context = this;
@@ -122,8 +141,44 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         progressWheel.setBarColor(appPreferences.getPrimaryColorPref());
         progressWheel.setVisibility(View.VISIBLE);
-        new getInstalledApps().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
+        new GetInstalledApps().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private void startCheckingForNewUpdates() {
+        if (appUpdateHandler == null) {
+            Log.e(TAG, "Start checking for updates");
+            appUpdateHandler = new AppUpdateHandler(MainActivity.this);
+            // to start version checker
+            appUpdateHandler.startCheckingUpdate();
+            // prompting intervals
+            appUpdateHandler.setCount(1);
+            // to print new features added automatically
+            appUpdateHandler.setWhatsNew(true);
+            // listener for custom update prompt
+            appUpdateHandler.setOnUpdateListener(new UpdateListener() {
+                @Override
+                public void onUpdateFound(boolean newVersion, String whatsNew) {
+                    Log.e(TAG, "New updates found - " + newVersion + " : " + whatsNew);
+                    isNewUpdateAvailable = newVersion;
+                    CHANGE_LOGS = whatsNew;
+                    compareUpdates();
+                }
+            });
+        }
+    }
+
+    private void compareUpdates() {
+        // Added code on 08-March-2017, by Rudraksh
+        if (isNewUpdateAvailable && !CHANGE_LOGS.equals("")) {
+            if (appUpdateHandler != null) {
+                // Display update dialog
+                appUpdateHandler.showDefaultAlert(true);
+            }
+        } else {
+            // Enable app rater
+            AppRater.app_launched(this);
+        }
     }
 
     private void setInitialConfiguration() {
@@ -151,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 appSystemAdapter.clear();
                 appFavoriteAdapter.clear();
                 recyclerView.setAdapter(null);
-                new getInstalledApps().execute();
+                new GetInstalledApps().execute();
 
                 pullToRefreshView.postDelayed(new Runnable() {
                     @Override
@@ -302,12 +357,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         super.onStop();
     }
 
-
-    class getInstalledApps extends AsyncTask<Void, String, Void> {
+    class GetInstalledApps extends AsyncTask<Void, String, Void> {
         private Integer totalApps;
         private Integer actualApps;
 
-        public getInstalledApps() {
+        public GetInstalledApps() {
             actualApps = 0;
 
             appList = new ArrayList<>();
@@ -441,5 +495,4 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
 
     }
-
 }
