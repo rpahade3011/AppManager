@@ -75,13 +75,14 @@ public class AppUpdateHandler {
     public void startCheckingUpdate() {
         String NETWORK_STATUS = InternetConnection.getConnectivityStatusString(activity.getApplicationContext());
         if (NETWORK_STATUS.equals("Wifi enabled") || NETWORK_STATUS.equals("Mobile data enabled")) {
-            StringRequest request = new StringRequest(Request.Method.GET, Config.PLAY_STORE_ROOT_URL + PACKAGE_NAME, new Response.Listener<String>() {
+            StringRequest request = new StringRequest(Request.Method.GET,
+                    Config.PLAY_STORE_ROOT_URL + PACKAGE_NAME, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     try {
                         checker(response);
                     } catch (Exception e) {
-                        Log.v(TAG + " Exception", e.toString());
+                        Log.e(TAG + " Exception: ", e.toString());
                     }
                 }
             }, new Response.ErrorListener() {
@@ -93,12 +94,12 @@ public class AppUpdateHandler {
                                 HttpHeaderParser.parseCharset(networkResponse.headers, "utf-8"));
                         checker(res);
                     } catch (Exception e) {
-                        Log.v(TAG + " Exception", e.toString());
+                        Log.e(TAG + " Exception: ", e.toString());
                     }
                 }
             });
-            request.setRetryPolicy(new DefaultRetryPolicy(30000,
-                    1, 1f));
+            request.setRetryPolicy(new DefaultRetryPolicy(Config.DEFAULT_TIMEOUT_MS,
+                    Config.DEFAULT_MAX_RETRIES, Config.DEFAULT_BACKOFF_MULT));
             queue.add(request);
         } else {
             new AlertDialog.Builder(activity)
@@ -139,7 +140,7 @@ public class AppUpdateHandler {
                     }
                 }
             } else if (line.contains(Config.PLAY_STORE_PACKAGE_NOT_PUBLISHED_IDENTIFIER)) {
-                Log.v(TAG, Config.PLAY_STORE_PACKAGE_NOT_PUBLISHED_IDENTIFIER);
+                Log.e(TAG, Config.PLAY_STORE_PACKAGE_NOT_PUBLISHED_IDENTIFIER);
                 this.updateListener.onUpdateFound(false, "");
             }
         }

@@ -1,5 +1,7 @@
 package com.appman.appmanager.appupdater;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,9 +10,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.appman.appmanager.activities.MainActivity;
+import com.appman.appmanager.service.NotificationAlarmService;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.util.Calendar;
+import java.util.Locale;
+
+import static android.content.Context.ALARM_SERVICE;
 import static com.appman.appmanager.appupdater.Config.PLAY_STORE_HTML_TAGS_TO_DIV_WHATS_NEW_END;
 import static com.appman.appmanager.appupdater.Config.PLAY_STORE_HTML_TAGS_TO_DIV_WHATS_NEW_START;
 import static com.appman.appmanager.appupdater.Config.PLAY_STORE_WHATS_NEW;
@@ -23,6 +32,9 @@ import static com.appman.appmanager.appupdater.Config.PLAY_STORE_WHATS_NEW;
 public class AppUpdateAlert {
 
     private AppCompatActivity activity;
+    public static AlarmManager alarmManager = null;
+    public static PendingIntent pendingIntent = null;
+    public static AppCompatActivity alarmActivity;
 
     public AppUpdateAlert(AppCompatActivity mAct) {
         this.activity = mAct;
@@ -51,6 +63,13 @@ public class AppUpdateAlert {
                 goToMarket();
             }
         });
+        alertDialogBuilder.setNegativeButton("Later", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                createNotificationAlarm();
+            }
+        });
         AlertDialog alertDialog = alertDialogBuilder.create();
         try {
             alertDialog.show();
@@ -76,5 +95,21 @@ public class AppUpdateAlert {
         activity.startActivity(new Intent(Intent.ACTION_VIEW,
                 Uri.parse(Config.ROOT_PLAY_STORE_DEVICE + activity.getPackageName())));
         activity.finish();
+    }
+
+    private void createNotificationAlarm() {
+        Log.e("AppUpdateAlert", "called createNotificationAlarm()");
+        if (alarmManager == null) {
+            alarmManager = (AlarmManager) activity.getSystemService(ALARM_SERVICE);
+        }
+        alarmActivity = activity;
+        Intent intent = new Intent(activity, NotificationAlarmService.class);
+        pendingIntent = PendingIntent.getService(activity, 0, intent, 0);
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.MINUTE, 1);
+        if (alarmManager != null) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
     }
 }

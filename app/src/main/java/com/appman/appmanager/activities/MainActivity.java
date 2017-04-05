@@ -103,18 +103,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //AppRater.app_launched(this);
-        try{
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    // Check for updates
-                    startCheckingForNewUpdates();
-                }
-            });
-        } catch (Exception ex) {
-            Log.e(TAG, "Exception while performing app update: " + ex.getMessage());
-        }
+        AppRater.app_launched(this);
+
         this.appPreferences = AppManagerApplication.getAppPreferences();
         this.activity = this;
         this.context = this;
@@ -143,42 +133,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         progressWheel.setVisibility(View.VISIBLE);
 
         new GetInstalledApps().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    private void startCheckingForNewUpdates() {
-        if (appUpdateHandler == null) {
-            Log.e(TAG, "Start checking for updates");
-            appUpdateHandler = new AppUpdateHandler(MainActivity.this);
-            // to start version checker
-            appUpdateHandler.startCheckingUpdate();
-            // prompting intervals
-            appUpdateHandler.setCount(1);
-            // to print new features added automatically
-            appUpdateHandler.setWhatsNew(true);
-            // listener for custom update prompt
-            appUpdateHandler.setOnUpdateListener(new UpdateListener() {
-                @Override
-                public void onUpdateFound(boolean newVersion, String whatsNew) {
-                    Log.e(TAG, "New updates found - " + newVersion + " : " + whatsNew);
-                    isNewUpdateAvailable = newVersion;
-                    CHANGE_LOGS = whatsNew;
-                    compareUpdates();
-                }
-            });
-        }
-    }
-
-    private void compareUpdates() {
-        // Added code on 08-March-2017, by Rudraksh
-        if (isNewUpdateAvailable && !CHANGE_LOGS.equals("")) {
-            if (appUpdateHandler != null) {
-                // Display update dialog
-                appUpdateHandler.showDefaultAlert(true);
-            }
-        } else {
-            // Enable app rater
-            AppRater.app_launched(this);
-        }
     }
 
     private void setInitialConfiguration() {
