@@ -19,8 +19,8 @@ android {
         applicationId "com.appman.appmanager"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 5
-        versionName "1.7"
+        versionCode 4
+        versionName "1.6"
         multiDexEnabled true
     }
     buildTypes {

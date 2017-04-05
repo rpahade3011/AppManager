@@ -2,16 +2,28 @@ package com.appman.appmanager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
+import com.appman.appmanager.activities.MainActivity;
+import com.appman.appmanager.appupdater.AppUpdateAlert;
+import com.appman.appmanager.appupdater.Config;
+import com.appman.appmanager.service.NotificationAlarmService;
 import com.appman.appmanager.utils.AppPreferences;
 import com.crashlytics.android.Crashlytics;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -98,6 +110,21 @@ public class AppManagerApplication extends Application implements
         }
     }
 
+    private void createNotificationAlarm() {
+        Log.e(TAG, "called createNotificationAlarm()");
+        if (AppUpdateAlert.alarmManager == null) {
+            AppUpdateAlert.alarmManager = (AlarmManager) AppUpdateAlert.alarmActivity.getSystemService(ALARM_SERVICE);
+        }
+        Intent intent = new Intent(AppUpdateAlert.alarmActivity, NotificationAlarmService.class);
+        AppUpdateAlert.pendingIntent = PendingIntent.getService(AppUpdateAlert.alarmActivity, 0, intent, 0);
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.MINUTE, 1);
+        if (AppUpdateAlert.alarmManager != null) {
+            AppUpdateAlert.alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AppUpdateAlert.pendingIntent);
+        }
+    }
+
     @Override
     public void onTerminate() {
         super.onTerminate();
@@ -105,7 +132,19 @@ public class AppManagerApplication extends Application implements
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
+        // Creating notification for update reminder, only if user has opted to perform later
+        if (activity instanceof MainActivity) {
+            if (activity != null) {
+                if (Config.HAS_IGNORED_FOR_UPDATES) {
+                    AppUpdateAlert.alarmActivity = (AppCompatActivity) activity;
+                    createNotificationAlarm();
+                }
+            } else {
+                Log.e(TAG, "MainActivity is not instantiated");
+            }
+        } else {
+            Log.e(TAG, "MainActivity is not instantiated");
+        }
     }
 
     @Override

@@ -10,16 +10,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.appman.appmanager.activities.ActivitySplash;
 import com.appman.appmanager.activities.MainActivity;
-import com.appman.appmanager.service.NotificationAlarmService;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.util.Calendar;
-import java.util.Locale;
-
-import static android.content.Context.ALARM_SERVICE;
 import static com.appman.appmanager.appupdater.Config.PLAY_STORE_HTML_TAGS_TO_DIV_WHATS_NEW_END;
 import static com.appman.appmanager.appupdater.Config.PLAY_STORE_HTML_TAGS_TO_DIV_WHATS_NEW_START;
 import static com.appman.appmanager.appupdater.Config.PLAY_STORE_WHATS_NEW;
@@ -61,13 +57,14 @@ public class AppUpdateAlert {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 goToMarket();
+                Config.HAS_IGNORED_FOR_UPDATES = false;
             }
         });
         alertDialogBuilder.setNegativeButton("Later", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                createNotificationAlarm();
+                goToMainActivity();
             }
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
@@ -97,19 +94,15 @@ public class AppUpdateAlert {
         activity.finish();
     }
 
-    private void createNotificationAlarm() {
-        Log.e("AppUpdateAlert", "called createNotificationAlarm()");
-        if (alarmManager == null) {
-            alarmManager = (AlarmManager) activity.getSystemService(ALARM_SERVICE);
-        }
-        alarmActivity = activity;
-        Intent intent = new Intent(activity, NotificationAlarmService.class);
-        pendingIntent = PendingIntent.getService(activity, 0, intent, 0);
-        Calendar calendar = Calendar.getInstance(Locale.getDefault());
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.MINUTE, 1);
-        if (alarmManager != null) {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+    private void goToMainActivity() {
+        if (activity instanceof ActivitySplash) {
+            Intent mainIntent = new Intent(activity, MainActivity.class);
+            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            activity.startActivity(mainIntent);
+
+            Config.HAS_IGNORED_FOR_UPDATES = true;
+
+            activity.finish();
         }
     }
 }

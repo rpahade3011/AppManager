@@ -1,8 +1,6 @@
 package com.appman.appmanager.service;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -10,6 +8,7 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
@@ -30,14 +29,16 @@ public class NotificationAlarmService extends Service {
 
     private static final String LOG_TAG = "NotificationAlarmService";
     private static final int NOTIFICATION_ID = 10000;
-    private static final long ALARM_TIME_WHEN = 60000;
+    private static final String UPDATE_APP_ACTION = "UPDATE_ANYWAY";
     private static final String NO_UPDATE_ACTION = "CANCEL_UPDATE";
-    private static final int BROADCAST_REQUEST_CODE = 12345;
+    private static final int BROADCAST_REQUEST_CANCEL_CODE = 12345;
+    private static final int BROADCAST_REQUEST_UPDATE_CODE = 67891;
 
     private Context mContext = null;
     private AppCompatActivity currentActivity = null;
 
     private NotificationManager notificationManager = null;
+    private CancelAlarmNotificationReceiver cancelAlarmNotificationReceiver = null;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -49,7 +50,17 @@ public class NotificationAlarmService extends Service {
             this.mContext = currentActivity.getApplicationContext();
         }
         if (notificationManager == null) {
-            notificationManager = (NotificationManager) mContext.getSystemService(NOTIFICATION_SERVICE);
+            try {
+                notificationManager = (NotificationManager) mContext.getSystemService(NOTIFICATION_SERVICE);
+            } catch (Exception e) {
+                Log.e(LOG_TAG, "Unable to create service: " + e.getMessage());
+            }
+        }
+
+        try {
+            registerNotificationReceiver();
+        } catch (Exception ex) {
+            Log.e(LOG_TAG, "Unable to register receiver: " + ex.getMessage());
         }
     }
 
@@ -70,39 +81,74 @@ public class NotificationAlarmService extends Service {
         return super.onUnbind(intent);
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     public void onDestroy() {
+        try {
+            unRegisterNotificationReceiver();
+        } catch (Exception ex) {
+            Log.e(LOG_TAG, "Unable to un-register receiver: " + ex.getMessage());
+        }
         super.onDestroy();
     }
 
     @SuppressLint("LongLogTag")
     private void showAppUpdateReminderNotification() {
         Log.e(LOG_TAG, "called showAppUpdateReminderNotification()");
-        if (ALARM_TIME_WHEN == System.currentTimeMillis()) {
+        if (notificationManager != null) {
             long when = System.currentTimeMillis();
 
             Intent updateIntent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse(Config.ROOT_PLAY_STORE_DEVICE + currentActivity.getPackageName()));
             PendingIntent updatePendingIntent = PendingIntent.getActivity(mContext, 0, updateIntent, 0);
 
+        /*Intent updateIntent = new Intent();
+        updateIntent.setAction(UPDATE_APP_ACTION);
+        PendingIntent updatePendingIntent = PendingIntent.getBroadcast(mContext, BROADCAST_REQUEST_UPDATE_CODE, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);*/
+            android.support.v4.app.NotificationCompat.Action updateAction = new android.support.v4.app.NotificationCompat.Action(R.drawable.ic_file_download_black_24dp, "Update Now", updatePendingIntent);
+
             Intent cancelIntent = new Intent();
             cancelIntent.setAction(NO_UPDATE_ACTION);
-            PendingIntent cancelPendingIntent = PendingIntent.getBroadcast(mContext, BROADCAST_REQUEST_CODE, cancelIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent cancelPendingIntent = PendingIntent.getBroadcast(mContext, BROADCAST_REQUEST_CANCEL_CODE, cancelIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             android.support.v4.app.NotificationCompat.Action cancelAction = new android.support.v4.app.NotificationCompat.Action(R.drawable.ic_close_black_24dp, "Not Now", cancelPendingIntent);
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             android.support.v4.app.NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(mContext)
                     .setContentTitle(currentActivity.getResources().getString(R.string.app_name) + " update reminder")
-                    .setContentText("An update is available to download")
+                    //.setContentText("An update is available to download")
                     .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
                     .setAutoCancel(false)
                     .setSound(defaultSoundUri)
                     .setWhen(when)
-                    .addAction(R.drawable.ic_file_download_black_24dp, "Update Now", updatePendingIntent)
-                    .addAction(cancelAction);
+                    .addAction(updateAction)
+                    .addAction(cancelAction)
+                    //.setOngoing(true)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setStyle(new android.support.v4.app.NotificationCompat.BigTextStyle().bigText("An update is available to download").setSummaryText("By: Rudraksh Pahade"));
 
             notificationManager.notify(NOTIFICATION_ID, notiBuilder.build());
+        } else {
+            Log.e(LOG_TAG, "Notification service didn't created");
         }
+    }
+
+    private void registerNotificationReceiver() throws Exception {
+        IntentFilter intentFilter = new IntentFilter("CANCEL_UPDATE");
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        cancelAlarmNotificationReceiver = new CancelAlarmNotificationReceiver();
+        this.registerReceiver(cancelAlarmNotificationReceiver, intentFilter);
+    }
+
+    private void unRegisterNotificationReceiver() throws Exception {
+        if (cancelAlarmNotificationReceiver != null) {
+            this.unregisterReceiver(cancelAlarmNotificationReceiver);
+        }
+    }
+
+    private void goToMarket() {
+        currentActivity.startActivity(new Intent(Intent.ACTION_VIEW,
+                Uri.parse(Config.ROOT_PLAY_STORE_DEVICE + currentActivity.getPackageName())));
+        currentActivity.finish();
     }
 
     public class CancelAlarmNotificationReceiver extends BroadcastReceiver {
@@ -120,6 +166,19 @@ public class NotificationAlarmService extends Service {
                 if (notificationManager != null) {
                     notificationManager.cancel(NOTIFICATION_ID);
                 }
+                //stopSelf();
+                onDestroy();
+            } else if (UPDATE_APP_ACTION.equals(action)) {
+                Log.e(LOG_TAG + ".CancelAlarmNotificationReceiver", "Detected update application action");
+                if (AppUpdateAlert.alarmManager != null) {
+                    AppUpdateAlert.alarmManager.cancel(AppUpdateAlert.pendingIntent);
+                }
+
+                if (notificationManager != null) {
+                    notificationManager.cancel(NOTIFICATION_ID);
+                }
+                goToMarket();
+                onDestroy();
             }
         }
     }

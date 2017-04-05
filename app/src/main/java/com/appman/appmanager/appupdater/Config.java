@@ -23,4 +23,6 @@ public class Config {
     public static final int DEFAULT_TIMEOUT_MS = 60 * 1000;
     public static final int DEFAULT_MAX_RETRIES = 0;
     public static final float DEFAULT_BACKOFF_MULT = 1f;
+
+    public static boolean HAS_IGNORED_FOR_UPDATES = false;
 }
