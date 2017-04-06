@@ -63,12 +63,16 @@ public class ActivityAfterMemoryCleaned extends AppCompatActivity{
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(false);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.title_bg));
+        if (toolbar != null) {
+            toolbar.setBackgroundColor(getResources().getColor(R.color.title_bg));
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(UtilsUI.darker(getResources().getColor(R.color.title_bg), 0.8));
-            toolbar.setBackgroundColor(getResources().getColor(R.color.title_bg));
+            if (toolbar != null) {
+                toolbar.setBackgroundColor(getResources().getColor(R.color.title_bg));
+            }
             if (!appPreferences.getNavigationBlackPref()) {
                 getWindow().setNavigationBarColor(getResources().getColor(R.color.title_bg));
             }

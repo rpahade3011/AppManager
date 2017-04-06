@@ -70,7 +70,7 @@ public class ActivitySplash extends AppCompatActivity {
                 SPLASH_SCREEN_MILLIS_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
-
+                // Do nothing
             }
 
             @Override

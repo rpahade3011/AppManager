@@ -51,7 +51,6 @@ public class ActivityNoInternetConnection extends Activity implements View.OnCli
             finish();
             startActivity(new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS));
         }
-
     }
 
 }

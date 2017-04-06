@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -52,18 +53,23 @@ public class AboutActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.action_about);
-        toolbar.setBackgroundColor(getResources().getColor(R.color.bkg_card));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        if (toolbar != null) {
+            toolbar.setBackgroundColor(getResources().getColor(R.color.bkg_card));
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+        }
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(UtilsUI.darker(getResources().getColor(R.color.bkg_card), 0.8));
-            toolbar.setBackgroundColor(getResources().getColor(R.color.bkg_card));
+            if (toolbar != null) {
+                toolbar.setBackgroundColor(getResources().getColor(R.color.bkg_card));
+            }
             if (!appPreferences.getNavigationBlackPref()) {
                 getWindow().setNavigationBarColor(getResources().getColor(R.color.bkg_card));
             }
@@ -81,77 +87,91 @@ public class AboutActivity extends AppCompatActivity {
         CardView about_twitter = (CardView) findViewById (R.id.about_twitter);
 
         try{
-            imageViewProfilePic.setImageResource(R.mipmap.about_rudraksh_pahade_profile_pic);
+            if (imageViewProfilePic != null) {
+                imageViewProfilePic.setImageResource(R.mipmap.about_rudraksh_pahade_profile_pic);
+            }
         }catch (Exception e){
             imageViewProfilePic.setImageResource(R.mipmap.about_rudraksh_pahade_profile_pic);
-            e.getMessage().toString();
+            Log.e("Exception", e.getMessage());
         }
 
-        header.setBackgroundColor(getResources().getColor(R.color.bkg_card));
-        appNameVersion.setText(getResources().getString(R.string.app_name) + " " + UtilsApp.getAppVersionName(getApplicationContext()) + "(" + UtilsApp.getAppVersionCode(getApplicationContext()) + ")");
+        if (header != null) {
+            header.setBackgroundColor(getResources().getColor(R.color.bkg_card));
+        }
+        if (appNameVersion != null) {
+            appNameVersion.setText(getResources().getString(R.string.app_name) + " " + UtilsApp.getAppVersionName(getApplicationContext()) + "(" + UtilsApp.getAppVersionCode(getApplicationContext()) + ")");
+        }
 
         // If clicks on Google Play
-        about_googleplay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isInternetConnected = internetConnection.isInternetConnection(AboutActivity.this);
-                if (isInternetConnected == true){
-                    try{
-                        UtilsApp.goToGooglePlay(context, context.getPackageName());
-                    }catch (Exception e){
-                        e.getMessage().toString();
+        if (about_googleplay != null) {
+            about_googleplay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    isInternetConnected = internetConnection.isInternetConnection(AboutActivity.this);
+                    if (isInternetConnected){
+                        try{
+                            UtilsApp.goToGooglePlay(context, context.getPackageName());
+                        }catch (Exception e){
+                            Log.e("Exception", e.getMessage());
+                        }
+                    }else {
+                        startActivity(new Intent(AboutActivity.this,ActivityNoInternetConnection.class));
                     }
-                }else {
-                    startActivity(new Intent(AboutActivity.this,ActivityNoInternetConnection.class));
                 }
-            }
-        });
+            });
+        }
         // If clicks on Facebook
-        about_facebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isInternetConnected = internetConnection.isInternetConnection(AboutActivity.this);
-                if (isInternetConnected == true){
-                    try{
-                        //UtilsApp.goToFacebook(context, facebook_id);
-                        Intent facebookIntent = UtilsApp.getFacebookIntent(context, facebook_id);
-                        context.startActivity(facebookIntent);
-                    }catch (Exception e){
-                        e.getMessage().toString();
+        if (about_facebook != null) {
+            about_facebook.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    isInternetConnected = internetConnection.isInternetConnection(AboutActivity.this);
+                    if (isInternetConnected){
+                        try{
+                            //UtilsApp.goToFacebook(context, facebook_id);
+                            Intent facebookIntent = UtilsApp.getFacebookIntent(context, facebook_id);
+                            context.startActivity(facebookIntent);
+                        }catch (Exception e){
+                            Log.e("Exception", e.getMessage());
+                        }
+                    }else {
+                        startActivity(new Intent(AboutActivity.this,ActivityNoInternetConnection.class));
                     }
-                }else {
-                    startActivity(new Intent(AboutActivity.this,ActivityNoInternetConnection.class));
-                }
 
-            }
-        });
+                }
+            });
+        }
         // If clicks on Twitter
-        about_twitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isInternetConnected = internetConnection.isInternetConnection(AboutActivity.this);
-                if (isInternetConnected == true){
-                    try{
-                        //UtilsApp.goToTwitter(context, twitter_id);
-                        Intent twitterIntent = UtilsApp.getTwitterIntent(context, twitter_id);
-                        context.startActivity(twitterIntent);
-                    }catch (Exception e){
-                        e.getMessage().toString();
+        if (about_twitter != null) {
+            about_twitter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    isInternetConnected = internetConnection.isInternetConnection(AboutActivity.this);
+                    if (isInternetConnected){
+                        try{
+                            //UtilsApp.goToTwitter(context, twitter_id);
+                            Intent twitterIntent = UtilsApp.getTwitterIntent(context, twitter_id);
+                            context.startActivity(twitterIntent);
+                        }catch (Exception e){
+                            Log.e("Exception", e.getMessage());
+                        }
+                    }else {
+                        startActivity(new Intent(AboutActivity.this,ActivityNoInternetConnection.class));
                     }
-                }else {
-                    startActivity(new Intent(AboutActivity.this,ActivityNoInternetConnection.class));
-                }
 
-            }
-        });
+                }
+            });
+        }
     }
 
     private void loadAdMob(){
         // Load an ad into the AdMob banner view.
         AdView adView = (AdView) findViewById(R.id.adView);
-        adView.setVisibility(View.VISIBLE);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        if (adView != null) {
+            adView.setVisibility(View.VISIBLE);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adView.loadAd(adRequest);
+        }
     }
 
     @Override

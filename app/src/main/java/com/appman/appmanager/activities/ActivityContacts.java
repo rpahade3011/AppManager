@@ -141,20 +141,21 @@ public class ActivityContacts extends AppCompatActivity implements View.OnClickL
         final InterstitialAd interstitialAd = new InterstitialAd(ActivityContacts.this);
         interstitialAd.setAdUnitId(getResources().getString(R.string.ad_mob_interstitial_id));
         AdView adView = (AdView) findViewById (R.id.adView);
-        adView.setVisibility(View.VISIBLE);
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        adView.loadAd(adRequest);
-        interstitialAd.loadAd(adRequest);
-        interstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                if (interstitialAd.isLoaded()){
-                    interstitialAd.show();
+        if (adView != null) {
+            adView.setVisibility(View.VISIBLE);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adView.loadAd(adRequest);
+            interstitialAd.loadAd(adRequest);
+            interstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    super.onAdLoaded();
+                    if (interstitialAd.isLoaded()){
+                        interstitialAd.show();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override
