@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.appman.appmanager.activities.ActivitySplash;
 import com.appman.appmanager.activities.MainActivity;
 import com.appman.appmanager.service.NotificationAlarmService;
 
@@ -35,6 +36,7 @@ public class AppUpdateAlert {
     public static AlarmManager alarmManager = null;
     public static PendingIntent pendingIntent = null;
     public static AppCompatActivity alarmActivity;
+    private boolean isAlarmSet = false;
 
     public AppUpdateAlert(AppCompatActivity mAct) {
         this.activity = mAct;
@@ -61,13 +63,15 @@ public class AppUpdateAlert {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 goToMarket();
+                Config.HAS_IGNORED_FOR_UPDATES = false;
             }
         });
         alertDialogBuilder.setNegativeButton("Later", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                createNotificationAlarm();
+                Config.HAS_IGNORED_FOR_UPDATES = true;
+                setAlarmForNotification();
             }
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
@@ -97,19 +101,35 @@ public class AppUpdateAlert {
         activity.finish();
     }
 
+    private void setAlarmForNotification() {
+        if (activity instanceof MainActivity) {
+            if (Config.HAS_IGNORED_FOR_UPDATES) {
+                if (!isAlarmSet) {
+                    AppUpdateAlert.alarmActivity = activity;
+                    createNotificationAlarm();
+                    isAlarmSet = true;
+                } else {
+                    Log.e("AppUpdateAlert", "Alarm has already set");
+                }
+            }
+        } else {
+            Log.e("AppUpdateAlert", "MainActivity is not instantiated");
+        }
+    }
+
     private void createNotificationAlarm() {
         Log.e("AppUpdateAlert", "called createNotificationAlarm()");
-        if (alarmManager == null) {
-            alarmManager = (AlarmManager) activity.getSystemService(ALARM_SERVICE);
+        if (AppUpdateAlert.alarmManager == null) {
+            AppUpdateAlert.alarmManager = (AlarmManager) AppUpdateAlert.alarmActivity.getSystemService(ALARM_SERVICE);
+
         }
-        alarmActivity = activity;
-        Intent intent = new Intent(activity, NotificationAlarmService.class);
-        pendingIntent = PendingIntent.getService(activity, 0, intent, 0);
+        Intent intent = new Intent(AppUpdateAlert.alarmActivity, NotificationAlarmService.class);
+        AppUpdateAlert.pendingIntent = PendingIntent.getService(AppUpdateAlert.alarmActivity, 0, intent, 0);
         Calendar calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.MINUTE, 1);
-        if (alarmManager != null) {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        calendar.add(Calendar.SECOND, 30);
+        if (AppUpdateAlert.alarmManager != null) {
+            AppUpdateAlert.alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AppUpdateAlert.pendingIntent);
         }
     }
 }

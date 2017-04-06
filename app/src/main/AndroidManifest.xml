@@ -84,13 +84,10 @@
         <service
             android:name=".service.CoreService"
             android:exported="false" />
+
         <service android:name=".service.NotificationAlarmService"
             android:exported="false"/>
-        <receiver android:name=".service.NotificationAlarmService$CancelAlarmNotificationReceiver">
-            <intent-filter>
-                <action android:name="CANCEL_UPDATE"/>
-            </intent-filter>
-        </receiver>
+
     </application>
 
 </manifest>

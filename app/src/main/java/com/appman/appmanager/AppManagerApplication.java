@@ -2,16 +2,31 @@ package com.appman.appmanager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
+import com.appman.appmanager.activities.ActivitySplash;
+import com.appman.appmanager.activities.MainActivity;
+import com.appman.appmanager.appupdater.AppUpdateAlert;
+import com.appman.appmanager.appupdater.AppUpdateHandler;
+import com.appman.appmanager.appupdater.Config;
+import com.appman.appmanager.appupdater.UpdateListener;
+import com.appman.appmanager.service.NotificationAlarmService;
 import com.appman.appmanager.utils.AppPreferences;
 import com.crashlytics.android.Crashlytics;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -28,11 +43,16 @@ public class AppManagerApplication extends Application implements
     @SuppressLint("StaticFieldLeak")
     private static AppManagerApplication mInstance;
     private Activity mCurrentActivity;
+
     public static AppPreferences getAppPreferences() {
         return sAppPreferences;
     }
 
     private RequestQueue requestQueue = null;
+
+    private boolean isNewUpdateAvailable = false;
+    private String CHANGE_LOGS = "";
+    private AppUpdateHandler appUpdateHandler = null;
 
     @Override
     public void onCreate() {
@@ -43,7 +63,9 @@ public class AppManagerApplication extends Application implements
         mInstance.registerActivityLifecycleCallbacks(this);
     }
 
-    public static synchronized AppManagerApplication getInstance() {return mInstance;}
+    public static synchronized AppManagerApplication getInstance() {
+        return mInstance;
+    }
 
     /**
      * @return The Volley Request queue, the queue will be created if it is null
@@ -98,6 +120,41 @@ public class AppManagerApplication extends Application implements
         }
     }
 
+    private void checkForUpdates(Activity activity) {
+        if (appUpdateHandler == null) {
+            Log.e(TAG, "Start checking for updates");
+            appUpdateHandler = new AppUpdateHandler((AppCompatActivity) activity);
+            // to start version checker
+            appUpdateHandler.startCheckingUpdate();
+            // prompting intervals
+            appUpdateHandler.setCount(1);
+            // to print new features added automatically
+            appUpdateHandler.setWhatsNew(true);
+            // listener for custom update prompt
+            appUpdateHandler.setOnUpdateListener(new UpdateListener() {
+                @Override
+                public void onUpdateFound(boolean newVersion, String whatsNew) {
+                    Log.e(TAG, "New updates found - " + newVersion + " : " + whatsNew);
+                    isNewUpdateAvailable = newVersion;
+                    CHANGE_LOGS = whatsNew;
+                    compareUpdates();
+                }
+            });
+        }
+    }
+
+    private void compareUpdates() {
+        // Added code on 08-March-2017, by Rudraksh
+        if (isNewUpdateAvailable && !CHANGE_LOGS.equals("")) {
+            if (appUpdateHandler != null) {
+                // Display update dialog
+                appUpdateHandler.showDefaultAlert(true);
+            }
+        } else {
+            Log.e(TAG, "No updates found, start app normally.");
+        }
+    }
+
     @Override
     public void onTerminate() {
         super.onTerminate();
@@ -105,7 +162,17 @@ public class AppManagerApplication extends Application implements
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
+        // Creating notification for update reminder, only if user has opted to perform later
+        if (activity instanceof MainActivity) {
+            if (activity != null) {
+                // Check for updates
+                checkForUpdates(activity);
+            } else {
+                Log.e(TAG, "MainActivity is not instantiated");
+            }
+        } else {
+            Log.e(TAG, "MainActivity is not instantiated");
+        }
     }
 
     @Override
@@ -141,6 +208,7 @@ public class AppManagerApplication extends Application implements
 
     /**
      * GETTER SETTER METHODS FOR GET AND SET CURRENT ACTIVITY INSTANCE
+     *
      * @return activity instance
      */
     public Activity getmCurrentActivity() {
@@ -151,7 +219,7 @@ public class AppManagerApplication extends Application implements
         this.mCurrentActivity = mCurrentActivity;
     }
 
-    private void clearReferences(){
+    private void clearReferences() {
         Activity currActivity = getmCurrentActivity();
         if (this.equals(currActivity))
             setmCurrentActivity(null);
