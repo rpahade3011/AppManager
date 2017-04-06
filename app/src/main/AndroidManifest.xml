@@ -84,6 +84,7 @@
         <service
             android:name=".service.CoreService"
             android:exported="false" />
+
         <service android:name=".service.NotificationAlarmService"
             android:exported="false"/>
 

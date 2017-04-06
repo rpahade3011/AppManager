@@ -17,8 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.appman.appmanager.R;
-import com.appman.appmanager.appupdater.AppUpdateHandler;
-import com.appman.appmanager.appupdater.UpdateListener;
 
 /**
  * Created by rudhraksh.pahade on 4/5/2017.
@@ -37,12 +35,6 @@ public class ActivitySplash extends AppCompatActivity {
 
     private Animation mainAnimation;
     private Animation appImageAnimation;
-    private Animation appNameAnimation;
-
-    // Added code on 08-March-2017, by Rudraksh
-    private boolean isNewUpdateAvailable = false;
-    private String CHANGE_LOGS = "";
-    private AppUpdateHandler appUpdateHandler = null;
 
     private TextView tvSplashAppName;
     private ImageView imgVwAppIcon;
@@ -78,8 +70,7 @@ public class ActivitySplash extends AppCompatActivity {
                 SPLASH_SCREEN_MILLIS_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
-                // Check for updates
-                checkForUpdates();
+
             }
 
             @Override
@@ -95,43 +86,13 @@ public class ActivitySplash extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        // Added code on 08-March-2017, by Rudraksh
-                        if (isNewUpdateAvailable && !CHANGE_LOGS.equals("")) {
-                            if (appUpdateHandler != null) {
-                                // Display update dialog
-                                appUpdateHandler.showDefaultAlert(true);
-                            }
-                        } else {
-                            Log.e(LOG_TAG, "No updates found, start app normally.");
-                            goToMainActivity();
-                        }
+                        Log.e(LOG_TAG, "Starting Main activity");
+                        goToMainActivity();
                     }
                 }, 500);
             }
         };
         splashScreenTimer.start();
-    }
-
-    private void checkForUpdates() {
-        if (appUpdateHandler == null) {
-            Log.e(LOG_TAG, "Start checking for updates");
-            appUpdateHandler = new AppUpdateHandler(ActivitySplash.this);
-            // to start version checker
-            appUpdateHandler.startCheckingUpdate();
-            // prompting intervals
-            appUpdateHandler.setCount(1);
-            // to print new features added automatically
-            appUpdateHandler.setWhatsNew(true);
-            // listener for custom update prompt
-            appUpdateHandler.setOnUpdateListener(new UpdateListener() {
-                @Override
-                public void onUpdateFound(boolean newVersion, String whatsNew) {
-                    Log.e(LOG_TAG, "New updates found - " + newVersion + " : " + whatsNew);
-                    isNewUpdateAvailable = newVersion;
-                    CHANGE_LOGS = whatsNew;
-                }
-            });
-        }
     }
 
     private void goToMainActivity() {

@@ -12,10 +12,15 @@ import android.util.Log;
 
 import com.appman.appmanager.activities.ActivitySplash;
 import com.appman.appmanager.activities.MainActivity;
+import com.appman.appmanager.service.NotificationAlarmService;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.util.Calendar;
+import java.util.Locale;
+
+import static android.content.Context.ALARM_SERVICE;
 import static com.appman.appmanager.appupdater.Config.PLAY_STORE_HTML_TAGS_TO_DIV_WHATS_NEW_END;
 import static com.appman.appmanager.appupdater.Config.PLAY_STORE_HTML_TAGS_TO_DIV_WHATS_NEW_START;
 import static com.appman.appmanager.appupdater.Config.PLAY_STORE_WHATS_NEW;
@@ -31,6 +36,7 @@ public class AppUpdateAlert {
     public static AlarmManager alarmManager = null;
     public static PendingIntent pendingIntent = null;
     public static AppCompatActivity alarmActivity;
+    private boolean isAlarmSet = false;
 
     public AppUpdateAlert(AppCompatActivity mAct) {
         this.activity = mAct;
@@ -64,7 +70,8 @@ public class AppUpdateAlert {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                goToMainActivity();
+                Config.HAS_IGNORED_FOR_UPDATES = true;
+                setAlarmForNotification();
             }
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
@@ -94,15 +101,35 @@ public class AppUpdateAlert {
         activity.finish();
     }
 
-    private void goToMainActivity() {
-        if (activity instanceof ActivitySplash) {
-            Intent mainIntent = new Intent(activity, MainActivity.class);
-            mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            activity.startActivity(mainIntent);
+    private void setAlarmForNotification() {
+        if (activity instanceof MainActivity) {
+            if (Config.HAS_IGNORED_FOR_UPDATES) {
+                if (!isAlarmSet) {
+                    AppUpdateAlert.alarmActivity = activity;
+                    createNotificationAlarm();
+                    isAlarmSet = true;
+                } else {
+                    Log.e("AppUpdateAlert", "Alarm has already set");
+                }
+            }
+        } else {
+            Log.e("AppUpdateAlert", "MainActivity is not instantiated");
+        }
+    }
 
-            Config.HAS_IGNORED_FOR_UPDATES = true;
+    private void createNotificationAlarm() {
+        Log.e("AppUpdateAlert", "called createNotificationAlarm()");
+        if (AppUpdateAlert.alarmManager == null) {
+            AppUpdateAlert.alarmManager = (AlarmManager) AppUpdateAlert.alarmActivity.getSystemService(ALARM_SERVICE);
 
-            activity.finish();
+        }
+        Intent intent = new Intent(AppUpdateAlert.alarmActivity, NotificationAlarmService.class);
+        AppUpdateAlert.pendingIntent = PendingIntent.getService(AppUpdateAlert.alarmActivity, 0, intent, 0);
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.SECOND, 30);
+        if (AppUpdateAlert.alarmManager != null) {
+            AppUpdateAlert.alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AppUpdateAlert.pendingIntent);
         }
     }
 }

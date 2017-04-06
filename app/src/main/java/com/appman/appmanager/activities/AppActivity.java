@@ -113,8 +113,6 @@ public class AppActivity extends AppCompatActivity {
         CardView start = (CardView) findViewById(R.id.start_card);
         CardView extract = (CardView) findViewById(R.id.extract_card);
         CardView uninstall = (CardView) findViewById(R.id.uninstall_card);
-//        CardView cache = (CardView) findViewById(R.id.cache_card);
-//        CardView clearData = (CardView) findViewById(R.id.clear_data_card);
 
 
         icon.setImageDrawable(appInfo.getIcon());
@@ -195,29 +193,6 @@ public class AppActivity extends AppCompatActivity {
                 new ExtractFileInBackground(context, dialog, appInfo).execute();
             }
         });
-        /*cache.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MaterialDialog dialog = UtilsDialog.showTitleContentWithProgress(context
-                        , getResources().getString(R.string.dialog_cache_deleting)
-                        , getResources().getString(R.string.dialog_cache_deleting_description));
-                new DeleteDataInBackground(context, dialog, appInfo.getData() + "/cache/**"
-                        , getResources().getString(R.string.dialog_cache_success_description, appInfo.getName())).execute();
-//                MemoryUtils.clearCache(context);
-            }
-        });
-        clearData.setVisibility(View.VISIBLE);
-        clearData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MaterialDialog dialog = UtilsDialog.showTitleContentWithProgress(context
-                        , getResources().getString(R.string.dialog_clear_data_deleting)
-                        , getResources().getString(R.string.dialog_clear_data_deleting_description));
-                new DeleteDataInBackground(context, dialog, appInfo.getData() + "/**"
-                        , getResources().getString(R.string.dialog_clear_data_success_description, appInfo.getName())).execute();
-            }
-        });*/
-
     }
 
     @Override
