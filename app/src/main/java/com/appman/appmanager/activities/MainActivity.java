@@ -127,12 +127,46 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        drawer = UtilsUI.setNavigationDrawer((Activity) context, context, toolbar, appAdapter, appSystemAdapter, appFavoriteAdapter, appHiddenAdapter, recyclerView);
+        drawer = UtilsUI.setNavigationDrawer((Activity) context,
+                context, toolbar, appAdapter, appSystemAdapter,
+                appFavoriteAdapter, appHiddenAdapter, recyclerView);
 
         progressWheel.setBarColor(appPreferences.getPrimaryColorPref());
         progressWheel.setVisibility(View.VISIBLE);
 
+        // Check for updates
+        startCheckingForNewUpdates();
+
         new GetInstalledApps().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private void startCheckingForNewUpdates() {
+        if (appUpdateHandler == null) {
+            Log.e(TAG, "inside startCheckingForNewUpdates");
+            appUpdateHandler = new AppUpdateHandler(MainActivity.this);
+            appUpdateHandler.startCheckingUpdate();
+            appUpdateHandler.setCount(1);
+            appUpdateHandler.setWhatsNew(true);
+            appUpdateHandler.setOnUpdateListener(new UpdateListener() {
+                @Override
+                public void onUpdateFound(boolean newVersion, String whatsNew) {
+                    Log.e(TAG, "New updates found - " + newVersion + " : " + whatsNew);
+                    isNewUpdateAvailable = newVersion;
+                    CHANGE_LOGS = whatsNew;
+                    compareUpdates();
+                }
+            });
+        }
+    }
+
+    private void compareUpdates() {
+        if (isNewUpdateAvailable && !CHANGE_LOGS.equals("")) {
+            if (appUpdateHandler != null) {
+                appUpdateHandler.showDefaultAlert(true);
+            }
+        } else {
+            Log.e(TAG, "No updates found.");
+        }
     }
 
     private void setInitialConfiguration() {
@@ -447,6 +481,5 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             drawer.closeDrawer();
             drawer = UtilsUI.setNavigationDrawer((Activity) context, context, toolbar, appAdapter, appSystemAdapter, appFavoriteAdapter, appHiddenAdapter, recyclerView);
         }
-
     }
 }

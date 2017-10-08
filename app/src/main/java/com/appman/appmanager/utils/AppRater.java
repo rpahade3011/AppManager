@@ -21,7 +21,7 @@ import com.gc.materialdesign.views.ButtonFlat;
  * Found at: http://www.androidsnippets.com/prompt-engaged-users-to-rate-your-app-in-the-android-market-appirater
  * @author Sissi @ http://www.androidsnippets.com/
  */
-public class AppRater{
+public class AppRater {
 
     private final static String APP_TITLE = "AppManager";
     private final static String APP_PNAME = "com.appman.appmanager";
@@ -63,7 +63,7 @@ public class AppRater{
             }
         }
 
-        editor.commit();
+        editor.apply();
     }
 
     /**

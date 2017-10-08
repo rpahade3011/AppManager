@@ -2,10 +2,14 @@ package com.appman.appmanager.appupdater;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,6 +41,20 @@ public class AppUpdateAlert {
     public static PendingIntent pendingIntent = null;
     public static AppCompatActivity alarmActivity;
     private boolean isAlarmSet = false;
+
+    private NotificationAlarmService notificationAlarmService = null;
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            notificationAlarmService = ((NotificationAlarmService.NotificationAlarmServiceBinder) iBinder).getBinder();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            notificationAlarmService = null;
+        }
+    };
 
     public AppUpdateAlert(AppCompatActivity mAct) {
         this.activity = mAct;
@@ -119,9 +137,10 @@ public class AppUpdateAlert {
 
     private void createNotificationAlarm() {
         Log.e("AppUpdateAlert", "called createNotificationAlarm()");
+        activity.bindService(new Intent(activity.getApplicationContext(),
+                NotificationAlarmService.class),serviceConnection,Context.BIND_AUTO_CREATE);
         if (AppUpdateAlert.alarmManager == null) {
             AppUpdateAlert.alarmManager = (AlarmManager) AppUpdateAlert.alarmActivity.getSystemService(ALARM_SERVICE);
-
         }
         Intent intent = new Intent(AppUpdateAlert.alarmActivity, NotificationAlarmService.class);
         AppUpdateAlert.pendingIntent = PendingIntent.getService(AppUpdateAlert.alarmActivity, 0, intent, 0);
@@ -129,7 +148,8 @@ public class AppUpdateAlert {
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.SECOND, 30);
         if (AppUpdateAlert.alarmManager != null) {
-            AppUpdateAlert.alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AppUpdateAlert.pendingIntent);
+            AppUpdateAlert.alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                    AppUpdateAlert.pendingIntent);
         }
     }
 }

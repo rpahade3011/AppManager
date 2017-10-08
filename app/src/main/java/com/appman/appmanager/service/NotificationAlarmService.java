@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,8 @@ public class NotificationAlarmService extends Service {
 
     private NotificationManager notificationManager = null;
     private AlarmNotificationReceiver alarmNotificationReceiver = null;
+
+    private IBinder notificationServiceBinder = new NotificationAlarmServiceBinder();
 
     @SuppressLint("LongLogTag")
     @Override
@@ -72,7 +75,7 @@ public class NotificationAlarmService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return notificationServiceBinder;
     }
 
     @Override
@@ -179,6 +182,12 @@ public class NotificationAlarmService extends Service {
                 }
                 onDestroy();
             }
+        }
+    }
+
+    public class NotificationAlarmServiceBinder extends Binder {
+        public NotificationAlarmService getBinder() {
+            return NotificationAlarmService.this;
         }
     }
 }

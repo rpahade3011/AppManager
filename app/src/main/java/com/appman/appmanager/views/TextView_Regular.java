@@ -4,11 +4,13 @@
 
 package com.appman.appmanager.views;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+@SuppressLint("AppCompatCustomView")
 public class TextView_Regular extends TextView
 {
 
@@ -36,6 +38,6 @@ public class TextView_Regular extends TextView
         {
             return;
         }
-        setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Regular.ttf"));
+        setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/clan-book-webfont.ttf"));
     }
 }
