@@ -2,10 +2,7 @@ package com.appman.appmanager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.Application;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -15,18 +12,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
-import com.appman.appmanager.activities.ActivitySplash;
 import com.appman.appmanager.activities.MainActivity;
-import com.appman.appmanager.appupdater.AppUpdateAlert;
 import com.appman.appmanager.appupdater.AppUpdateHandler;
-import com.appman.appmanager.appupdater.Config;
 import com.appman.appmanager.appupdater.UpdateListener;
-import com.appman.appmanager.service.NotificationAlarmService;
 import com.appman.appmanager.utils.AppPreferences;
 import com.crashlytics.android.Crashlytics;
-
-import java.util.Calendar;
-import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -224,4 +214,5 @@ public class AppManagerApplication extends Application implements
         if (this.equals(currActivity))
             setmCurrentActivity(null);
     }
+
 }

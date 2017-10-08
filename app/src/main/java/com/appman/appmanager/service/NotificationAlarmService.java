@@ -1,6 +1,7 @@
 package com.appman.appmanager.service;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,12 +13,14 @@ import android.content.IntentFilter;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
+import com.appman.appmanager.OreoNotificationHelper;
 import com.appman.appmanager.R;
 import com.appman.appmanager.appupdater.AppUpdateAlert;
 import com.appman.appmanager.appupdater.Config;
@@ -94,41 +97,84 @@ public class NotificationAlarmService extends Service {
         super.onDestroy();
     }
 
+    @TargetApi(26)
     @SuppressLint("LongLogTag")
     private void showAppUpdateReminderNotification() {
         Log.e(LOG_TAG, "called showAppUpdateReminderNotification()");
-        if (notificationManager != null) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             long when = System.currentTimeMillis();
 
             // Update Intent
             Intent updateIntent = new Intent();
             updateIntent.setAction(UPDATE_APP_ACTION);
-            PendingIntent updatePendingIntent = PendingIntent.getBroadcast(this, BROADCAST_REQUEST, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            android.support.v4.app.NotificationCompat.Action updateAction = new android.support.v4.app.NotificationCompat.Action(R.drawable.ic_file_download_black_24dp, "Update Now",updatePendingIntent);
+            PendingIntent updatePendingIntent = PendingIntent.getBroadcast(this,
+                    BROADCAST_REQUEST, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Notification.Action updateAction =
+                    new Notification.Action(R.drawable.ic_file_download_black_24dp,
+                            "Update Now",updatePendingIntent);
 
             // Cancel Intent
             Intent cancelIntent = new Intent();
             cancelIntent.setAction(NO_UPDATE_ACTION);
-            PendingIntent cancelPendingIntent = PendingIntent.getBroadcast(mContext, BROADCAST_REQUEST, cancelIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            android.support.v4.app.NotificationCompat.Action cancelAction = new android.support.v4.app.NotificationCompat.Action(R.drawable.ic_close_black_24dp, "Not Now", cancelPendingIntent);
+            PendingIntent cancelPendingIntent = PendingIntent.getBroadcast(mContext, BROADCAST_REQUEST, cancelIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            Notification.Action cancelAction =
+                    new Notification.Action(R.drawable.ic_close_black_24dp, "Not Now", cancelPendingIntent);
 
-            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            android.support.v4.app.NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(mContext)
-                    .setContentTitle(currentActivity.getResources().getString(R.string.app_name) + " update reminder")
-                    .setContentText("An update is available to download")
-                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
-                    .setAutoCancel(false)
-                    .setSound(defaultSoundUri)
-                    .setWhen(when)
-                    .addAction(updateAction)
-                    .addAction(cancelAction)
-                    .setOngoing(true)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setStyle(new android.support.v4.app.NotificationCompat.BigTextStyle().bigText("An update is available to download").setSummaryText("By: Rudraksh Pahade"));
+            Notification.Builder oreoBuilder = new Notification.Builder(NotificationAlarmService.this,
+                    OreoNotificationHelper.NOTIFICATION_CHANNEL_ID);
+            oreoBuilder.setContentTitle(currentActivity.getResources().getString(R.string.app_name) + " update reminder");
+            oreoBuilder.setContentText("An update is available to download");
+            oreoBuilder.setWhen(when);
+            oreoBuilder.addAction(updateAction);
+            oreoBuilder.addAction(cancelAction);
+            oreoBuilder.setOngoing(true);
+            oreoBuilder.setSmallIcon(R.mipmap.ic_launcher);
+            oreoBuilder.setStyle(new Notification.BigTextStyle().bigText("An update is available to download")
+                    .setSummaryText("By: Rudraksh Pahade"));
 
-            notificationManager.notify(NOTIFICATION_ID, notiBuilder.build());
+            OreoNotificationHelper.getInstance(NotificationAlarmService.this
+                    .getApplicationContext()).notify(NOTIFICATION_ID, oreoBuilder);
+
         } else {
-            Log.e(LOG_TAG, "Notification service didn't created");
+            if (notificationManager != null) {
+                long when = System.currentTimeMillis();
+
+                // Update Intent
+                Intent updateIntent = new Intent();
+                updateIntent.setAction(UPDATE_APP_ACTION);
+                PendingIntent updatePendingIntent = PendingIntent.getBroadcast(this,
+                        BROADCAST_REQUEST, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                android.support.v4.app.NotificationCompat.Action updateAction =
+                        new android.support.v4.app.NotificationCompat.Action(R.drawable.ic_file_download_black_24dp,
+                                "Update Now",updatePendingIntent);
+
+                // Cancel Intent
+                Intent cancelIntent = new Intent();
+                cancelIntent.setAction(NO_UPDATE_ACTION);
+                PendingIntent cancelPendingIntent = PendingIntent.getBroadcast(mContext, BROADCAST_REQUEST, cancelIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                android.support.v4.app.NotificationCompat.Action cancelAction = new android.support.v4.app.NotificationCompat.Action(R.drawable.ic_close_black_24dp, "Not Now", cancelPendingIntent);
+
+                Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                android.support.v4.app.NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(mContext)
+                        .setContentTitle(currentActivity.getResources().getString(R.string.app_name) + " update reminder")
+                        .setContentText("An update is available to download")
+                        .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+                        .setAutoCancel(false)
+                        .setSound(defaultSoundUri)
+                        .setWhen(when)
+                        .addAction(updateAction)
+                        .addAction(cancelAction)
+                        .setOngoing(true)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setStyle(new android.support.v4.app.NotificationCompat
+                                .BigTextStyle().bigText("An update is available to download")
+                                .setSummaryText("By: Rudraksh Pahade"));
+
+                notificationManager.notify(NOTIFICATION_ID, notiBuilder.build());
+            } else {
+                Log.e(LOG_TAG, "Notification service didn't created");
+            }
         }
     }
 
