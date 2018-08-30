@@ -3,10 +3,10 @@
 buildscript {
     ext.versions = [
             'applicationPkgName': 'com.appman.appmanager',
-            'compileSdkVersion' : 26,
-            'buildToolsVersion' : '26.0.2',
-            'minSdkVersion' : 17,
-            'targetSdkVersion' : 26,
+            'compileSdkVersion' : 27,
+            'buildToolsVersion' : '27.0.3',
+            'minSdkVersion' : 21,
+            'targetSdkVersion' : 27,
             'versionCode': 7,
             'versionName' : '1.8',
             'supportLibVersion': '23.4.0',
@@ -14,10 +14,14 @@ buildscript {
     ]
     repositories {
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
-        classpath "com.google.gms:google-services:3.0.0"
+        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath "com.google.gms:google-services:3.2.1"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -27,6 +31,10 @@ allprojects {
     repositories {
         jcenter()
         maven { url "https://jitpack.io" }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 }
 

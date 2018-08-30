@@ -169,4 +169,5 @@
     <!- -->
     <string name="ad_mob_banner_id">ca-app-pub-5293031144790539/2510067801</string>
     <string name="ad_mob_interstitial_id">ca-app-pub-5293031144790539/3986801004</string>
+    <string name="drive_api_client_id">312522004504-0ji9hjiq7fe3ub27r1qbjn58h557jdd3.apps.googleusercontent.com</string>
 </resources>

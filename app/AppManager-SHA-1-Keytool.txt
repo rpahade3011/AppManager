@@ -1,0 +1,32 @@
+
+C:\Program Files\Java\jdk-9.0.1\bin>keytool -exportcert -keystore C:\Users\rudraksh.pahade\.android\debug.keystore -list -v
+Enter keystore password:
+Keystore type: JKS
+Keystore provider: SUN
+Your keystore contains 1 entry
+
+Alias name: androiddebugkey
+Creation date: 28-May-2018
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:                                                                                                         Owner: C=US, O=Android, CN=Android Debug
+Issuer: C=US, O=Android, CN=Android Debug
+Serial number: 1
+Valid from: Mon May 28 15:05:27 IST 2018 until: Wed May 20 15:05:27 IST 2048
+Certificate fingerprints:
+         SHA1: C0:21:CD:00:63:FB:65:3E:8D:F2:AD:D8:58:04:48:40:13:C4:86:09
+         SHA256: C6:79:9F:EB:71:BA:A3:F0:A5:E2:E5:FD:84:CF:DE:98:66:33:A0:A6:6B:D5:23:E3:58:9B:93:AD:9E:F8:07:A4
+Signature algorithm name: SHA1withRSA
+Subject Public Key Algorithm: 1024-bit RSA key
+Version: 1
+
+
+*******************************************
+*******************************************
+
+
+
+Warning:
+The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS12 which is an industry standard format using "keytool -importkeystore -srckeystore C:\Users\rudraksh.pahade\.android\debug.keystore -destkeystore C:\Users\rudraksh.pahade\.android\debug.keystore -deststoretype pkcs12".
+
+C:\Program Files\Java\jdk-9.0.1\bin>
